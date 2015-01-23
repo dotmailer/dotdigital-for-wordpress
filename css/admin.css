@@ -1,0 +1,50 @@
+/* 
+    Document   : admin
+    Created on : 06-Feb-2013, 12:07:50
+    Author     : Akis.Loumpourdis
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.newdmstyle .inside * {font-size: 13px;}
+.widefat .check-column {padding: 9px 0 0;}
+.widefat td {padding: 8px 7px 2px !important;}
+.form-table th {vertical-align: middle; border: none;}
+input[disabled], select[disabled]{
+    background: #eee; color: #aaa; text-shadow: 1px 1px rgba(255,255,255,0.8);
+}
+
+.radiolist th {
+	width: 40px;
+	padding-top: 24px;
+	padding-bottom: 12px;
+}
+
+.radiolist td.radiotitle {
+	width: 150px;
+}
+
+
+.dm_placeholder{
+    background-color:#FFFFF0;
+}
+
+span.handle{
+    cursor:grab;cursor:-moz-grab;
+    cursor:-webkit-grab; 
+}
+
+tr.dragger:hover{background: #fceaf4; }
+
+#namediv  input.bookselector{
+    width: 30%;
+}
+
+#namediv input.multiselector{
+    margin-left: 18px;
+    width: 30%;
+}
+
+#namediv input[type=radio], #namediv input[type=checkbox] {
+	width: auto;
+}
