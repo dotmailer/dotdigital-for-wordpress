@@ -39,35 +39,6 @@ function clean($data) {
     return $clean;
 }
 
-function createDataFields($var, $type) {
-    switch ($type) {
-        case "Date":
-            $xsd = XSD_DATE;
-            $vartype = "date";
-            $var = date("Y-m-d", strtotime($var));
-            break;
-        case "String":
-            $xsd = XSD_STRING;
-            $vartype = "string";
-            break;
-        case "radio":
-            $xsd = XSD_BOOLEAN;
-            if ($var = "FALSE") {
-                $var = 0;
-            } else {
-                $var = 1;
-            }
-            $vartype = "boolean";
-            break;
-        default:
-            $xsd = XSD_STRING;
-            $vartype = "string";
-    }
-    $typedVar = new SoapVar($var, $xsd, $vartype, "http://www.w3.org/2001/XMLSchema");
-
-    return $typedVar;
-}
-
 function writeFormLine($fieldType, $fieldName, $fieldWording, $required) {
     if ($required == "true") {
         $required = "required";
@@ -145,6 +116,3 @@ function checkBooksVisibility($booksArray) {
         return false;
     }
 }
-
-
-?>

@@ -1,0 +1,100 @@
+[
+    {
+        "name": "romanpitak/php-rest-client",
+        "version": "v1.2.1",
+        "version_normalized": "1.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/romanpitak/PHP-REST-Client.git",
+            "reference": "728b6c44040a13daeb8033953f5f3cdd3dde1980"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/romanpitak/PHP-REST-Client/zipball/728b6c44040a13daeb8033953f5f3cdd3dde1980",
+            "reference": "728b6c44040a13daeb8033953f5f3cdd3dde1980",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "php": ">=5.3.3"
+        },
+        "time": "2015-02-19 15:32:16",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "RestClient\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Roman Piták",
+                "email": "roman@pitak.net",
+                "homepage": "http://pitak.net",
+                "role": "Developer"
+            }
+        ],
+        "description": "REST client library.",
+        "homepage": "https://github.com/romanpitak/PHP-REST-Client",
+        "keywords": [
+            "client",
+            "http",
+            "rest"
+        ]
+    },
+    {
+        "name": "romanpitak/dotmailer-api-v2-client",
+        "version": "v1.1.2",
+        "version_normalized": "1.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/romanpitak/dotMailer-API-v2-PHP-client.git",
+            "reference": "e40e5cb7aa4e3ca757a55797f809d5a1f40a0c77"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/romanpitak/dotMailer-API-v2-PHP-client/zipball/e40e5cb7aa4e3ca757a55797f809d5a1f40a0c77",
+            "reference": "e40e5cb7aa4e3ca757a55797f809d5a1f40a0c77",
+            "shasum": ""
+        },
+        "require": {
+            "ext-json": "*",
+            "php": ">=5.3.3",
+            "romanpitak/php-rest-client": ">=v1.2"
+        },
+        "time": "2015-10-26 10:17:35",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "DotMailer\\Api\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Roman Piták",
+                "email": "roman@pitak.net",
+                "homepage": "http://pitak.net",
+                "role": "Developer"
+            }
+        ],
+        "description": "Client library for the dotMailer v2 (REST) API.",
+        "homepage": "https://github.com/romanpitak/dotMailer-API-v2-PHP-client",
+        "keywords": [
+            "api",
+            "client",
+            "dotmailer",
+            "rest",
+            "v2",
+            "version 2"
+        ]
+    }
+]

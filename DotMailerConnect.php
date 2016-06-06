@@ -1,166 +1,162 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace DotMailer\Api;
+
 
 class DotMailerConnect {
 
-    private $request_url = 'http://apiconnector.com/api.asmx?WSDL';
     private $username;
     private $password;
-    private $client;
-    private $params;
+	private $resources;
 
-    function __construct($username, $password) {
-        try {
+    function __construct( $username, $password ) {
 
+		require_once( 'vendor/autoload.php' );
 
-            $this->username = $username;
-            $this->password = $password;
-            $this->params = array('username' => $this->username, 'password' => $this->password);
-            $this->client = new SoapClient($this->request_url, array("trace" => 1, "exceptions" => 1));
-            $this->getClient();
-        } catch (Exception $e) {
+		$this->username = $username;
+        $this->password = $password;
+		$credentials = array(
+		    Container::USERNAME => $username,
+		    Container::PASSWORD => $password
+		);
 
-            echo $e->getFile();
-        }
+		if ( ( $this->username != null ) || ( $this->password != null ) ) $this->resources = Container::newResources( $credentials );
+
     }
 
-    function getClient() {
+	function getAccountInfo() {
 
-        return $this->client;
-    }
+		if ( isset( $this->resources ) ) {
+
+			try {
+				return json_decode( $this->resources->GetAccountInfo(), true );
+			}
+			catch (Exception $e) {
+				return false;
+			}
+
+		}
+
+	}
+
 
     function listAddressBooks() {
 
+		if ( isset( $this->resources ) ) {
 
+			try {
+				return json_decode( $this->resources->GetAddressBooks(), true );
+			}
+			catch (Exception $e) {
+				return false;
+			}
 
-        try {
-            $result = $this->client->ListAddressBooks($this->params);
-            return $result->ListAddressBooksResult->APIAddressBook;
-        } Catch (SoapFault $ex) {
+		}
 
-            return false;
-        }
     }
 
-    function listDataFields() {
 
-        $params = array('username' => $this->username, 'password' => $this->password);
+	function listDataFields() {
 
-        try {
-            $result = $this->client->ListContactDataLabels($this->params);
-            return $result->ListContactDataLabelsResult->ContactDataLabel;
-        } Catch (Exception $ex) {
-            return false;
-        }
+		if ( isset( $this->resources ) ) {
+
+			try {
+				return json_decode( $this->resources->GetDataFields(), true );
+			}
+			catch (Exception $e) {
+				return false;
+			}
+
+		}
+
+	}
+
+
+	function AddContactToAddressBook( $email, $addressBookId, $datafields = "" ) {
+
+		try {
+			$apiContact = new DataTypes\ApiContact( array(
+				'Id'		=> -1,
+				'Email'		=> $email,
+				'OptInType'	=> "Single",
+				'EmailType'	=> "Html",
+				'DataFields' => $datafields,
+			) );
+
+			return json_decode( $this->resources->PostAddressBookContacts( $addressBookId, $apiContact ), true );
+		}
+		catch (Exception $e) {
+			return false;
+		}
+
+	}
+
+
+	function GetContactByEmail( $email ) {
+
+		try {
+			return json_decode( $this->resources->GetContactByEmail( $email ), true );
+		}
+		catch (Exception $e) {
+			return false;
+		}
+
     }
 
-    function AddContactToAddressBook($email, $addressBookId, $datafields = "") {
-        $AudienceType = "B2C";
-        $OptInType = "Single";
-        $EmailType = "Html";
 
-        $contact = array('Email' => $email, "AudienceType" => $AudienceType, "OptInType" => $OptInType,
-            'EmailType' => $EmailType, "ID" => -1, "DataFields" => $datafields);
+	function getStatusByEmail($email) {
 
-        $params = array('username' => $this->username,
-            'password' => $this->password,
-            'contact' => $contact,
-            'addressbookId' => $addressBookId
-        );
-        try {
-            $result = $this->client->AddContactToAddressBook($params);
-            return $result;
-        } catch (SoapFault $e) {
-            echo $e->faultstring;
-            return false;
-        } catch (Exception $ex) {
-            echo $ex->getMessage();
+		$contact = $this->GetContactByEmail( $email );
 
-            return false;
-        }
+		if ( $contact["Status"] === NULL ) return false;
+
+		else return $contact["Status"];
+
     }
 
-    function GetContactByEmail($email) {
-        $params = array('username' => $this->username, 'password' => $this->password, 'email' => $email);
 
-        try {
-            $result = $this->client->GetContactByEmail($params);
-            return $result;
-        } Catch (Exception $ex) {
-            return false;
-        }
+	function reSubscribeContact( $email, $addressBookId, $datafields = "" ) {
+
+		try {
+
+			$apiContact = new DataTypes\ApiContact( array(
+				'Id'		=> -1,
+				'Email'		=> $email,
+				'OptInType'	=> "Single",
+				'EmailType'	=> "Html",
+				'DataFields' => $datafields,
+			) );
+
+			$reSubscribeContact = new DataTypes\ApiContactResubscription( array (
+				'UnsubscribedContact' => $apiContact,
+				'PreferredLocale' => '',
+				'ReturnUrlToUseIfChallenged' => '',
+		 	) );
+
+			return json_decode( $this->resources->PostAddressBookContactsResubscribe( $addressBookId, $reSubscribeContact ), true );
+
+		}
+
+		catch (Exception $e) {
+			return false;
+		}
+
     }
 
-    function getStatusByEmail($email) {
-        $params = array('username' => $this->username, 'password' => $this->password, 'email' => $email);
-        try {
-            $result = $this->client->GetContactStatusByEmail($params);
-            return $result;
-        } Catch (Exception $ex) {
-            return false;
-        }
-    }
+	// NEED TO TRY THIS!!!
+	function ApiCampaignSend( $campaignID, $contactID ) {
+		try {
+			$apiCampaignSend = new DataTypes\ApiCampaignSend( array(
+				'CampaignId' => $campaignID,
+				'ContactIds' => '[' . $contactID . ']',
+			) );
 
-    function reSubscribeContact($email, $addressBookId, $datafields = "") {
+			return json_decode( $this->resources->PostCampaignsSend( $apiCampaignSend ), true );
 
-        $AudienceType = "B2C";
-        $OptInType = "Single";
-        $EmailType = "Html";
-
-        $contact = array('Email' => $email, "AudienceType" => $AudienceType, "OptInType" => $OptInType,
-            'EmailType' => $EmailType, "ID" => -1, "DataFields" => $datafields);
-
-        $params = array('username' => $this->username,
-            'password' => $this->password,
-            'contact' => $contact,
-            'addressBookId' => $addressBookId,
-            'preferredLocale' => 'en-GB',
-            'returnUrlToUseIfChallenged' => ''
-        );
-
-        try {
-            $result = $this->client->ResubscribeContact($params);
-            return $result;
-        } catch (SoapFault $e) {
-            echo $e->faultstring;
-            return false;
-        } catch (Exception $ex) {
-            echo $ex->getMessage();
-
-            return false;
-        }
-    }
-
-    function getAccountDetails() {
-        try {
-            $result = $this->client->GetCurrentAccountInfo($this->params);
-            return $result->GetCurrentAccountInfoResult->Properties->APIAccountProperty;
-        } Catch (SoapFault $ex) {
-
-            return false;
-        }
-    }
-    
-    
-    function ApiCampaignSend( $userName, $password, $campaignID, $contactID ) {
-        try {
-			$newTime = date("c", strtotime( date( "Y-m-d H:i:s" ) . " -60 minutes"));
-			$params = array('username' => $userName, 'password' => $password, 'campaignId' => $campaignID, 'contactid' => $contactID, 'sendDate' => $newTime );
-            $result = $this->client->SendCampaignToContact($params);
-            return $result;
-        } catch (SoapFault $e) {
-            echo $e->faultstring;
-            return false;
-        } catch (Exception $ex) {
-            echo $ex->getMessage();
-            return false;
-        }    
-    }
+		}
+		catch (Exception $e) {
+			return false;
+		}
+	}
 
 }
-
-?>
