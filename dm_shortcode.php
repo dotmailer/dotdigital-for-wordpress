@@ -11,7 +11,15 @@ function dm_shortcode_signup( $atts ) {
         'redirection' => NULL
     ), $atts );
 	
+	ob_start();
+	
 	the_widget ( 'DM_Widget', $instance, array( "showtitle" => $a["showtitle"], "showdesc" => $a["showdesc"], "redirection" => $a["redirection"] ) );
+	
+	$widget = ob_get_contents();
+	
+	ob_end_clean();
+	
+	return $widget;
 
 }
 

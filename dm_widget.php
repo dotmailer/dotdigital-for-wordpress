@@ -29,7 +29,7 @@ class DM_Widget extends WP_Widget {
         if (empty($msgs)) {
             ?>
             <div>
-                <?php echo "<p class='error_message'>The dotmailer sign-up plugin cannot be activated. No messages have been set up.Please use the messages tab to set them up.</p>"; ?>
+                <?php echo "<p class='error_message'>The dotmailer sign-up plugin cannot be activated. No messages have been set up. Please use the messages tab to set them up.</p>"; ?>
             </div>
             <?php
             return;
@@ -89,24 +89,23 @@ class DM_Widget extends WP_Widget {
                 $email = clean($_POST['dotMailer_email']);
 
                 if (!empty($dataFields_posted)) {
+					$valuesArray = array();
+					$i = 0;
                     foreach ($dataFields_posted as $fieldName => $field) {
-                        $variable = createDataFields($field[0], $field[1]);
-                        $add_keys[] = $fieldName;
-                        $add_values[] = $variable;
+						$valuesArray[$i]["key"] = $fieldName;
+						$valuesArray[$i]["value"] = $field[0];
+						$i++;
                     }
-                    $valuesArray = new stdClass();
-                    $valuesArray->Keys = $add_keys;
-                    $valuesArray->Values = $add_values;
                 }
 
 
                 $dm_api_credentials = get_option('dm_API_credentials');
 
 
-                $api = new DotMailerConnect($dm_api_credentials['dm_API_username'], $dm_api_credentials['dm_API_password']);
+                $api = new DotMailer\Api\DotMailerConnect($dm_api_credentials['dm_API_username'], $dm_api_credentials['dm_API_password']);
                 //check contact status first
 
-                $contact_status = $api->getStatusByEmail($email)->GetContactStatusByEmailResult;
+                $contact_status = $api->getStatusByEmail($email);
 
                 $suppressed_statuses = array("UnSubscribed", "HardBounced", "Suppressed");
 
@@ -132,20 +131,21 @@ class DM_Widget extends WP_Widget {
                     }
                 } else {
                     //attempt to subscribe
-                    if (isset($valuesArray)) {
-                        $result[] = $api->AddContactToAddressBook($email, $book, $valuesArray);
-                    } else {
-                        $result[] = $api->AddContactToAddressBook($email, $book);
-                    }
+					foreach ($books as $book) {
+	                    if (isset($valuesArray)) {
+	                        $result[] = $api->AddContactToAddressBook($email, $book, $valuesArray);
+	                    } else {
+	                        $result[] = $api->AddContactToAddressBook($email, $book);
+	                    }
+					}
                 }
-				
-				$option = get_option( 'dm_redirections' );
+
+
+				$option = get_option( 'dm_redirections', array() );
 				$redirect = NULL;
 				if ( array_key_exists('page', $option) ) $redirect = get_permalink( $option["page"] );
 				if ( array_key_exists('url', $option) ) $redirect = $option["url"];
-				
-				if ( $redirection != NULL ) $redirect = $redirection;
-			
+
                 if (!in_array(FALSE, $result)) {
                     $failure_message = "<p class='success'>{$form_success_message}</p>";
                     if ( $redirect != NULL ) $failure_message .= '<input type="hidden" name="dotMailer_redir" id="dotMailer_redir" value="'. $redirect .'" />
@@ -155,7 +155,7 @@ class DM_Widget extends WP_Widget {
                 }
             }
         }
-        ?> 
+        ?>
         <?php /*?>PG FIX - Unclosed div tag<?php */?>
         <?php /*?><div><?php */?>
             <?php
@@ -167,12 +167,12 @@ class DM_Widget extends WP_Widget {
 
             echo $before_widget;
 
-			// Display the widget title 
+			// Display the widget title
             if ($form_header && $showtitle)
                 echo $before_title . $form_header . $after_title;
-            ?> 
+            ?>
 
-            <form class="dotMailer_news_letter" style="margin:5px 0 10px 0;" method="post" action ="<?php the_permalink(); ?>" >
+            <form class="dotMailer_news_letter" style="margin:5px 0 10px 0;" method="post" action ="<?php get_bloginfo( 'url' ); ?>" >
                 <?php if ($showdesc) echo '<p>Please complete the fields below:</p>'; ?>
                 <label for="dotMailer_email">Your email address*:</label><br>
                 <input class="email" type="text" id="dotMailer_email" name="dotMailer_email" /><br>
@@ -230,7 +230,7 @@ class DM_Widget extends WP_Widget {
                     echo $success_message;
 
                 }
-                ?> 
+                ?>
                 <?php ?>
             </div>
 
@@ -247,4 +247,4 @@ class DM_Widget extends WP_Widget {
             //***********
         }
 
-    } 
+    }
