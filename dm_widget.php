@@ -5,7 +5,7 @@ class DM_Widget extends WP_Widget {
     function DM_Widget() {
         $widget_ops = array('classname' => 'dm_widget', 'description' => __('Put a signup form on your WordPress Website', 'dm_widget'));
         $control_ops = array('id_base' => 'dm_widget');
-        $this->WP_Widget('dm_widget', __('dotmailer Sign-up Form', 'dm_widget'), $widget_ops, $control_ops);
+        parent::__construct('dm_widget', __('dotmailer Sign-up Form', 'dm_widget'), $widget_ops, $control_ops);
     }
 
     function widget($args, $instance) {
