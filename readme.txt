@@ -4,7 +4,7 @@ Donate link: http://www.dotmailer.com
 Tags: email marketing, newsletter sign-up
 Requires at least: 4.0
 Tested up to: 4.4.2
-Stable tag: 4.0.1
+Version: 4.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -184,6 +184,7 @@ Source: https://getcomposer.org/
 * Fix: Remove warning in the widget if no contact data was saved into the DB
 * Fix: Version number confusion
 * Mod: Now initial default messages are save automatically to the database during plugin activation, so users need one step less to set it up properly.
+
 * Mod: Now user settings are not deleted on plugin deactivation. Settings are only deleted if you uninstall the plugin.
 
 = 3.1 =
