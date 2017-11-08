@@ -29,17 +29,9 @@ class Client implements IClient
     public function __construct($username, $password)
     {
 
-		if ( ( $_GET["page"] == 'dm_form_settings' ) && ( $_GET["tab"] == 'api_credentials' ) && ( is_array( $sent_check ) ) ) {
-            $endpoint = get_option( 'dm_api_endpoint' );
-            if ( $endpoint == false ) $endpoint = 'https://api.dotmailer.com/v2';
-            else $endpoint .= '/v2';
-        }
-        else {
-            $endpoint = get_option( 'dm_api_endpoint' );
-            if ( $endpoint == false ) $endpoint = 'https://api.dotmailer.com/v2';
-            else $endpoint .= '/v2';
-        }
-		// file_put_contents('xy.log', print_r($response, true) );
+        $endpoint = get_option( 'dm_api_endpoint' );
+        if ( $endpoint == false ) $endpoint = 'https://api.dotmailer.com/v2';
+        else $endpoint .= '/v2';
 
         $this->restClient = new \RestClient\Client(array(
             Request::BASE_URL_KEY => $endpoint,
