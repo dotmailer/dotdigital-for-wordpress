@@ -213,20 +213,18 @@ class DM_Widget extends WP_Widget {
             </form>
             <div id="form_errors">
                 <?php
-                $option = get_option( 'dm_redirections', array() );
-                $redirect = NULL;
-                if ( array_key_exists('page', $option) ) $redirect = get_permalink( $option["page"] );
-                if ( array_key_exists('url', $option) ) $redirect = $option["url"];
-                echo '<input type="hidden" name="dotMailer_redir" id="dotMailer_redir" value="'. $redirect .'" />';
-
-                if (isset($failure_message)) {
-
-                    echo $failure_message;
-                }
-                if (isset($success_message)) {
-
-                    echo $success_message;
-
+                if (isset($_POST['dotMailer_email'])) {
+                    $option = get_option('dm_redirections', array());
+                    $redirect = NULL;
+                    if (array_key_exists('page', $option)) $redirect = get_permalink($option["page"]);
+                    if (array_key_exists('url', $option)) $redirect = $option["url"];
+                    echo '<input type="hidden" name="dotMailer_redir" id="dotMailer_redir" value="'.$redirect.'" />';
+                    if (isset($failure_message)) {
+                        echo $failure_message;
+                    }
+                    if (isset($success_message)) {
+                        echo $success_message;
+                    }
                 }
                 ?>
                 <?php ?>
