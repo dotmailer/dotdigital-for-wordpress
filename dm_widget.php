@@ -218,7 +218,9 @@ class DM_Widget extends WP_Widget {
                     $redirect = NULL;
                     if (array_key_exists('page', $option)) $redirect = get_permalink($option["page"]);
                     if (array_key_exists('url', $option)) $redirect = $option["url"];
-                    echo '<input type="hidden" name="dotMailer_redir" id="dotMailer_redir" value="'.$redirect.'" />';
+                    if ( $redirect != NULL ) {
+                        echo '<input type="hidden" name="dotMailer_redir" id="dotMailer_redir" value="' . $redirect . '" />';
+                    }
                     if (isset($failure_message)) {
                         echo $failure_message;
                     }
