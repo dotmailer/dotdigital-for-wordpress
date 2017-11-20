@@ -229,12 +229,6 @@ class DM_Widget extends WP_Widget {
                 ?>
                 <?php ?>
             </div>
-
-
-
-
-
-
             <?php
             echo $after_widget;
 
