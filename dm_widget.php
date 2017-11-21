@@ -140,16 +140,8 @@ class DM_Widget extends WP_Widget {
 					}
                 }
 
-
-				$option = get_option( 'dm_redirections', array() );
-				$redirect = NULL;
-				if ( array_key_exists('page', $option) ) $redirect = get_permalink( $option["page"] );
-				if ( array_key_exists('url', $option) ) $redirect = $option["url"];
-
                 if (!in_array(FALSE, $result)) {
                     $failure_message = "<p class='success'>{$form_success_message}</p>";
-                    if ( $redirect != NULL ) $failure_message .= '<input type="hidden" name="dotMailer_redir" id="dotMailer_redir" value="'. $redirect .'" />
-					';
                 } else {
                     $success_message = "<p class='error_message'>{$form_failure_message}.</p>";
                 }
@@ -221,24 +213,24 @@ class DM_Widget extends WP_Widget {
             </form>
             <div id="form_errors">
                 <?php
-                if (isset($failure_message)) {
-
-                    echo $failure_message;
-                }
-                if (isset($success_message)) {
-
-                    echo $success_message;
-
+                if (isset($_POST['dotMailer_email'])) {
+                    $option = get_option('dm_redirections', array());
+                    $redirect = NULL;
+                    if (array_key_exists('page', $option)) $redirect = get_permalink($option["page"]);
+                    if (array_key_exists('url', $option)) $redirect = $option["url"];
+                    if ( $redirect != NULL ) {
+                        echo '<input type="hidden" name="dotMailer_redir" id="dotMailer_redir" value="' . $redirect . '" />';
+                    }
+                    if (isset($failure_message)) {
+                        echo $failure_message;
+                    }
+                    if (isset($success_message)) {
+                        echo $success_message;
+                    }
                 }
                 ?>
                 <?php ?>
             </div>
-
-
-
-
-
-
             <?php
             echo $after_widget;
 
