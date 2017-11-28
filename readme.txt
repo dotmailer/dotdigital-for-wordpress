@@ -3,8 +3,8 @@ Contributors: dotMailer
 Donate link: http://www.dotmailer.com
 Tags: email marketing, newsletter sign-up
 Requires at least: 4.0
-Tested up to: 4.4.2
-Version: 4.0.3
+Tested up to: 4.9
+Version: 4.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,11 @@ Source: https://getcomposer.org/
 
 
 == Changelog ==
+4.0.5 (2017-11-28)
+
+* Mod: PHP7 support
+* Mod: Redirection url is always followed regardless of validation result
+
 4.0.1 (2016-06-06)
 
 * Fix: endpoint discovery error where region ID > 1
