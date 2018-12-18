@@ -29,6 +29,12 @@
 require_once ( plugin_dir_path(__FILE__) . 'functions.php' );
 require_once ( plugin_dir_path(__FILE__) . 'dm_widget.php' );
 require_once ( plugin_dir_path(__FILE__) . 'dm_shortcode.php' );
+
+/**
+ * Block Initializer.
+ */
+require_once plugin_dir_path( __FILE__ ) . 'src/init.php';
+
 register_uninstall_hook(__FILE__, "dotMailer_widget_uninstall");
 register_activation_hook(__FILE__, 'dotMailer_widget_activate');
 
