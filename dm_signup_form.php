@@ -688,6 +688,7 @@ function dm_settings_menu_display() {
         $connection = new DotMailer\Api\DotMailerConnect($options['dm_API_username'], $options['dm_API_password']);
         $dm_account_books = $connection->listAddressBooks();
         $dm_data_fields = $connection->listDataFields();
+        $surveys = $connection->listSurveys();
         $account_info = $connection->getAccountInfo();
         $_SESSION['connection'] = serialize($connection);
         $_SESSION['dm_account_books'] = serialize($dm_account_books);
@@ -720,7 +721,7 @@ function dm_settings_menu_display() {
         <?php
 
         if($active_tab == 'my_surveys'){
-            echo 'paokara mou';
+           print_r($surveys);
         }
 
 

@@ -22,6 +22,21 @@ class DotMailerConnect {
 
 		if ( ( $this->username != null ) || ( $this->password != null ) ) $this->resources = Container::newResources( $credentials );
 
+
+    }
+
+    function listSurveys()
+    {
+
+        if(isset( $this->resources )) {
+
+            try {
+                return json_decode($this->resources->ListSurveys(),true);
+            }
+            catch (Exception $e){
+                return false;
+            }
+        }
     }
 
 	function getAccountInfo() {
@@ -45,6 +60,7 @@ class DotMailerConnect {
 		if ( isset( $this->resources ) ) {
 
 			try {
+//			    var_dump(json_decode( $this->resources->GetAddressBooks(), true ));
 				return json_decode( $this->resources->GetAddressBooks(), true );
 			}
 			catch (Exception $e) {

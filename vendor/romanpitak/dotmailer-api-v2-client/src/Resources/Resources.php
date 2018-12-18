@@ -52,6 +52,7 @@ use DotMailer\Api\DataTypes\ApiResubscribeResult;
 use DotMailer\Api\DataTypes\ApiSegmentList;
 use DotMailer\Api\DataTypes\ApiSegmentRefresh;
 use DotMailer\Api\DataTypes\ApiSms;
+use DotMailer\Api\DataTypes\ApiSurveys;
 use DotMailer\Api\DataTypes\ApiTemplate;
 use DotMailer\Api\DataTypes\ApiTemplateList;
 use DotMailer\Api\DataTypes\ApiTransactionalData;
@@ -90,6 +91,16 @@ final class Resources implements IResources
     /*
      * ========== RESOURCES ==========
      */
+
+    /*
+     * ========== list-surveys =============
+     */
+
+    public function ListSurveys()
+    {
+        $url = 'surveys';
+        return new ApiSurveys($this->execute($url));
+    }
 
     /*
      * ========== account-info ==========
