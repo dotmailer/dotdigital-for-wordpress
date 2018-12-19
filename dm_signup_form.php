@@ -37,6 +37,48 @@ require_once plugin_dir_path( __FILE__ ) . 'src/init.php';
 
 register_uninstall_hook(__FILE__, "dotMailer_widget_uninstall");
 register_activation_hook(__FILE__, 'dotMailer_widget_activate');
+register_activation_hook(__FILE__, 'activate');
+
+
+
+/**
+ * Executed upon plugin activation.
+ */
+function activate() {
+    global $wpdb;
+    $plugin_name = 'dotmailer';
+
+    // Address books
+    $dm_address_books_table = $wpdb->prefix . $plugin_name . "_address_books";
+
+    $sql[] = "CREATE TABLE ". $dm_address_books_table . "     (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    dm_id INT(11) NOT NULL,
+    dm_name VARCHAR(255) DEFAULT NULL,
+    visibility VARCHAR(500) DEFAULT NULL,
+    contacts INT(11) DEFAULT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY dm_id (dm_id)
+    ) ";
+
+    // Surveys
+    $dm_surveys_table = $wpdb->prefix . $plugin_name . "_surveys";
+
+    $sql[] = "CREATE TABLE ". $dm_surveys_table . "   (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    dm_id INT(11) NOT NULL,
+    dm_name varchar(255) DEFAULT NULL,
+    url VARCHAR(255) DEFAULT NULL,
+    state VARCHAR(255) DEFAULT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY dm_id (dm_id)
+    ) ";
+
+    if ( !empty($sql) ) {
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
+    }
+}
 
 function dotMailer_widget_activate() {
 	dotMailer_set_initial_messages();
@@ -850,8 +892,11 @@ function dm_settings_menu_display() {
         $account_info = $connection->getAccountInfo();
         $_SESSION['connection'] = serialize($connection);
         $_SESSION['dm_account_books'] = serialize($dm_account_books);
+        saveAddressBooks();
+
         $_SESSION['dm_data_fields'] = serialize($dm_data_fields);
         $_SESSION['dm_surveys'] = serialize($dm_surveys);
+        saveSurveys();
     }
     ?>
         <style>
@@ -872,9 +917,9 @@ function dm_settings_menu_display() {
                 <a href='?page=dm_form_settings&tab=api_credentials' class="nav-tab <?php echo $active_tab == 'api_credentials' ? 'nav-tab-active' : ''; ?>">API credentials</a>
                 <a href='?page=dm_form_settings&tab=my_address_books' class="nav-tab <?php echo $active_tab == 'my_address_books' ? 'nav-tab-active' : ''; ?>">My address books</a>
                 <a href='?page=dm_form_settings&tab=my_data_fields' class="nav-tab <?php echo $active_tab == 'my_data_fields' ? 'nav-tab-active' : ''; ?>">My contact data fields</a>
+                <a href='?page=dm_form_settings&tab=my_surveys' class="nav-tab <?php echo $active_tab == 'my_surveys' ? 'nav-tab-active' : ''; ?>">My surveys</a>
                 <a href='?page=dm_form_settings&tab=my_form_msg' class="nav-tab <?php echo $active_tab == 'my_form_msg' ? 'nav-tab-active' : ''; ?>">Messages</a>
                 <a href='?page=dm_form_settings&tab=my_redirections' class="nav-tab <?php echo $active_tab == 'my_redirections' ? 'nav-tab-active' : ''; ?>">Redirections</a>
-                <a href='?page=dm_form_settings&tab=my_surveys' class="nav-tab <?php echo $active_tab == 'my_surveys' ? 'nav-tab-active' : ''; ?>">My Surveys</a>
 
             </h2>
         <?php
