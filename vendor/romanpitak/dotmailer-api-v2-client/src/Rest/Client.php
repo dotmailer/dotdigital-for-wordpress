@@ -101,6 +101,7 @@ class Client implements IClient
             case 200:
             case 201:
             case 202:
+                print_r($response->getParsedResponse());
                 return $response->getParsedResponse();
                 break;
             case 204: // no content

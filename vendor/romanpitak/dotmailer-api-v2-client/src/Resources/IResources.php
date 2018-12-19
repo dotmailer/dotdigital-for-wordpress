@@ -53,7 +53,7 @@ use DotMailer\Api\DataTypes\ApiResubscribeResult;
 use DotMailer\Api\DataTypes\ApiSegmentList;
 use DotMailer\Api\DataTypes\ApiSegmentRefresh;
 use DotMailer\Api\DataTypes\ApiSms;
-use DotMailer\Api\DataTypes\ApiSurveys;
+use DotMailer\Api\DataTypes\ApiSurveysList;
 use DotMailer\Api\DataTypes\ApiTemplateList;
 use DotMailer\Api\DataTypes\ApiTransactionalData;
 use DotMailer\Api\DataTypes\ApiTransactionalDataImport;
@@ -80,7 +80,7 @@ interface IResources
     /**
      * Gets the whole list of surveys.
      *
-     * @return ApiSurveys
+     * @return ApiSurveysList
      */
     public function ListSurveys();
 

@@ -60,7 +60,6 @@ class DotMailerConnect {
 		if ( isset( $this->resources ) ) {
 
 			try {
-//			    var_dump(json_decode( $this->resources->GetAddressBooks(), true ));
 				return json_decode( $this->resources->GetAddressBooks(), true );
 			}
 			catch (Exception $e) {
