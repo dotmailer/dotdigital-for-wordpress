@@ -40,6 +40,11 @@ registerBlockType( 'cgb/block-dd-block', {
 		__( 'CGB Example' ),
 		__( 'create-guten-block' ),
 	],
+	attributes: {
+		id: {
+			type: 'string',
+		}
+	},
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -50,42 +55,31 @@ registerBlockType( 'cgb/block-dd-block', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
     edit: function( props ) {
-        var url = props.attributes.url || '',
-            focus = props.focus;
-        // retval is our return value for the callback.
+        var id = props.attributes.id || '',
+			focus = props.focus;
         var retval = [];
-        // When the block is focus or there's no URL value,
-        // show the text input control so the user can enter a URL.
-        if ( !! focus || ! url.length ) {
-            // Instantiate a SelectControl element
+
         	const MySelectControl = () => (
         		<SelectControl
 					label={ __( 'Select a survey:' ) }
-					value={ 'this.state.survey' } // e.g: value = [ 'a', 'c' ]
-					onChange={ ( survey ) => { console.log(survey); } }
+					value={ id } // e.g: value = [ 'a', 'c' ]
+					onChange={ (survey) =>props.setAttributes({
+						id: survey
+					})}
 					options={ [
-							{ value: 'a', label: 'Survey 1' },
-							{ value: 'b', label: 'Survey 2' },
-							{ value: 'c', label: 'Survey 3' },
+							{ value: 0, label: 'Survey 1' },
+							{ value: 1, label: 'Survey 2' },
+							{ value: 2, label: 'Survey 3' },
 					] }
 					/>
-        	);
+			);
             retval.push(
-                 // el() is a function to instantiate a new element.
                  el( MySelectControl )
-            );
-        }
+			);
+
         return retval;
-    },
-	
-    /**
-	 * The save function defines the way in which the different attributes should be combined
-	 * into the final markup, which is then serialized by Gutenberg into post_content.
-	 *
-	 * The "save" property must be specified and must be a valid function.
-	 *
-	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
-	 */
+	},
+
 	save: function( props ) {
 		return (
 			<div>
