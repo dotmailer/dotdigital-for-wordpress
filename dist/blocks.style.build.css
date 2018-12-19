@@ -16,3 +16,7 @@
   margin: 0 auto;
   max-width: 740px;
   padding: 2rem; }
+
+.block-editor__container iframe {
+  width: 100%;
+  overflow: hidden; }
