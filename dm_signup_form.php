@@ -333,7 +333,6 @@ function dm_API_address_books_input() {
 
         $dm_account_books = unserialize($_SESSION['dm_account_books']);
 
-//        var_dump($_SESSION);
     }
 
     if (isset($_GET['order'])) {
@@ -458,46 +457,64 @@ function dm_API_address_books_input() {
 
 function dm_API_surveys_input()
 {
-?>
-        <table class="wp-list-table widefat fixed " cellspacing="0">
+    if (isset($_SESSION['connection']) && $_SESSION['connection'] !== FALSE) {
+
+
+        $dm_surveys = unserialize($_SESSION['dm_surveys']);
+    }
+
+    if (isset($_GET['order'])) {
+        if ($_GET['order'] == 'asc') {
+            uasort($dm_surveys, 'bookSortAsc');
+            $neworder = "&order=desc";
+        } elseif ($_GET['order'] == 'desc') {
+            uasort($dm_surveys, 'bookSortDesc');
+            $neworder = "&order=asc";
+        }
+    } else {
+
+        $neworder = "&order=desc";
+    }
+    ?>
+    <table class="wp-list-table widefat fixed " cellspacing="0">
         <thead>
-            <tr>
-                <th scope="col"  class="manage-column column-cb check-column " style=""><input class="multiselector" type="checkbox"/></th>
-                <th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_address_books<?php if (isset($neworder)) echo $neworder; ?>"><span>Surveys</span><span class="sorting-indicator"></span></a></th>
-                <th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
-                <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Visible?</th>
-            </tr>
+        <tr>
+            <th scope="col"  class="manage-column column-cb check-column " style=""><input class="multiselector" type="checkbox"/></th>
+            <th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_surveys<?php if (isset($neworder)) echo $neworder; ?>"><span>Surveys</span><span class="sorting-indicator"></span></a></th>
+            <th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
+            <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Visible?</th>
+        </tr>
         </thead>
         <tfoot>
-            <tr>
-                <th scope="col" id="cb" class="manage-column column-cb check-column" style=""><input class="multiselector" type="checkbox"/></th>
-                <th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_address_books<?php if (isset($neworder)) echo $neworder; ?>"><span>Surveys</span><span class="sorting-indicator"></span></a></th>
-                <th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
-                <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Visible?</th>
-            </tr>
+        <tr>
+            <th scope="col" id="cb" class="manage-column column-cb check-column" style=""><input class="multiselector" type="checkbox"/></th>
+            <th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_surveys<?php if (isset($neworder)) echo $neworder; ?>"><span>Surveys</span><span class="sorting-indicator"></span></a></th>
+            <th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
+            <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Visible?</th>
+        </tr>
         </tfoot>
         <tbody id="the-list" class="sort_books">
-            <?php
-            $selected_books = get_option('dm_API_address_books');
+        <?php
 
+            $selected_surveys = get_option('dm_API_surveys');
 
             $indexes_to_replace = array();
             $elements_to_swap = array();
             //re-sort
-            if (!empty($selected_books)) {
+            if (!empty($selected_surveys)) {
                 $swapped_array = array();
-                foreach ($dm_account_books as $account_book) {
+                foreach ($dm_surveys as $survey) {
 
-                    if (in_array($account_book["Name"], array_keys($selected_books))) {
-                        $indexes_to_replace[] = array_search($account_book, $dm_account_books);
-                        $elements_to_swap[] = $account_book;
+                    if (in_array($survey["Name"], array_keys($selected_surveys))) {
+                        $indexes_to_replace[] = array_search($survey, $dm_surveys);
+                        $elements_to_swap[] = $survey;
                     }
                 }
 
-                foreach ($selected_books as $book_name => $book_details) {
+                foreach ($selected_surveys as $survey_name => $survey_details) {
                     foreach ($elements_to_swap as $index => $element) {
 
-                        if ($book_name == $element["Name"]) {
+                        if ($survey_name == $element["Name"]) {
                             $swapped_array[] = $element;
                         }
                     }
@@ -506,34 +523,34 @@ function dm_API_surveys_input()
                 if (!empty($indexes_to_replace)) {
                     $new_order = array_combine($indexes_to_replace, $swapped_array);
                     foreach ($new_order as $new_key => $element) {
-                        $old_index = array_search($element, $dm_account_books);
-                        $temp = $dm_account_books[$new_key];
-                        $dm_account_books[$new_key] = $element;
-                        $dm_account_books[$old_index] = $temp;
+                        $old_index = array_search($element, $dm_surveys);
+                        $temp = $dm_surveys[$new_key];
+                        $dm_surveys[$new_key] = $element;
+                        $dm_surveys[$old_index] = $temp;
                     }
                 }
             }
 
 
 
-            foreach ($dm_account_books as $account_book) {
+            foreach ($dm_surveys as $survey) {
                 $selected = "";
                 $label = "";
                 $visible = "";
 
-                if ($account_book["Name"] == "Test") {
+                if ($survey["Name"] == "Test") {
                     continue;
                 }
-                if (!empty($selected_books)) {
+                if (!empty($selected_surveys)) {
 
 
-                    if (in_array($account_book["Name"], array_keys($selected_books))) {
+                    if (in_array($survey["Name"], array_keys($selected_surveys))) {
 
                         $selected = " checked='checked'";
-                        $book_values = $selected_books[$account_book["Name"]];
-                        $label = $book_values['label'];
+                        $survey_values = $selected_surveys[$survey["Name"]];
+                        $label = $survey_values['label'];
 
-                        if ($book_values['isVisible'] == 'true') {
+                        if ($survey_values['isVisible'] == 'true') {
                             $visible = " checked='checked'";
                         }
 
@@ -541,18 +558,18 @@ function dm_API_surveys_input()
                 }
                 ?>
 
-                <tr  id="<?php echo $account_book["Id"] ?>" class="dragger">
-                    <th scope="row" id="cb" ><span class="handle" ><img src="<?php echo plugins_url('images/large.png', __FILE__) ?>" class="drag_image" /></span><input class="bookselector" type="checkbox" value="<?php echo $account_book["Id"] ?>" name="dm_API_address_books[<?php echo $account_book["Name"] ?>][id]" <?php echo $selected; ?>/></th>
-                    <td class="addressbook column-addressbook"><strong><?php echo $account_book["Name"] ?></strong></td>
-                    <td><input type="text" disabled="disabled" name="dm_API_address_books[<?php echo $account_book["Name"] ?>][label]" value ="<?php
+                <tr  id="<?php echo $survey["Id"] ?>" class="dragger">
+                    <th scope="row" id="cb" ><span class="handle" ><img src="<?php echo plugins_url('images/large.png', __FILE__) ?>" class="drag_image" /></span><input class="bookselector" type="checkbox" value="<?php echo $survey["Id"] ?>" name="dm_API_surveys[<?php echo $survey["Name"] ?>][id]" <?php echo $selected; ?>/></th>
+                    <td class="addressbook column-addressbook"><strong><?php echo $survey["name"] ?></strong></td>
+                    <td><input type="text" disabled="disabled" name="dm_API_address_books[<?php echo $survey["name"] ?>][label]" value ="<?php
         if (!empty($label)) {
             echo $label;
         } else {
-            echo $account_book["Name"];
+            echo $survey["Name"];
         }
                 ?>"/></td>
-                    <td style="text-align: center;" class=""><input disabled="disabled" value="false" type="hidden" name="dm_API_address_books[<?php echo $account_book["Name"] ?>][isVisible]" />
-                        <input value="true" type="checkbox" name="dm_API_address_books[<?php echo $account_book["Name"] ?>][isVisible]" disabled="disabled" <?php echo $visible; ?>/></td>
+                    <td style="text-align: center;" class=""><input disabled="disabled" value="false" type="hidden" name="dm_API_address_books[<?php echo $survey["Name"] ?>][isVisible]" />
+                        <input value="true" type="checkbox" name="dm_API_address_books[<?php echo $survey["Name"] ?>][isVisible]" disabled="disabled" <?php echo $visible; ?>/></td>
 
 
                 </tr>
@@ -564,7 +581,16 @@ function dm_API_surveys_input()
     </table>
 
 
-<?php
+
+
+
+
+
+        </tbody>
+    </table>
+
+
+    <?php
 
 }
 
