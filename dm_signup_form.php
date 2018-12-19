@@ -850,6 +850,8 @@ function dm_settings_menu_display() {
         $account_info = $connection->getAccountInfo();
         $_SESSION['connection'] = serialize($connection);
         $_SESSION['dm_account_books'] = serialize($dm_account_books);
+        saveAddressBooks();
+
         $_SESSION['dm_data_fields'] = serialize($dm_data_fields);
         $_SESSION['dm_surveys'] = serialize($dm_surveys);
     }

@@ -116,3 +116,16 @@ function checkBooksVisibility($booksArray) {
         return false;
     }
 }
+
+function saveAddressBooks() {
+    global $wpdb;
+    $addressBooks = unserialize($_SESSION['dm_account_books']);
+
+    foreach ($addressBooks as $book) {
+
+        $sql = "INSERT INTO {$wpdb->prefix}dotmailer_address_books (dm_id, name, visibility, contacts) VALUES (%d, %s, %s, %d) ON DUPLICATE KEY UPDATE name = VALUES(name), visibility = VALUES(visibility), contacts = VALUES(contacts)";
+        $sql = $wpdb->prepare($sql, $book['Id'], $book['Name'], $book['Visibility'], $book['Contacts']);
+        $wpdb->query($sql);
+
+    }
+}
