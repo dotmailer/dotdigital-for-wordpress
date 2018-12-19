@@ -7,7 +7,6 @@ const { registerBlockType } = wp.blocks;
 const el = wp.element.createElement;
 const Components = wp.components;
 var $ = require('jQuery');
-var tools = require('./tools.js');
 import { SelectControl } from '@wordpress/components';
 import { withState } from '@wordpress/compose';
 
@@ -26,7 +25,6 @@ registerBlockType( 'cgb/block-dd-block', {
 		}
 	},
     edit: function( props ) {
-		dotsurvey.externalConnectionTest();
         var id = props.attributes.id || '',
 			focus = props.focus;
 		var retval = [];
@@ -54,7 +52,7 @@ registerBlockType( 'cgb/block-dd-block', {
 				)
 			);
 			if(props.attributes.id) {
-				$('#survey-container').html('<iframe onload="dotsurvey.resizeIframe(this)" src="'+props.attributes.id+'"></iframe>');
+				$('#survey-container').html('<iframe src="'+props.attributes.id+'"></iframe>');
 			}
 			
         return retval;
@@ -62,20 +60,7 @@ registerBlockType( 'cgb/block-dd-block', {
 
 	save: function( props ) {
 		return (
-			<div>
-				<p>— Hello from the frontend.</p>
-				<p>
-		Dotdigital block: <code>dd-block</code> is a new Gutenberg block.
-				</p>
-				<p>
-					It was created via{ ' ' }
-					<code>
-						<a href="https://github.com/ahmadawais/create-guten-block">
-							create-guten-block
-						</a>
-					</code>.
-				</p>
-			</div>
+			<iframe src={props.attributes.id}></iframe>
 		);
 	},
 } );

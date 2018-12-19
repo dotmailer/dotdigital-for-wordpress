@@ -5,7 +5,7 @@
  */
 
 .wp-block-cgb-block-dd-block  {
-  background: $red;
+  background: $white;
   border: 0.2rem solid $black;
   color: $black;
   margin: 0 auto;
@@ -14,7 +14,9 @@
 }
 
 
-.block-editor__container iframe {
-  width: 100%;
-  overflow:hidden;
+.block-editor__container {
+  iframe {
+    width: 100%;
+    overflow:hidden;
+  }
 }
