@@ -11,6 +11,11 @@ import './editor.scss';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
+const el = wp.element.createElement;
+const Components = wp.components;
+
+import { SelectControl } from '@wordpress/components';
+import { withState } from '@wordpress/compose';
 
 /**
  * Register: aa Gutenberg Block.
@@ -44,27 +49,36 @@ registerBlockType( 'cgb/block-dd-block', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: function( props ) {
-		// Creates a <p class='wp-block-cgb-block-dd-block'></p>.
-		return (
-			<div className={ props.className }>
-				<p>— Hello from the backend.</p>
-				<p>
-					Dotdigital block: <code>dd-block</code> is a new Gutenberg block
-				</p>
-				<p>
-					It was created via{ ' ' }
-					<code>
-						<a href="https://github.com/ahmadawais/create-guten-block">
-							create-guten-block
-						</a>
-					</code>.
-				</p>
-			</div>
-		);
-	},
-
-	/**
+    edit: function( props ) {
+        var url = props.attributes.url || '',
+            focus = props.focus;
+        // retval is our return value for the callback.
+        var retval = [];
+        // When the block is focus or there's no URL value,
+        // show the text input control so the user can enter a URL.
+        if ( !! focus || ! url.length ) {
+            // Instantiate a SelectControl element
+        	const MySelectControl = () => (
+        		<SelectControl
+					label={ __( 'Select a survey:' ) }
+					value={ this.state.users } // e.g: value = [ 'a', 'c' ]
+					onChange={ ( users ) => { this.setState( { users } ) } }
+					options={ [
+							{ value: 'a', label: 'Survey 1' },
+							{ value: 'b', label: 'Survey 2' },
+							{ value: 'c', label: 'Survey 3' },
+					] }
+					/>
+        	);
+            retval.push(
+                 // el() is a function to instantiate a new element.
+                 el( MySelectControl )
+            );
+        }
+        return retval;
+    },
+	
+    /**
 	 * The save function defines the way in which the different attributes should be combined
 	 * into the final markup, which is then serialized by Gutenberg into post_content.
 	 *
