@@ -854,6 +854,7 @@ function dm_settings_menu_display() {
 
         $_SESSION['dm_data_fields'] = serialize($dm_data_fields);
         $_SESSION['dm_surveys'] = serialize($dm_surveys);
+        saveSurveys();
     }
     ?>
         <style>
