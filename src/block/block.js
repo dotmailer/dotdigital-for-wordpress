@@ -52,7 +52,7 @@ registerBlockType( 'cgb/block-dd-block', {
 				)
 			);
 			if(props.attributes.id) {
-				$('#survey-container').html('<iframe src="'+props.attributes.id+'"></iframe>');
+				$('#survey-container').html('<iframe frameBorder="0" src="'+props.attributes.id+'"></iframe>');
 			}
 			
         return retval;
@@ -60,7 +60,7 @@ registerBlockType( 'cgb/block-dd-block', {
 
 	save: function( props ) {
 		return (
-			<iframe src={props.attributes.id}></iframe>
+			<iframe frameBorder="0" src={props.attributes.id}></iframe>
 		);
 	},
 } );

@@ -4,19 +4,15 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
-/**
- * #.# Styles
- *
- * CSS for both Frontend+Backend.
- */
 .wp-block-cgb-block-dd-block {
-  background: #f4f4f4;
-  border: 0.2rem solid #292929;
-  color: #292929;
-  margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem; }
+  width: 100%;
+  overflow: hidden !important;
+  height: 1000px; }
+
+.block-editor__container {
+  overflow: hidden; }
 
 .block-editor__container iframe {
   width: 100%;
-  overflow: hidden; }
+  overflow: hidden !important;
+  height: 1000px; }
