@@ -123,16 +123,38 @@ function saveAddressBooks() {
 
     foreach ($addressBooks as $book) {
 
-        $sql = "INSERT INTO {$wpdb->prefix}dotmailer_address_books (dm_id, name, visibility, contacts) VALUES (%d, %s, %s, %d) ON DUPLICATE KEY UPDATE name = VALUES(name), visibility = VALUES(visibility), contacts = VALUES(contacts)";
+        $sql = "INSERT INTO {$wpdb->prefix}dotmailer_address_books (dm_id, dm_name, visibility, contacts) VALUES (%d, %s, %s, %d) ON DUPLICATE KEY UPDATE dm_name = VALUES(dm_name), visibility = VALUES(visibility), contacts = VALUES(contacts)";
         $sql = $wpdb->prepare($sql, $book['Id'], $book['Name'], $book['Visibility'], $book['Contacts']);
         $wpdb->query($sql);
 
     }
 }
 
-function get_all_address_books( $data ) {
+function get_all_address_books( $data )
+{
     global $wpdb;
     $query = "SELECT dname, visibility, contacts FROM `wp_dotmailer_address_books`";
     $list = $wpdb->get_results($query);
     return $list;
+}
+
+function get_all_surveys( $data )
+{
+    global $wpdb;
+    $query = "SELECT * FROM `wp_dotmailer_surveys`";
+    $list = $wpdb->get_results($query);
+    return $list;
+}
+
+function saveSurveys() {
+    global $wpdb;
+    $surveys = unserialize($_SESSION['dm_surveys']);
+
+    foreach ($surveys as $survey) {
+
+        $sql = "INSERT INTO {$wpdb->prefix}dotmailer_surveys (dm_id, dm_name, url, state) VALUES (%d, %s, %s, %s) ON DUPLICATE KEY UPDATE dm_name = VALUES(dm_name), url = VALUES(url), state = VALUES(state)";
+        $sql = $wpdb->prepare($sql, $survey['id'], $survey['name'], $survey['url'], $survey['state']);
+        $wpdb->query($sql);
+
+    }
 }
