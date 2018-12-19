@@ -98,7 +98,8 @@ final class Resources implements IResources
 
     public function ListSurveys()
     {
-        return new ApiSurveysList($this->execute('surveys'));
+        return $this->execute('surveys');
+//        return new ApiSurveysList($this->execute('surveys'));
     }
 
     /*
