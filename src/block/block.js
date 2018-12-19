@@ -13,6 +13,7 @@ const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 const el = wp.element.createElement;
 const Components = wp.components;
+var $ = require('jQuery');
 
 import { SelectControl } from '@wordpress/components';
 import { withState } from '@wordpress/compose';
@@ -67,16 +68,18 @@ registerBlockType( 'cgb/block-dd-block', {
 						id: survey
 					})}
 					options={ [
-							{ value: 0, label: 'Survey 1' },
-							{ value: 1, label: 'Survey 2' },
-							{ value: 2, label: 'Survey 3' },
+							{ value: "https://r1.dotmailer-surveys.com/204mlv7a-9e3jrsda", label: 'Survey 1' },
+							{ value: "https://r1.dotmailer-surveys.com/204mlv7a-8a3jrt2e", label: 'Survey 2' },
+							{ value: "https://r1.dotmailer-surveys.com/204mlv7a-9e3jrsda", label: 'Survey 3' },
 					] }
 					/>
 			);
             retval.push(
                  el( MySelectControl )
 			);
-
+			if(props.attributes.id) {
+				$('#inspector-select-control-1').closest('.editor-block-list__block-edit').append('<iframe src="'+props.attributes.id+'"></iframe>');
+			}
         return retval;
 	},
 
