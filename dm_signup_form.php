@@ -37,6 +37,48 @@ require_once plugin_dir_path( __FILE__ ) . 'src/init.php';
 
 register_uninstall_hook(__FILE__, "dotMailer_widget_uninstall");
 register_activation_hook(__FILE__, 'dotMailer_widget_activate');
+register_activation_hook(__FILE__, 'activate');
+
+
+
+/**
+ * Executed upon plugin activation.
+ */
+function activate() {
+    global $wpdb;
+    $plugin_name = 'dotmailer';
+
+    // Address books
+    $dm_address_books_table = $wpdb->prefix . $plugin_name . "_address_books";
+
+    $sql[] = "CREATE TABLE ". $dm_address_books_table . "     (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    dm_id INT(11) NOT NULL,
+    dm_name VARCHAR(255) DEFAULT NULL,
+    visibility VARCHAR(500) DEFAULT NULL,
+    contacts INT(11) DEFAULT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY dm_id (dm_id)
+    ) ";
+
+    // Surveys
+    $dm_surveys_table = $wpdb->prefix . $plugin_name . "_surveys";
+
+    $sql[] = "CREATE TABLE ". $dm_surveys_table . "   (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    dm_id INT(11) NOT NULL,
+    dm_name varchar(255) DEFAULT NULL,
+    url VARCHAR(255) DEFAULT NULL,
+    state VARCHAR(255) DEFAULT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY dm_id (dm_id)
+    ) ";
+
+    if ( !empty($sql) ) {
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
+    }
+}
 
 function dotMailer_widget_activate() {
 	dotMailer_set_initial_messages();
