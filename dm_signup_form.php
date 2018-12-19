@@ -481,16 +481,18 @@ function dm_API_surveys_input()
         <tr>
             <th scope="col"  class="manage-column column-cb check-column " style=""><input class="multiselector" type="checkbox"/></th>
             <th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_surveys<?php if (isset($neworder)) echo $neworder; ?>"><span>Surveys</span><span class="sorting-indicator"></span></a></th>
-            <th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
-            <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Visible?</th>
+            <th scope="col" id="changelabel" class="manage-column column-changelabel" style="">URL</th>
+            <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Views</th>
+            <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Completed</th>
         </tr>
         </thead>
         <tfoot>
         <tr>
             <th scope="col" id="cb" class="manage-column column-cb check-column" style=""><input class="multiselector" type="checkbox"/></th>
             <th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_surveys<?php if (isset($neworder)) echo $neworder; ?>"><span>Surveys</span><span class="sorting-indicator"></span></a></th>
-            <th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
-            <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Visible?</th>
+            <th scope="col" id="changelabel" class="manage-column column-changelabel" style="">URL</th>
+            <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Views</th>
+            <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Completed</th>
         </tr>
         </tfoot>
         <tbody id="the-list" class="sort_books">
@@ -505,7 +507,7 @@ function dm_API_surveys_input()
                 $swapped_array = array();
                 foreach ($dm_surveys as $survey) {
 
-                    if (in_array($survey["Name"], array_keys($selected_surveys))) {
+                    if (in_array($survey["name"], array_keys($selected_surveys))) {
                         $indexes_to_replace[] = array_search($survey, $dm_surveys);
                         $elements_to_swap[] = $survey;
                     }
@@ -514,7 +516,7 @@ function dm_API_surveys_input()
                 foreach ($selected_surveys as $survey_name => $survey_details) {
                     foreach ($elements_to_swap as $index => $element) {
 
-                        if ($survey_name == $element["Name"]) {
+                        if ($survey_name == $element["name"]) {
                             $swapped_array[] = $element;
                         }
                     }
@@ -530,24 +532,23 @@ function dm_API_surveys_input()
                     }
                 }
             }
-
-
+            
 
             foreach ($dm_surveys as $survey) {
                 $selected = "";
                 $label = "";
                 $visible = "";
 
-                if ($survey["Name"] == "Test") {
+                if ($survey["name"] == "Test") {
                     continue;
                 }
                 if (!empty($selected_surveys)) {
 
 
-                    if (in_array($survey["Name"], array_keys($selected_surveys))) {
+                    if (in_array($survey["name"], array_keys($selected_surveys))) {
 
                         $selected = " checked='checked'";
-                        $survey_values = $selected_surveys[$survey["Name"]];
+                        $survey_values = $selected_surveys[$survey["name"]];
                         $label = $survey_values['label'];
 
                         if ($survey_values['isVisible'] == 'true') {
@@ -558,18 +559,18 @@ function dm_API_surveys_input()
                 }
                 ?>
 
-                <tr  id="<?php echo $survey["Id"] ?>" class="dragger">
-                    <th scope="row" id="cb" ><span class="handle" ><img src="<?php echo plugins_url('images/large.png', __FILE__) ?>" class="drag_image" /></span><input class="bookselector" type="checkbox" value="<?php echo $survey["Id"] ?>" name="dm_API_surveys[<?php echo $survey["Name"] ?>][id]" <?php echo $selected; ?>/></th>
+                <tr  id="<?php echo $survey["id"] ?>" class="dragger">
+                    <th scope="row" id="cb" ><span class="handle" ><img src="<?php echo plugins_url('images/large.png', __FILE__) ?>" class="drag_image" /></span><input class="bookselector" type="checkbox" value="<?php echo $survey["id"] ?>" name="dm_API_surveys[<?php echo $survey["name"] ?>][id]" <?php echo $selected; ?>/></th>
                     <td class="addressbook column-addressbook"><strong><?php echo $survey["name"] ?></strong></td>
                     <td><input type="text" disabled="disabled" name="dm_API_address_books[<?php echo $survey["name"] ?>][label]" value ="<?php
         if (!empty($label)) {
             echo $label;
         } else {
-            echo $survey["Name"];
+            echo $survey["url"];
         }
                 ?>"/></td>
-                    <td style="text-align: center;" class=""><input disabled="disabled" value="false" type="hidden" name="dm_API_address_books[<?php echo $survey["Name"] ?>][isVisible]" />
-                        <input value="true" type="checkbox" name="dm_API_address_books[<?php echo $survey["Name"] ?>][isVisible]" disabled="disabled" <?php echo $visible; ?>/></td>
+                    <td style="text-align: center;" class="addressbook column-addressbook"><?php echo $survey['totalViews'] ?></td>
+                    <td style="text-align: center;" class="addressbook column-addressbook"><?php echo $survey['totalCompleteResponses'] ?></td>
 
 
                 </tr>
