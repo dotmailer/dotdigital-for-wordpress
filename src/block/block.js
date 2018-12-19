@@ -61,8 +61,8 @@ registerBlockType( 'cgb/block-dd-block', {
         	const MySelectControl = () => (
         		<SelectControl
 					label={ __( 'Select a survey:' ) }
-					value={ this.state.users } // e.g: value = [ 'a', 'c' ]
-					onChange={ ( users ) => { this.setState( { users } ) } }
+					value={ 'this.state.survey' } // e.g: value = [ 'a', 'c' ]
+					onChange={ ( survey ) => { console.log(survey); } }
 					options={ [
 							{ value: 'a', label: 'Survey 1' },
 							{ value: 'b', label: 'Survey 2' },
