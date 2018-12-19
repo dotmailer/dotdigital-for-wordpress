@@ -917,9 +917,9 @@ function dm_settings_menu_display() {
                 <a href='?page=dm_form_settings&tab=api_credentials' class="nav-tab <?php echo $active_tab == 'api_credentials' ? 'nav-tab-active' : ''; ?>">API credentials</a>
                 <a href='?page=dm_form_settings&tab=my_address_books' class="nav-tab <?php echo $active_tab == 'my_address_books' ? 'nav-tab-active' : ''; ?>">My address books</a>
                 <a href='?page=dm_form_settings&tab=my_data_fields' class="nav-tab <?php echo $active_tab == 'my_data_fields' ? 'nav-tab-active' : ''; ?>">My contact data fields</a>
+                <a href='?page=dm_form_settings&tab=my_surveys' class="nav-tab <?php echo $active_tab == 'my_surveys' ? 'nav-tab-active' : ''; ?>">My surveys</a>
                 <a href='?page=dm_form_settings&tab=my_form_msg' class="nav-tab <?php echo $active_tab == 'my_form_msg' ? 'nav-tab-active' : ''; ?>">Messages</a>
                 <a href='?page=dm_form_settings&tab=my_redirections' class="nav-tab <?php echo $active_tab == 'my_redirections' ? 'nav-tab-active' : ''; ?>">Redirections</a>
-                <a href='?page=dm_form_settings&tab=my_surveys' class="nav-tab <?php echo $active_tab == 'my_surveys' ? 'nav-tab-active' : ''; ?>">My Surveys</a>
 
             </h2>
         <?php
