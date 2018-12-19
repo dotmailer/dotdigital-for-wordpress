@@ -40,6 +40,7 @@ function dotMailer_widget_install() {
     add_option('dm_API_credentials', "", "");
     add_option('dm_API_messages', "", "");
     add_option('dm_API_address_books', "", "");
+    add_option('dm_API_surveys', "", "");
     add_option('dm_API_data_fields', "", "");
     add_option('dm_redirections', "");
 }
@@ -48,6 +49,7 @@ function dotMailer_widget_uninstall() {
     delete_option('dm_API_credentials');
     delete_option('dm_API_messages');
     delete_option('dm_API_address_books');
+    delete_option('dm_API_surveys');
     delete_option('dm_API_data_fields');
     delete_option('dm_redirections');
 	delete_option('dm_api_endpoint');
@@ -105,11 +107,13 @@ function plugin_admin_init() {
     register_setting('dm_API_credentials', 'dm_API_credentials', 'dm_API_credentials_validate');
     register_setting('dm_API_messages', 'dm_API_messages', 'dm_API_messages_validate');
     register_setting('dm_API_address_books', 'dm_API_address_books', 'dm_API_books_validate');
+    register_setting('dm_API_surveys', 'dm_API_surveys', 'dm_API_surveys_validate');
     register_setting('dm_API_data_fields', 'dm_API_data_fields', 'dm_API_fields_validate');
     register_setting('dm_redirections', 'dm_redirections', 'dm_redirections_validate');
     add_settings_section('credentials_section', 'Main settings', 'api_credentials_section', 'credentials_section');
     add_settings_section('messages_section', 'Message settings', 'api_messages_section', 'messages_section');
     add_settings_section('address_books_section', 'Address book settings', 'api_address_books_section', 'address_books_section');
+    add_settings_section('surveys_section', 'Surveys settings', 'api_surveys_section', 'surveys_section');
     add_settings_section('data_fields_section', 'Contact data field settings', 'api_data_fields_section', 'data_fields_section');
     add_settings_section('redirections_section', 'Redirection settings', 'api_redirections_section', 'redirections_section');
     add_settings_field('dm_API_username', 'Your API username', 'dm_API_username_input', 'credentials_section', 'credentials_section');
@@ -122,6 +126,8 @@ function plugin_admin_init() {
     add_settings_field('dm_API_nobook_message', 'No newsletter selected message', 'dm_API_nobook_message_input', 'messages_section', 'messages_section');
     add_settings_field('dm_API_subs_button', 'Form subscribe button', 'dm_API_subs_button_input', 'messages_section', 'messages_section');
     add_settings_field('dm_API_address_books', '', 'dm_API_address_books_input', 'address_books_section', 'address_books_section');
+    add_settings_field('dm_API_surveys', '', 'dm_API_surveys_input', 'surveys_section', 'surveys_section');
+
     add_settings_field('dm_API_data_fields', '', 'dm_API_data_fields_input', 'data_fields_section', 'data_fields_section');
     add_settings_field('dm_redirections', 'Where do you want to redirect the user after successful submission?', 'dm_redirections_input', 'redirections_section', 'redirections_section');
 }
@@ -132,6 +138,10 @@ function api_credentials_section() {
 
 function api_messages_section() {
     echo "<div class='inside'><h4>Customise form messages:</h4>";
+}
+
+function api_surveys_section() {
+    echo "<div class='inside'><h4>Customise tour Surveys:</h4>";
 }
 
 function api_address_books_section() {
@@ -322,6 +332,7 @@ function dm_API_address_books_input() {
 
 
         $dm_account_books = unserialize($_SESSION['dm_account_books']);
+
     }
 
     if (isset($_GET['order'])) {
@@ -442,6 +453,146 @@ function dm_API_address_books_input() {
 
 
 <?php
+}
+
+function dm_API_surveys_input()
+{
+    if (isset($_SESSION['connection']) && $_SESSION['connection'] !== FALSE) {
+
+
+        $dm_surveys = unserialize($_SESSION['dm_surveys']);
+    }
+
+    if (isset($_GET['order'])) {
+        if ($_GET['order'] == 'asc') {
+            uasort($dm_surveys, 'bookSortAsc');
+            $neworder = "&order=desc";
+        } elseif ($_GET['order'] == 'desc') {
+            uasort($dm_surveys, 'bookSortDesc');
+            $neworder = "&order=asc";
+        }
+    } else {
+
+        $neworder = "&order=desc";
+    }
+    ?>
+    <table class="wp-list-table widefat fixed " cellspacing="0">
+        <thead>
+        <tr>
+            <th scope="col"  class="manage-column column-cb check-column " style=""><input class="multiselector" type="checkbox"/></th>
+            <th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_surveys<?php if (isset($neworder)) echo $neworder; ?>"><span>Surveys</span><span class="sorting-indicator"></span></a></th>
+            <th scope="col" id="changelabel" class="manage-column column-changelabel" style="">URL</th>
+            <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Views</th>
+            <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Completed</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th scope="col" id="cb" class="manage-column column-cb check-column" style=""><input class="multiselector" type="checkbox"/></th>
+            <th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_surveys<?php if (isset($neworder)) echo $neworder; ?>"><span>Surveys</span><span class="sorting-indicator"></span></a></th>
+            <th scope="col" id="changelabel" class="manage-column column-changelabel" style="">URL</th>
+            <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Views</th>
+            <th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Completed</th>
+        </tr>
+        </tfoot>
+        <tbody id="the-list" class="sort_books">
+        <?php
+
+            $selected_surveys = get_option('dm_API_surveys');
+
+            $indexes_to_replace = array();
+            $elements_to_swap = array();
+            //re-sort
+            if (!empty($selected_surveys)) {
+                $swapped_array = array();
+                foreach ($dm_surveys as $survey) {
+
+                    if (in_array($survey["name"], array_keys($selected_surveys))) {
+                        $indexes_to_replace[] = array_search($survey, $dm_surveys);
+                        $elements_to_swap[] = $survey;
+                    }
+                }
+
+                foreach ($selected_surveys as $survey_name => $survey_details) {
+                    foreach ($elements_to_swap as $index => $element) {
+
+                        if ($survey_name == $element["name"]) {
+                            $swapped_array[] = $element;
+                        }
+                    }
+                }
+
+                if (!empty($indexes_to_replace)) {
+                    $new_order = array_combine($indexes_to_replace, $swapped_array);
+                    foreach ($new_order as $new_key => $element) {
+                        $old_index = array_search($element, $dm_surveys);
+                        $temp = $dm_surveys[$new_key];
+                        $dm_surveys[$new_key] = $element;
+                        $dm_surveys[$old_index] = $temp;
+                    }
+                }
+            }
+            
+
+            foreach ($dm_surveys as $survey) {
+                $selected = "";
+                $label = "";
+                $visible = "";
+
+                if ($survey["name"] == "Test") {
+                    continue;
+                }
+                if (!empty($selected_surveys)) {
+
+
+                    if (in_array($survey["name"], array_keys($selected_surveys))) {
+
+                        $selected = " checked='checked'";
+                        $survey_values = $selected_surveys[$survey["name"]];
+                        $label = $survey_values['label'];
+
+                        if ($survey_values['isVisible'] == 'true') {
+                            $visible = " checked='checked'";
+                        }
+
+                    }
+                }
+                ?>
+
+                <tr  id="<?php echo $survey["id"] ?>" class="dragger">
+                    <th scope="row" id="cb" ><span class="handle" ><img src="<?php echo plugins_url('images/large.png', __FILE__) ?>" class="drag_image" /></span><input class="bookselector" type="checkbox" value="<?php echo $survey["id"] ?>" name="dm_API_surveys[<?php echo $survey["name"] ?>][id]" <?php echo $selected; ?>/></th>
+                    <td class="addressbook column-addressbook"><strong><?php echo $survey["name"] ?></strong></td>
+                    <td><input type="text" disabled="disabled" name="dm_API_address_books[<?php echo $survey["name"] ?>][label]" value ="<?php
+        if (!empty($label)) {
+            echo $label;
+        } else {
+            echo $survey["url"];
+        }
+                ?>"/></td>
+                    <td style="text-align: center;" class="addressbook column-addressbook"><?php echo $survey['totalViews'] ?></td>
+                    <td style="text-align: center;" class="addressbook column-addressbook"><?php echo $survey['totalCompleteResponses'] ?></td>
+
+
+                </tr>
+
+    <?php
+}
+?>
+        </tbody>
+    </table>
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+
+
+    <?php
+
 }
 
 function dm_API_data_fields_input() {
@@ -688,10 +839,13 @@ function dm_settings_menu_display() {
         $connection = new DotMailer\Api\DotMailerConnect($options['dm_API_username'], $options['dm_API_password']);
         $dm_account_books = $connection->listAddressBooks();
         $dm_data_fields = $connection->listDataFields();
+        $dm_surveys = $connection->listSurveys();
+//        var_dump($dm_surveys);
         $account_info = $connection->getAccountInfo();
         $_SESSION['connection'] = serialize($connection);
         $_SESSION['dm_account_books'] = serialize($dm_account_books);
         $_SESSION['dm_data_fields'] = serialize($dm_data_fields);
+        $_SESSION['dm_surveys'] = serialize($dm_surveys);
     }
     ?>
         <style>
@@ -714,8 +868,59 @@ function dm_settings_menu_display() {
                 <a href='?page=dm_form_settings&tab=my_data_fields' class="nav-tab <?php echo $active_tab == 'my_data_fields' ? 'nav-tab-active' : ''; ?>">My contact data fields</a>
                 <a href='?page=dm_form_settings&tab=my_form_msg' class="nav-tab <?php echo $active_tab == 'my_form_msg' ? 'nav-tab-active' : ''; ?>">Messages</a>
                 <a href='?page=dm_form_settings&tab=my_redirections' class="nav-tab <?php echo $active_tab == 'my_redirections' ? 'nav-tab-active' : ''; ?>">Redirections</a>
+                <a href='?page=dm_form_settings&tab=my_surveys' class="nav-tab <?php echo $active_tab == 'my_surveys' ? 'nav-tab-active' : ''; ?>">My Surveys</a>
+
             </h2>
         <?php
+
+        if($active_tab == 'my_surveys'){
+          if($dm_surveys){
+              ?>
+              <div class="metabox-holder columns-2 newdmstyle" id="post-body">
+                  <div id="post-body-content">
+                      <div id="namediv" class="stuffbox">
+                          <form action="options.php" method="post">
+                              <?php settings_fields('dm_API_surveys'); ?>
+                              <?php do_settings_sections('surveys_section'); ?>
+                              <p><a href="https://dotmailer.zendesk.com/entries/23228992-Using-dotMailer-WordPress-sign-up-form-plugin-v2#myaddbooks" target="_blank">Find out more...</a></p>
+
+
+
+                      </div>
+                  </div>
+              </div>
+              </div>
+              <input name="Submit" type="submit" value="Save Changes" class="button-primary action">
+              <?php
+          }else {
+              ?>
+              <div class="metabox-holder columns-2 newdmstyle" id="post-body">
+                  <table width="100%" cellspacing="0" cellpadding="0">
+                      <tbody>
+                      <tr valign="top">
+                          <td>
+                              <div id="post-body-content">
+                                  <div id="namediv" class="stuffbox">
+                                      <h3>You're not up and running yet...</h3>
+                                      <div class="inside">
+
+
+                                          <p>Before you can use this tab, you need to enter your API credentials. See our <a href="https://dotmailer.zendesk.com/entries/23228992-Using-dotMailer-WordPress-sign-up-form-plugin-v2" target="_blank">user guide</a> on how to get started</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </td>
+                      </tr>
+                      </tbody>
+                  </table>
+              </div>
+
+              <?php
+          }
+        }
+
+
+
         if ($active_tab == 'my_address_books') {
 
 

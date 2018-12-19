@@ -53,6 +53,7 @@ use DotMailer\Api\DataTypes\ApiResubscribeResult;
 use DotMailer\Api\DataTypes\ApiSegmentList;
 use DotMailer\Api\DataTypes\ApiSegmentRefresh;
 use DotMailer\Api\DataTypes\ApiSms;
+use DotMailer\Api\DataTypes\ApiSurveysList;
 use DotMailer\Api\DataTypes\ApiTemplateList;
 use DotMailer\Api\DataTypes\ApiTransactionalData;
 use DotMailer\Api\DataTypes\ApiTransactionalDataImport;
@@ -72,10 +73,22 @@ use DotMailer\Api\DataTypes\XsString;
  */
 interface IResources
 {
+    /*
+    * ========== list-surveys ==========
+    */
+
+    /**
+     * Gets the whole list of surveys.
+     *
+     * @return ApiSurveysList
+     */
+    public function ListSurveys();
 
     /*
      * ========== account-info ==========
      */
+
+
 
     /**
      * Gets a summary of information about the current status of the account.
