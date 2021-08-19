@@ -22,14 +22,28 @@ function returnRequiredFields($post = array()) {
 
 register_shutdown_function('shutdown');
 
-function bookSortDesc($a, $b) {
-
-    return strtolower($a->Name) == strtolower($b->Name) ? 0 : ( strtolower($a->Name) > strtolower($b->Name) ) ? 1 : -1;
+/**
+ * @param array $a
+ * @param array $b
+ * @return int
+ */
+function bookSortDesc(array $a, array $b) {
+	if (!isset($a['Name']) || !isset($b['Name'])) {
+		return 0;
+	}
+    return ( strtolower($a['Name']) == strtolower($b['Name']) ? 0 : ( strtolower($a['Name']) > strtolower($b['Name']) ) ) ? 1 : -1;
 }
 
-function bookSortAsc($a, $b) {
-
-    return strtolower($a->Name) == strtolower($b->Name) ? 0 : ( strtolower($a->Name) > strtolower($b->Name) ) ? -1 : 1;
+/**
+ * @param array $a
+ * @param array $b
+ * @return int
+ */
+function bookSortAsc(array $a, array $b) {
+	if (!isset($a['Name']) || !isset($b['Name'])) {
+		return 0;
+	}
+    return ( strtolower($a['Name']) == strtolower($b['Name']) ? 0 : ( strtolower($a['Name']) > strtolower($b['Name']) ) ) ? -1 : 1;
 }
 
 function clean($data) {
