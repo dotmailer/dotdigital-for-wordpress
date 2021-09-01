@@ -2,7 +2,7 @@
 
 function shutdown() {
     $error = error_get_last();
-    if ($error['type'] === E_ERROR) {
+    if (isset($error) && $error['type'] === E_ERROR) {
         echo "There was a problem: " . $error['message'];
     }
 }
