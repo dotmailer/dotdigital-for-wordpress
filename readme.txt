@@ -54,7 +54,7 @@ A. There is an alternative way. Click on 'Screen Options' in the top right-hand 
 A. From plugin version 3.4 it is possible. You can find the redirection options under the Redirections tab in the plugin dashboard. Here you can set up 3 options: * No redirection (default): the user will stay on the same page where a short message will be displayed about the result of the subscription * Local page: you can select a page from your website that will be your dotmailer Thank you page * Custom URL: with this option you can redirect your user wherever you want to. If you choose this option, please use a valid URL starting with "http://" or "https://" here.
 
 = Q. How can I insert the dotmailer form into my posts and pages? =
-A. From plugin version 3.3, you can use the [dotmailer-signup] shortcode to show the form inside the post's content. Shortcode parameters (works only when you use the form with a shortcode):
+A. From plugin version 3.3, you can use the [dotdigital-signup] shortcode to show the form inside the post's content. Shortcode parameters (works only when you use the form with a shortcode):
 
 showtitle=0 - Hide the title of the widget
 
@@ -62,7 +62,7 @@ showdesc=0 - Hide the description under the title
 
 redirection="URL" - Redirect the user to a custom URL after successful submission
 
-Example: [dotmailer-signup showtitle=0 showdesc=0 redirection="http://www.example.com"] (will show the form without a title and description and will redirect the user to http://www.example.com on success)
+Example: [dotdigital-signup showtitle=0 showdesc=0 redirection="http://www.example.com"] (will show the form without a title and description and will redirect the user to http://www.example.com on success)
 
 == Screenshots ==
 

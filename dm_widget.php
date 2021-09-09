@@ -11,8 +11,8 @@ class DM_Widget extends WP_Widget {
     function widget($args, $instance) {
         //***********
 
-        $showtitle = 1;
-        $showdesc = 1;
+        $showtitle = (isset($args['showtitle'])) ? $args['showtitle'] : 1;
+        $showdesc = (isset($args['showdesc'])) ? $args['showdesc'] : 1;
 
 		extract($args);
 

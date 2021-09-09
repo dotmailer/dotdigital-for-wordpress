@@ -1,8 +1,10 @@
 <?php 
 
-// Add Shortcode: [dotmailer-signup]
-// Use attribute: showtitle=0 if you don't want to display the default title
-// Use attribute: showdesc=0 if you don't want to display the default description before the form
+/**
+ * Add Shortcode: [dotdigital-signup]
+ * Use attribute: showtitle=0 if you don't want to display the default title
+ * Use attribute: showdesc=0 if you don't want to display the default description before the form
+ */
 function dm_shortcode_signup( $atts ) {
 
 	$a = shortcode_atts( array(
@@ -23,6 +25,7 @@ function dm_shortcode_signup( $atts ) {
 
 }
 
-add_shortcode( 'dotmailer-signup', 'dm_shortcode_signup' );
+add_shortcode( 'dotmailer-signup', 'dm_shortcode_signup' ); // deprecated
+add_shortcode( 'dotdigital-signup', 'dm_shortcode_signup' );
 
 ?>
