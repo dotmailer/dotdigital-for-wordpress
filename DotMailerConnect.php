@@ -108,10 +108,7 @@ class DotMailerConnect {
 
 		$contact = $this->GetContactByEmail( $email );
 
-		if ( $contact["Status"] === NULL ) return false;
-
-		else return $contact["Status"];
-
+		return ( isset($contact["Status"]) ) ? $contact["Status"] : false;
     }
 
 

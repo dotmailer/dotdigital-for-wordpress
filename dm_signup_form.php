@@ -1,15 +1,15 @@
 <?php
 /*
-  Plugin Name: dotmailer Sign-up Form
-  Plugin URI: https://apps.dotmailer.com/wordpress/
-  Description: Add a "Subscribe to Newsletter" widget to your WordPress powered website that will insert your contact in one of your dotmailer address book.
+  Plugin Name: dotdigital Signup Form
+  Plugin URI: https://integrations.dotdigital.com/technology-partners/wordpress
+  Description: Add a "Subscribe to Newsletter" widget to your WordPress powered website that will insert your contact in one of your dotdigital address books.
   Version: 4.0.5
-  Author: Ben Staveley
-  Author URI: https://www.dotmailer.com/
+  Author: dotdigital
+  Author URI: https://www.dotdigital.com/
  */
 
 
-/*  Copyright 2014-2016  dotmailer (email : support@dotmailer.com)
+/*  Copyright 2014-2021  dotdigital (email : support@dotdigital.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -84,13 +84,15 @@ function settings_head_scripts() {
 
 function dm_create_menu_page() {
 
+	$icon_svg      = 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZD0iTTE2LDIuNzhBMTMuMjIsMTMuMjIsMCwxLDEsMi43OCwxNiwxMy4yMywxMy4yMywwLDAsMSwxNiwyLjc4TTE2LDBBMTYsMTYsMCwxLDAsMzIsMTYsMTYsMTYsMCwwLDAsMTYsMFoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTYsOC4yOUE3Ljc0LDcuNzQsMCwxLDEsOC4yNiwxNiw3Ljc1LDcuNzUsMCwwLDEsMTYsOC4yOW0wLTIuNzhBMTAuNTIsMTAuNTIsMCwxLDAsMjYuNTIsMTYsMTAuNTIsMTAuNTIsMCwwLDAsMTYsNS41MVoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTYsMTMuNzdBMi4yNiwyLjI2LDAsMSwxLDEzLjc1LDE2LDIuMjYsMi4yNiwwLDAsMSwxNiwxMy43N00xNiwxMWE1LDUsMCwxLDAsNSw1LDUsNSwwLDAsMC01LTVaIiBmaWxsPSIjZmZmIi8+PC9zdmc+';
+
     add_menu_page(
-            'dotmailer Sign-up Form Options', // The title to be displayed on the corresponding page for this menu
-            'dotmailer', // The text to be displayed for this actual menu item
+            'dotdigital Signup Form Options', // The title to be displayed on the corresponding page for this menu
+            'dotdigital Signup Form', // The text to be displayed for this actual menu item
             'manage_options', // Which type of users can see this menu
             'dm_form_settings', // The unique ID - that is, the slug - for this menu item
             'dm_settings_menu_display', // The name of the function to call when rendering the menu for this page
-            ''
+		'data:image/svg+xml;base64,' . $icon_svg
     );
 }
 
@@ -591,7 +593,7 @@ function dm_API_credentials_validate($input) {
     require_once ( plugin_dir_path(__FILE__) . 'DotMailerConnect.php');
     $connection = new DotMailer\Api\DotMailerConnect($submitted_API_username, $submitted_API_password);
     $account_info = $connection->getAccountInfo();
-    
+
     if ($account_info === false){
             $options = array();
             add_settings_error('dm_API_credentials', 'dm_API_credentials_error', "Your API credentials seem to be invalid");
@@ -604,7 +606,7 @@ function dm_API_credentials_validate($input) {
                     $api_endpoint = get_option( 'dm_api_endpoint' );
                     if ( ( $api_endpoint == false ) || ( $api_endpoint != $acc_dets['ApiEndpoint'] ) ) {
                         update_option( 'dm_api_endpoint', $acc_dets['ApiEndpoint']);
-                        
+
                     }
                     break;
             }
@@ -612,8 +614,8 @@ function dm_API_credentials_validate($input) {
         $options['dm_API_username'] = trim($input['dm_API_username']);
         $options['dm_API_password'] = trim($input['dm_API_password']);
         add_settings_error('dm_API_credentials', 'dm_API_credentials_error', "Settings saved.", 'updated');
-        
-            
+
+
     }
 
     $stats = dm_collect_stat();
@@ -699,9 +701,8 @@ function dm_settings_menu_display() {
         </style>
 
         <div class="wrap">
-
-            <img src="<?php echo plugins_url("/images/dmtarget.png", ( __FILE__)) ?>" alt="dotmailer" style="float:left; margin: 0 10px 0 10px; padding:9px 0px 4px 0;"  />
-            <h2 style="padding:9px 15px 4px 0;">dotmailer Sign-up Form</h2>
+            <div id="icon-dotdigital" class="icon32"></div>
+            <h2 style="padding:9px 15px 4px 0;">dotdigital Signup Form</h2>
         <?php settings_errors(); ?>
         <?php
         $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'about_dm';
@@ -728,7 +729,7 @@ function dm_settings_menu_display() {
                                 <form action="options.php" method="post">
                     <?php settings_fields('dm_API_address_books'); ?>
                     <?php do_settings_sections('address_books_section'); ?>
-                                    <p><a href="https://dotmailer.zendesk.com/entries/23228992-Using-dotMailer-WordPress-sign-up-form-plugin-v2#myaddbooks" target="_blank">Find out more...</a></p>
+                                    <p><a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2#My%20address%20books" target="_blank">Find out more...</a></p>
 
 
 
@@ -755,7 +756,7 @@ function dm_settings_menu_display() {
                                             <div class="inside">
 
 
-                                                <p>Before you can use this tab, you need to enter your API credentials. See our <a href="https://dotmailer.zendesk.com/entries/23228992-Using-dotMailer-WordPress-sign-up-form-plugin-v2" target="_blank">user guide</a> on how to get started</p>
+                                                <p>Before you can use this tab, you need to enter your API credentials. See our <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2" target="_blank">user guide</a> on how to get started</p>
                                             </div>
                                         </div>
                                     </div>
@@ -782,7 +783,7 @@ function dm_settings_menu_display() {
                             <form action="options.php" method="post">
             <?php settings_fields('dm_API_data_fields'); ?>
             <?php do_settings_sections('data_fields_section'); ?>
-                                <p><a href="https://dotmailer.zendesk.com/entries/23228992-Using-dotMailer-WordPress-sign-up-form-plugin-v2#mycdf" target="_blank">Find out more...</a></p>
+                                <p><a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2#My%20contact%20data%20fields" target="_blank">Find out more...</a></p>
                         </div>
                     </div>
                 </div>
@@ -803,7 +804,7 @@ function dm_settings_menu_display() {
                                         <div class="inside">
 
 
-                                            <p>Before you can use this tab, you need to enter your API credentials. See our <a href="https://dotmailer.zendesk.com/entries/23228992-Using-dotMailer-WordPress-sign-up-form-plugin-v2" target="_blank">user guide</a> on how to get started</p>
+                                            <p>Before you can use this tab, you need to enter your API credentials. See our <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2" target="_blank">user guide</a> on how to get started</p>
                                         </div>
                                     </div>
                                 </div>
@@ -826,10 +827,10 @@ function dm_settings_menu_display() {
                     <tr valign="top">
                         <td>
                             <div id="post-body-content">
-                                <div id="namediv" class="stuffbox">
+                                <div id="namediv" class="postbox">
                                     <h3>What it does</h3>
                                     <div class="inside">
-                                        <p>Capture the email addresses of visitors and put them in your dotmailer address books. You can also collect contact data
+                                        <p>Capture the email addresses of visitors and put them in your dotdigital address books. You can also collect contact data
                                             field information, too.</p>
 
 										<b>What’s new in version 4.0:</b>
@@ -849,7 +850,7 @@ function dm_settings_menu_display() {
                                         <b>What’s new in version 3.3:</b>
 
                                         <ul style="list-style-type: circle; list-style-position: inside;">
-											<li>Now you can add the dotmailer form with the [dotmailer-signup] shortcode to your posts and pages. <a href="http://wordpress.org/plugins/dotmailer-sign-up-widget/faq/" target="_blank">Read more here...</a></li>
+											<li>Now you can add the dotdigital form with the [dotmailer-signup] shortcode to your posts and pages. <a href="http://wordpress.org/plugins/dotdigital-signup-form/faq/" target="_blank">Read more here...</a></li>
 											<li>Several bugfixes and code cleanup</li>
                                         </ul>
 
@@ -862,18 +863,18 @@ function dm_settings_menu_display() {
                                             <li>Mod: Now user settings are not deleted on plugin deactivation. Settings are only deleted if you uninstall the plugin.</li>
                                         </ul>
 
-                                        <a href="https://wordpress.org/plugins/dotmailer-sign-up-widget/changelog/" target="_blank">See the full changelog here...</a>
+                                        <a href="https://wordpress.org/plugins/dotdigital-signup-form/changelog/" target="_blank">See the full changelog here...</a>
 
                                     </div>
                                 </div>
                             </div>
 
                             <div id="post-body-content">
-                                <div id="namediv" class="stuffbox">
+                                <div id="namediv" class="postbox">
                                     <h3>Setup advice</h3>
                                     <div class="inside">
                                         <p>To get you up and running, we have full setup
-                                            instructions on the <a href="https://dotmailer.zendesk.com/entries/23228992-Using-dotMailer-WordPress-sign-up-form-plugin-v2" target="_blank">dotmailer knowledge base</a>.</p>
+                                            instructions on the <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2" target="_blank">dotdigital knowledge base</a>.</p>
                                     </div>
                                 </div>
                             </div>
@@ -882,12 +883,10 @@ function dm_settings_menu_display() {
                         </td>
                         <td width="10"></td>
                         <td width="350">
-                            <div class="postbox" id="linksubmitdiv">
-                                <h3 style="cursor: default;">dotmailer</h3>
+                            <div class="postbox">
+                                <h3 style="cursor: default;">dotdigital</h3>
                                 <div class="inside">
-                                    <img src="<?php echo plugins_url("/images/dmlogo.png", ( __FILE__)) ?>" style="display:block; margin-bottom:10px; " alt="dotmailer" style="float:left;" /> <p>Powerful email marketing made easy -
-                                        with the most intuitive, easy to use email marketing platform you will find.
-                                        Grab yourself a free 30-day trial now from our website.&nbsp; Visit <a href="http://dotmailer.com" target="_blank" >dotmailer.com &gt;&gt;</a></p>
+                                    <img src="<?php echo plugins_url("/images/dotdigital-logo.png", ( __FILE__)) ?>" alt="dotdigital" /> <p>Powerful email marketing made easy - with the most intuitive, easy to use email marketing platform you will find. Grab yourself a free 30-day trial now from our website.&nbsp;Visit <a href="http://dotdigital.com" target="_blank" >dotdigital.com &gt;&gt;</a></p>
                                 </div>
                             </div>
                         </td>
@@ -904,7 +903,7 @@ function dm_settings_menu_display() {
 
         <div class="metabox-holder columns-2 newdmstyle" id="post-body">
             <div id="post-body-content">
-                <div id="namediv" class="stuffbox">
+                <div id="namediv" class="postbox">
 
 
                     <form action="options.php" method="post">
@@ -912,7 +911,7 @@ function dm_settings_menu_display() {
         <?php settings_fields('dm_API_credentials'); ?>
 
         <?php do_settings_sections('credentials_section'); ?>
-                        <p><a href="https://dotmailer.zendesk.com/entries/23228992-Using-dotMailer-WordPress-sign-up-form-plugin-v2#api" target="_blank">Find out more...</a></p>
+                        <p><a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2#API%20credentials" target="_blank">Find out more...</a></p>
                 </div>
             </div>
 
@@ -933,7 +932,7 @@ function dm_settings_menu_display() {
                         <tr valign="top">
                             <td>
                                 <div id="post-body-content">
-                                    <div id="namediv" class="stuffbox">
+                                    <div id="namediv" class="postbox">
                                         <h3>Account details</h3>
                                         <div class="inside">
                             <?php
@@ -988,11 +987,11 @@ function dm_settings_menu_display() {
 
         <div class="metabox-holder columns-2 newdmstyle" id="post-body">
             <div id="post-body-content">
-                <div id="namediv" class="stuffbox" style="padding-bottom:10px;">
+                <div id="namediv" class="postbox" style="padding-bottom:10px;">
                     <form action="options.php" method="post">
                                         <?php settings_fields('dm_API_messages'); ?>
                                         <?php do_settings_sections('messages_section'); ?>
-                        <p><a href="https://dotmailer.zendesk.com/entries/23228992-Using-dotMailer-WordPress-sign-up-form-plugin-v2#messages" target="_blank">Find out more...</a></p>
+                        <p><a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2#Messages" target="_blank">Find out more...</a></p>
                 </div>
             </div>
         </div>
@@ -1011,7 +1010,7 @@ function dm_settings_menu_display() {
 
         <div class="metabox-holder columns-2 newdmstyle" id="post-body">
             <div id="post-body-content">
-                <div id="namediv" class="stuffbox" style="padding-bottom:10px;">
+                <div id="namediv" class="postbox" style="padding-bottom:10px;">
                     <form action="options.php" method="post">
                             <?php settings_fields('dm_redirections'); ?>
                             <?php do_settings_sections('redirections_section'); ?>

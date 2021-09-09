@@ -1,1 +1,1 @@
-# dotmailer-wordpress-plugin
+# dotdigital Signup Form plugin
