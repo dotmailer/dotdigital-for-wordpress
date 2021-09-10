@@ -1,5 +1,8 @@
 .newdmstyle .inside * {font-size: 13px;}
-.widefat .check-column {padding: 9px 0 0;}
+.widefat .check-column {
+    padding: 0 0 0 6px;
+    vertical-align: middle;
+}
 .widefat td {padding: 8px 7px 2px !important;}
 .form-table th {vertical-align: middle; border: none;}
 input[disabled], select[disabled]{
@@ -17,12 +20,17 @@ input[disabled], select[disabled]{
 }
 
 
-.dm_placeholder{
+.dm_placeholder {
     background-color:#FFFFF0;
 }
 
+.dragger th {
+    padding-left: 10px;
+}
+
 span.handle{
-    cursor:grab;cursor:-moz-grab;
+    cursor:grab;
+    cursor:-moz-grab;
     cursor:-webkit-grab;
 }
 

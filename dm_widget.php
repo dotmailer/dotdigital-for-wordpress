@@ -3,7 +3,7 @@
 class DM_Widget extends WP_Widget {
 
     function __construct() {
-        $widget_ops = array('classname' => 'dm_widget', 'description' => __('Put a signup form on your WordPress Website', 'dm_widget'));
+        $widget_ops = array('classname' => 'dm_widget', 'description' => __('Put a signup form on your WordPress website.', 'dm_widget'));
         $control_ops = array('id_base' => 'dm_widget');
         parent::__construct('dm_widget', __('dotdigital Signup Form', 'dm_widget'), $widget_ops, $control_ops);
     }
@@ -141,9 +141,9 @@ class DM_Widget extends WP_Widget {
                 }
 
                 if (!in_array(FALSE, $result)) {
-                    $failure_message = "<p class='success'>{$form_success_message}</p>";
+                    $success_message = "<p class='success'>{$form_success_message}</p>";
                 } else {
-                    $success_message = "<p class='error_message'>{$form_failure_message}.</p>";
+                    $failure_message = "<p class='error_message'>{$form_failure_message}</p>";
                 }
             }
         }

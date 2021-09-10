@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Add Shortcode: [dotdigital-signup]
@@ -12,15 +12,15 @@ function dm_shortcode_signup( $atts ) {
         'showdesc' => 1,
         'redirection' => NULL
     ), $atts );
-	
+
 	ob_start();
-	
-	the_widget ( 'DM_Widget', $instance, array( "showtitle" => $a["showtitle"], "showdesc" => $a["showdesc"], "redirection" => $a["redirection"] ) );
-	
+
+	the_widget ( 'DM_Widget', array(), array( "showtitle" => $a["showtitle"], "showdesc" => $a["showdesc"], "redirection" => $a["redirection"] ) );
+
 	$widget = ob_get_contents();
-	
+
 	ob_end_clean();
-	
+
 	return $widget;
 
 }

@@ -420,8 +420,8 @@ function dm_API_address_books_input() {
                 }
                 ?>
 
-                <tr  id="<?php echo $account_book["Id"] ?>" class="dragger">
-                    <th scope="row" id="cb" ><span class="handle" ><img src="<?php echo plugins_url('images/large.png', __FILE__) ?>" class="drag_image" /></span><input class="bookselector" type="checkbox" value="<?php echo $account_book["Id"] ?>" name="dm_API_address_books[<?php echo $account_book["Name"] ?>][id]" <?php echo $selected; ?>/></th>
+                <tr id="<?php echo $account_book["Id"] ?>" class="dragger">
+                    <th scope="row"><span class="handle" ><img src="<?php echo plugins_url('images/large.png', __FILE__) ?>" class="drag_image" /></span><input class="bookselector" type="checkbox" value="<?php echo $account_book["Id"] ?>" name="dm_API_address_books[<?php echo $account_book["Name"] ?>][id]" <?php echo $selected; ?>/></th>
                     <td class="addressbook column-addressbook"><strong><?php echo $account_book["Name"] ?></strong></td>
                     <td><input type="text" disabled="disabled" name="dm_API_address_books[<?php echo $account_book["Name"] ?>][label]" value ="<?php
         if (!empty($label)) {
