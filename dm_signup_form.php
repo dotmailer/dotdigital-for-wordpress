@@ -585,7 +585,7 @@ function dm_API_credentials_validate($input) {
     $submitted_API_password = trim($input['dm_API_password']);
     if ($submitted_API_username == "" || $submitted_API_password == "") {
         $options = array();
-        add_settings_error('dm_API_credentials', 'dm_API_credentials_error', "Your API credentials cannot be empty");
+        add_settings_error('dm_API_credentials', 'dm_API_credentials_error', "Your API credentials cannot be empty.");
         return $options;
     }
 
@@ -596,7 +596,7 @@ function dm_API_credentials_validate($input) {
 
     if ($account_info === false){
             $options = array();
-            add_settings_error('dm_API_credentials', 'dm_API_credentials_error', "Your API credentials seem to be invalid");
+            add_settings_error('dm_API_credentials', 'dm_API_credentials_error', "Your API credentials seem to be invalid.");
             return $options;
     } else {
         foreach ($account_info["Properties"] as $info) {
@@ -683,7 +683,7 @@ function dm_settings_menu_display() {
 
     $options = get_option('dm_API_credentials');
 
-    if (isset($options)) {
+    if (isset($options["dm_API_username"]) && isset($options["dm_API_password"])) {
         ob_start();
         require_once ( plugin_dir_path(__FILE__) . 'initialize.php');
         ob_end_clean();
@@ -922,7 +922,7 @@ function dm_settings_menu_display() {
         </form>
 
         <?php
-        if ($account_info) {
+        if (isset($account_info)) {
 
             ?>
 
