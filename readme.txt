@@ -5,7 +5,6 @@ Tags: email marketing, newsletter signup
 Requires at least: 4.0
 Tested up to: 5.8
 Requires PHP: 5.6
-Version: 4.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -109,6 +108,22 @@ Source: https://getcomposer.org/
 
 
 == Changelog ==
+
+= 5.0.0 =
+
+**What's new**
+* The plugin has been renamed and rebranded.
+* The `[dotdigital-signup]` shortcode has been added to replace `[dotmailer-signup]` (although that shortcode will continue to work).
+
+**Improvements**
+* We've made a number of presentational updates and improvements.
+* Redirection on submit will now be blocked if the form has errors.
+
+**Bug fixes**
+* We fixed a bug to do with error detection in the `shutdown()` function.
+* We've updated our check for contact status when a contact is retrieved from dotdigital.
+* We improved error handling for invalid API credentials.
+
 4.0.5 (2017-11-28)
 
 * Mod: PHP7 support
