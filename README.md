@@ -1,1 +1,1 @@
-# dotdigital Signup Form plugin
+# Dotdigital Signup Form plugin

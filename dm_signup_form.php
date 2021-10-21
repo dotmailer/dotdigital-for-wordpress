@@ -1,6 +1,6 @@
 <?php
 /*
-  Plugin Name: dotdigital Signup Form
+  Plugin Name: Dotdigital Signup Form
   Plugin URI: https://integrations.dotdigital.com/technology-partners/wordpress
   Description: Add a "Subscribe to Newsletter" widget to your WordPress powered website that will insert your contact in one of your dotdigital address books.
   Version: 5.0.0
@@ -87,8 +87,8 @@ function dm_create_menu_page() {
 	$icon_svg      = 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZD0iTTE2LDIuNzhBMTMuMjIsMTMuMjIsMCwxLDEsMi43OCwxNiwxMy4yMywxMy4yMywwLDAsMSwxNiwyLjc4TTE2LDBBMTYsMTYsMCwxLDAsMzIsMTYsMTYsMTYsMCwwLDAsMTYsMFoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTYsOC4yOUE3Ljc0LDcuNzQsMCwxLDEsOC4yNiwxNiw3Ljc1LDcuNzUsMCwwLDEsMTYsOC4yOW0wLTIuNzhBMTAuNTIsMTAuNTIsMCwxLDAsMjYuNTIsMTYsMTAuNTIsMTAuNTIsMCwwLDAsMTYsNS41MVoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTYsMTMuNzdBMi4yNiwyLjI2LDAsMSwxLDEzLjc1LDE2LDIuMjYsMi4yNiwwLDAsMSwxNiwxMy43N00xNiwxMWE1LDUsMCwxLDAsNSw1LDUsNSwwLDAsMC01LTVaIiBmaWxsPSIjZmZmIi8+PC9zdmc+';
 
     add_menu_page(
-            'dotdigital Signup Form Options', // The title to be displayed on the corresponding page for this menu
-            'dotdigital Signup Form', // The text to be displayed for this actual menu item
+            'Dotdigital Signup Form Options', // The title to be displayed on the corresponding page for this menu
+            'Dotdigital Signup Form', // The text to be displayed for this actual menu item
             'manage_options', // Which type of users can see this menu
             'dm_form_settings', // The unique ID - that is, the slug - for this menu item
             'dm_settings_menu_display', // The name of the function to call when rendering the menu for this page
@@ -702,7 +702,7 @@ function dm_settings_menu_display() {
 
         <div class="wrap">
             <div id="icon-dotdigital" class="icon32"></div>
-            <h2 style="padding:9px 15px 4px 0;">dotdigital Signup Form</h2>
+            <h2 style="padding:9px 15px 4px 0;">Dotdigital Signup Form</h2>
         <?php settings_errors(); ?>
         <?php
         $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'about_dm';
@@ -830,7 +830,7 @@ function dm_settings_menu_display() {
                                 <div id="namediv" class="postbox">
                                     <h3>What it does</h3>
                                     <div class="inside">
-                                        <p>Capture the email addresses of visitors and put them in your dotdigital address books. You can also collect contact data
+                                        <p>Capture the email addresses of visitors and put them in your Dotdigital address books. You can also collect contact data
                                             field information, too.</p>
 
 										<b>What’s new in version 4.0:</b>
@@ -850,7 +850,7 @@ function dm_settings_menu_display() {
                                         <b>What’s new in version 3.3:</b>
 
                                         <ul style="list-style-type: circle; list-style-position: inside;">
-											<li>Now you can add the dotdigital form with the [dotmailer-signup] shortcode to your posts and pages. <a href="http://wordpress.org/plugins/dotdigital-signup-form/faq/" target="_blank">Read more here...</a></li>
+											<li>Now you can add the Dotdigital form with the [dotmailer-signup] shortcode to your posts and pages. <a href="http://wordpress.org/plugins/dotdigital-signup-form/faq/" target="_blank">Read more here...</a></li>
 											<li>Several bugfixes and code cleanup</li>
                                         </ul>
 
@@ -874,7 +874,7 @@ function dm_settings_menu_display() {
                                     <h3>Setup advice</h3>
                                     <div class="inside">
                                         <p>To get you up and running, we have full setup
-                                            instructions on the <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2" target="_blank">dotdigital knowledge base</a>.</p>
+                                            instructions on the <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2" target="_blank">Dotdigital knowledge base</a>.</p>
                                     </div>
                                 </div>
                             </div>
@@ -884,7 +884,7 @@ function dm_settings_menu_display() {
                         <td width="10"></td>
                         <td width="350">
                             <div class="postbox">
-                                <h3 style="cursor: default;">dotdigital</h3>
+                                <h3 style="cursor: default;">Dotdigital</h3>
                                 <div class="inside">
                                     <img src="<?php echo plugins_url("/images/dotdigital-logo.png", ( __FILE__)) ?>" alt="dotdigital" /> <p>Powerful email marketing made easy - with the most intuitive, easy to use email marketing platform you will find. Grab yourself a free 30-day trial now from our website.&nbsp;Visit <a href="http://dotdigital.com" target="_blank" >dotdigital.com &gt;&gt;</a></p>
                                 </div>

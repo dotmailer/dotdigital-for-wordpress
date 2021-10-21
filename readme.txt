@@ -1,4 +1,4 @@
-=== dotdigital Signup Form ===
+=== Dotdigital Signup Form ===
 Contributors: dotMailer, bsstaveley, amucklow, fstrezos
 Donate link: http://dotdigital.com
 Tags: email marketing, newsletter signup
@@ -12,7 +12,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Add the dotdigital signup form plugin to your site and allow your visitors to sign up to your dotdigital-powered newsletter and email marketing campaigns. The email addresses of new subscribers can be added to multiple dotdigital address books.
+Add the Dotdigital signup form plugin to your site and allow your visitors to sign up to your dotdigital-powered newsletter and email marketing campaigns. The email addresses of new subscribers can be added to multiple dotdigital address books.
 
 If you're not a dotdigital user already you can find out more about us at <a href="https://www.dotdigital.com">dotdigital.com</a>.
 
@@ -24,11 +24,11 @@ If you don't already have v1, log into your WordPress account and follow these s
 
 1. Go to 'Plugins' in the left-hand menu
 2. Select 'Add New'
-3. Search for 'dotdigital Signup Form'
+3. Search for 'Dotdigital Signup Form'
 4. Click on 'Install Now'
 5. When installed, click on 'Activate Plugin'
 
-The plugin will appear as 'dotdigital Signup Form' in your left-hand menu.
+The plugin will appear as 'Dotdigital Signup Form' in your left-hand menu.
 
 <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2#install">Read more detailed information on installation</a>.
 
@@ -66,7 +66,7 @@ Since plugin version 5, [dotdigital-signup] can also be used with the same param
 
 == Screenshots ==
 
-1. The plugin will appear as 'dotdigital Signup Form' in your left-hand menu
+1. The plugin will appear as 'Dotdigital Signup Form' in your left-hand menu
 2. Selecting an address book
 3. Changing address book visibility
 4. Reordering address books
@@ -90,7 +90,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-dotdigital Signup Form bundles the following third-party resources:
+Dotdigital Signup Form bundles the following third-party resources:
 
 dotMailer API v2 PHP client
 v1.1.2, Copyright 2014-2015 Roman Piták
