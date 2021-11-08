@@ -107,7 +107,7 @@ class DM_Widget extends WP_Widget {
 
                 $contact_status = $api->getStatusByEmail($email);
 
-                $suppressed_statuses = array("UnSubscribed", "HardBounced", "Suppressed");
+                $suppressed_statuses = array("Unsubscribed", "HardBounced", "Suppressed");
 
                 if ($contact_status !== FALSE) {//contact already exists
                     if (in_array($contact_status, $suppressed_statuses)) {
