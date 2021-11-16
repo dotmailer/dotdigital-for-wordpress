@@ -2,6 +2,7 @@
 
 namespace DotMailer\Api;
 
+use DotMailer\Api\DataTypes\ApiContact;
 
 class DotMailerConnect {
 
@@ -72,7 +73,7 @@ class DotMailerConnect {
 	}
 
 
-	function AddContactToAddressBook( $email, $addressBookId, $datafields = "" ) {
+	function AddContactToAddressBook( $email, $addressBookId, $datafields = [] ) {
 
 		try {
 			$apiContact = new DataTypes\ApiContact( array(
@@ -83,7 +84,7 @@ class DotMailerConnect {
 				'DataFields' => $datafields,
 			) );
 
-			return json_decode( $this->resources->PostAddressBookContacts( $addressBookId, $apiContact ), true );
+			return $this->createOrResubscribeContact( $addressBookId , $apiContact );
 		}
 		catch (Exception $e) {
 			return false;
@@ -91,8 +92,7 @@ class DotMailerConnect {
 
 	}
 
-
-	function GetContactByEmail( $email ) {
+	function getContactByEmail( $email ) {
 
 		try {
 			return json_decode( $this->resources->GetContactByEmail( $email ), true );
@@ -103,16 +103,7 @@ class DotMailerConnect {
 
     }
 
-
-	function getStatusByEmail($email) {
-
-		$contact = $this->GetContactByEmail( $email );
-
-		return ( isset($contact["Status"]) ) ? $contact["Status"] : false;
-    }
-
-
-	function reSubscribeContact( $email, $addressBookId, $datafields = "" ) {
+	function reSubscribeContact( $email, $addressBookId, $datafields = [] ) {
 
 		try {
 
@@ -130,7 +121,7 @@ class DotMailerConnect {
 				'ReturnUrlToUseIfChallenged' => '',
 		 	) );
 
-			return json_decode( $this->resources->PostAddressBookContactsResubscribe( $addressBookId, $reSubscribeContact ), true );
+			return $this->createOrResubscribeContact( $addressBookId, $reSubscribeContact);
 
 		}
 
@@ -156,4 +147,14 @@ class DotMailerConnect {
 		}
 	}
 
+	private function createOrResubscribeContact( $addressBookId, $contact )
+	{
+		if ( $contact instanceof ApiContact) {
+			$result = $addressBookId == -1 ? $this->resources->PostContacts( $contact ) : $this->resources->PostAddressBookContacts( $addressBookId ,$contact );
+		} else {
+			$result = $addressBookId == -1 ? $this->resources->PostContactsResubscribe( $contact ) : $this->resources->PostAddressBookContactsResubscribe( $addressBookId ,$contact );
+		}
+
+		return json_decode( $result, true );
+	}
 }

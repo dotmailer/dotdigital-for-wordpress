@@ -83,13 +83,11 @@ class DM_Widget extends WP_Widget {
 
 
             if (empty($formErrors)) {
-
-                $books = $_POST['books'];
-
-                $email = clean($_POST['dotMailer_email']);
+				$valuesArray = array();
+				$books = $_POST['books'];
+				$email = clean($_POST['dotMailer_email']);
 
                 if (!empty($dataFields_posted)) {
-					$valuesArray = array();
 					$i = 0;
                     foreach ($dataFields_posted as $fieldName => $field) {
 						$valuesArray[$i]["key"] = $fieldName;
@@ -98,45 +96,17 @@ class DM_Widget extends WP_Widget {
                     }
                 }
 
-
                 $dm_api_credentials = get_option('dm_API_credentials');
 
-
                 $api = new DotMailer\Api\DotMailerConnect($dm_api_credentials['dm_API_username'], $dm_api_credentials['dm_API_password']);
-                //check contact status first
 
-                $contact_status = $api->getStatusByEmail($email);
-
-                $suppressed_statuses = array("Unsubscribed", "HardBounced", "Suppressed");
-
-                if ($contact_status !== FALSE) {//contact already exists
-                    if (in_array($contact_status, $suppressed_statuses)) {
-                        //attempt to re-subscribe
-                        foreach ($books as $book) {
-                            if (isset($valuesArray)) {
-                                $result[] = $api->reSubscribeContact($email, $book, $valuesArray);
-                            } else {
-                                $result[] = $api->reSubscribeContact($email, $book);
-                            }
-                        }
-                    } else {
-                        //attempt to update
-                        foreach ($books as $book) {
-                            if (isset($valuesArray)) {
-                                $result[] = $api->AddContactToAddressBook($email, $book, $valuesArray);
-                            } else {
-                                $result[] = $api->AddContactToAddressBook($email, $book);
-                            }
-                        }
-                    }
-                } else {
-                    //attempt to subscribe
+                if ($api->getContactByEmail($email)) {
 					foreach ($books as $book) {
-	                    if (isset($valuesArray)) {
-	                        $result[] = $api->AddContactToAddressBook($email, $book, $valuesArray);
-	                    } else {
-	                        $result[] = $api->AddContactToAddressBook($email, $book);
-	                    }
+						$result[] = $api->reSubscribeContact($email, $book, $valuesArray);
+					}
+				} else {
+					foreach ($books as $book) {
+						$result[] = $api->AddContactToAddressBook($email, $book, $valuesArray);
 					}
                 }
 
