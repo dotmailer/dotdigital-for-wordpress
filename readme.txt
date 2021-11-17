@@ -114,6 +114,7 @@ Source: https://getcomposer.org/
 
 **Bug fixes**
 * If no address books are selected, contacts will now be added to ‘All contacts’.
+* We fixed a typo in the spelling of 'Unsubscribed'.
 
 = 5.0.0 =
 
