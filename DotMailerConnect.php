@@ -130,23 +130,7 @@ class DotMailerConnect {
 		}
 
     }
-
-	// NEED TO TRY THIS!!!
-	function ApiCampaignSend( $campaignID, $contactID ) {
-		try {
-			$apiCampaignSend = new DataTypes\ApiCampaignSend( array(
-				'CampaignId' => $campaignID,
-				'ContactIds' => '[' . $contactID . ']',
-			) );
-
-			return json_decode( $this->resources->PostCampaignsSend( $apiCampaignSend ), true );
-
-		}
-		catch (Exception $e) {
-			return false;
-		}
-	}
-
+    
 	private function createOrResubscribeContact( $addressBookId, $contact )
 	{
 		if ( $contact instanceof ApiContact) {
