@@ -276,26 +276,6 @@ function dm_API_subs_button_input() {
     echo "<input  id='dm_subs_button' name='dm_API_messages[dm_API_subs_button]' size='40' type='text' value='{$options['dm_API_subs_button']}' />";
 }
 
-function dm_collect_stat() {
-
-	$stat_array = array();
-	$options = get_option('dm_API_credentials');
-	$posts_no = 0;
-	$post_types = get_post_types();
-
-	foreach ( $post_types as $post_type ) {
-		$postc = wp_count_posts($post_type);
-		if ( !in_array ( $post_type, array ("attachment", "revision", "nav_menu_item") ) ) $posts_no += $postc->publish;
-	}
-
-	$stat_array["wpurl"] = get_bloginfo("url");
-	$stat_array["wpposts"] = $posts_no;
-	$stat_array["wpapi"] = $options['dm_API_username'];
-
-	return $stat_array;
-
-}
-
 function dm_API_username_input() {
     $options = get_option('dm_API_credentials');
 
@@ -617,20 +597,7 @@ function dm_API_credentials_validate($input) {
 
 
     }
-
-    $stats = dm_collect_stat();
-    $keys = array("WPURL","WPAPI","WPPOSTS");
-    $var1 = $stats["wpurl"];
-    $var2 = $stats["wpapi"];
-    $var3 = $stats["wpposts"];
-    $values = array($var1,$var2,$var3);
-    $Datafields = array ('Keys'=>$keys,'Values'=>$values);
-
-    $notif_connection = new DotMailer\Api\DotMailerConnect( 'apiuser-3d8361a9901a@apiconnector.com', 'Wordpress2014' );
-    $notif_connection->AddContactToAddressBook( 'ben.staveley@dotmailer.co.uk', '', $Datafields );
-    $notif_connection->ApiCampaignSend( 4064619, 13 );
-
-
+    
     return $options;
 }
 
