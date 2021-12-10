@@ -1,5 +1,7 @@
 <?php
 
+use DotMailer\Api\Container;
+
 class DM_Widget extends WP_Widget {
 
     function __construct() {
@@ -97,8 +99,10 @@ class DM_Widget extends WP_Widget {
                 }
 
                 $dm_api_credentials = get_option('dm_API_credentials');
-
-                $api = new DotMailer\Api\DotMailerConnect($dm_api_credentials['dm_API_username'], $dm_api_credentials['dm_API_password']);
+	            $api = new DotMailer\Api\DotMailerConnect( [
+		            Container::USERNAME => $dm_api_credentials['dm_API_username'],
+		            Container::PASSWORD => $dm_api_credentials['dm_API_password']
+	            ] );
 
                 if ($api->getContactByEmail($email)) {
 					foreach ($books as $book) {
