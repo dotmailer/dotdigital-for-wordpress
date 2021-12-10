@@ -2,28 +2,19 @@
 
 namespace DotMailer\Api;
 
-use DotMailer\Api\DataTypes\ApiContact;
+require_once __DIR__ . '/vendor/autoload.php';
+
+use DotMailer\Api\DataTypes;
 
 class DotMailerConnect {
 
-    private $username;
-    private $password;
 	private $resources;
 
-    function __construct( $username, $password ) {
-
-		require_once( 'vendor/autoload.php' );
-
-		$this->username = $username;
-        $this->password = $password;
-		$credentials = array(
-		    Container::USERNAME => $username,
-		    Container::PASSWORD => $password
-		);
-
-		if ( ( $this->username != null ) || ( $this->password != null ) ) $this->resources = Container::newResources( $credentials );
-
-    }
+	public function __construct( array $credentials ) {
+		if ( $credentials[Container::USERNAME] && $credentials[Container::PASSWORD] ) {
+			$this->resources = Container::newResources( $credentials );
+		}
+	}
 
 	function getAccountInfo() {
 
@@ -133,8 +124,8 @@ class DotMailerConnect {
     
 	private function createOrResubscribeContact( $addressBookId, $contact )
 	{
-		if ( $contact instanceof ApiContact) {
 			$result = $addressBookId == -1 ? $this->resources->PostContacts( $contact ) : $this->resources->PostAddressBookContacts( $addressBookId ,$contact );
+		if ( $contact instanceof DataTypes\ApiContact ) {
 		} else {
 			$result = $addressBookId == -1 ? $this->resources->PostContactsResubscribe( $contact ) : $this->resources->PostAddressBookContactsResubscribe( $addressBookId ,$contact );
 		}
