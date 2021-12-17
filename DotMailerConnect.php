@@ -121,11 +121,11 @@ class DotMailerConnect {
 		}
 
     }
-    
+
 	private function createOrResubscribeContact( $addressBookId, $contact )
 	{
-			$result = $addressBookId == -1 ? $this->resources->PostContacts( $contact ) : $this->resources->PostAddressBookContacts( $addressBookId ,$contact );
 		if ( $contact instanceof DataTypes\ApiContact ) {
+			$result = $addressBookId == -1 ? $this->resources->PostContacts( $contact ) : $this->resources->PostAddressBookContacts( $addressBookId ,$contact );
 		} else {
 			$result = $addressBookId == -1 ? $this->resources->PostContactsResubscribe( $contact ) : $this->resources->PostAddressBookContactsResubscribe( $addressBookId ,$contact );
 		}
