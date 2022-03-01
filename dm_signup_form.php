@@ -3,7 +3,7 @@
   Plugin Name: Dotdigital Signup Form
   Plugin URI: https://integrations.dotdigital.com/technology-partners/wordpress
   Description: Add a "Subscribe to Newsletter" widget to your WordPress powered website that will insert your contact in one of your dotdigital address books.
-  Version: 5.0.1
+  Version: 5.0.2
   Author: dotdigital
   Author URI: https://www.dotdigital.com/
  */
@@ -25,6 +25,8 @@
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+
+use DotMailer\Api\Container;
 
 require_once ( plugin_dir_path(__FILE__) . 'functions.php' );
 require_once ( plugin_dir_path(__FILE__) . 'dm_widget.php' );
@@ -274,26 +276,6 @@ function dm_API_subs_button_input() {
 
     $options = get_option('dm_API_messages');
     echo "<input  id='dm_subs_button' name='dm_API_messages[dm_API_subs_button]' size='40' type='text' value='{$options['dm_API_subs_button']}' />";
-}
-
-function dm_collect_stat() {
-
-	$stat_array = array();
-	$options = get_option('dm_API_credentials');
-	$posts_no = 0;
-	$post_types = get_post_types();
-
-	foreach ( $post_types as $post_type ) {
-		$postc = wp_count_posts($post_type);
-		if ( !in_array ( $post_type, array ("attachment", "revision", "nav_menu_item") ) ) $posts_no += $postc->publish;
-	}
-
-	$stat_array["wpurl"] = get_bloginfo("url");
-	$stat_array["wpposts"] = $posts_no;
-	$stat_array["wpapi"] = $options['dm_API_username'];
-
-	return $stat_array;
-
 }
 
 function dm_API_username_input() {
@@ -591,8 +573,13 @@ function dm_API_credentials_validate($input) {
 
 
     require_once ( plugin_dir_path(__FILE__) . 'DotMailerConnect.php');
-    $connection = new DotMailer\Api\DotMailerConnect($submitted_API_username, $submitted_API_password);
-    $account_info = $connection->getAccountInfo();
+
+	$connection = new DotMailer\Api\DotMailerConnect( [
+		Container::USERNAME => $submitted_API_username,
+		Container::PASSWORD => $submitted_API_password
+	] );
+
+	$account_info = $connection->getAccountInfo();
 
     if ($account_info === false){
             $options = array();
@@ -617,20 +604,7 @@ function dm_API_credentials_validate($input) {
 
 
     }
-
-    $stats = dm_collect_stat();
-    $keys = array("WPURL","WPAPI","WPPOSTS");
-    $var1 = $stats["wpurl"];
-    $var2 = $stats["wpapi"];
-    $var3 = $stats["wpposts"];
-    $values = array($var1,$var2,$var3);
-    $Datafields = array ('Keys'=>$keys,'Values'=>$values);
-
-    $notif_connection = new DotMailer\Api\DotMailerConnect( 'apiuser-3d8361a9901a@apiconnector.com', 'Wordpress2014' );
-    $notif_connection->AddContactToAddressBook( 'ben.staveley@dotmailer.co.uk', '', $Datafields );
-    $notif_connection->ApiCampaignSend( 4064619, 13 );
-
-
+    
     return $options;
 }
 
@@ -687,7 +661,10 @@ function dm_settings_menu_display() {
         ob_start();
         require_once ( plugin_dir_path(__FILE__) . 'initialize.php');
         ob_end_clean();
-        $connection = new DotMailer\Api\DotMailerConnect($options['dm_API_username'], $options['dm_API_password']);
+	    $connection = new DotMailer\Api\DotMailerConnect( [
+		    Container::USERNAME => $options['dm_API_username'],
+		    Container::PASSWORD => $options['dm_API_password']
+	    ] );
         $dm_account_books = $connection->listAddressBooks();
         $dm_data_fields = $connection->listDataFields();
         $account_info = $connection->getAccountInfo();
