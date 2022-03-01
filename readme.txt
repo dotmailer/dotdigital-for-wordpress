@@ -5,7 +5,7 @@ Tags: email marketing, newsletter signup
 Requires at least: 4.0
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 5.0.1
+Stable tag: 5.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -109,6 +109,14 @@ Source: https://getcomposer.org/
 
 
 == Changelog ==
+
+= 5.0.2 =
+
+**Improvements**
+* We removed some dormant code concerned with collecting system data from the WordPress instance.
+
+**Bug fixes**
+* API credentials are no longer exposed in the stack trace in the event of a fatal error.
 
 = 5.0.1 =
 
