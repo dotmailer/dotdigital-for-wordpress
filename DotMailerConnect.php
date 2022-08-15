@@ -16,19 +16,15 @@ class DotMailerConnect {
 		}
 	}
 
-	function getAccountInfo() {
-
+	function getAccountInfo()
+	{
 		if ( isset( $this->resources ) ) {
-
 			try {
 				return json_decode( $this->resources->GetAccountInfo(), true );
-			}
-			catch (Exception $e) {
+			} catch (Exception $e) {
 				return false;
 			}
-
 		}
-
 	}
 
 

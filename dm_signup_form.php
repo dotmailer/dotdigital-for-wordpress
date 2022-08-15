@@ -582,10 +582,12 @@ function dm_API_credentials_validate($input) {
 	$account_info = $connection->getAccountInfo();
 
     if ($account_info === false){
-            $options = array();
-            add_settings_error('dm_API_credentials', 'dm_API_credentials_error', "Your API credentials seem to be invalid.");
-            return $options;
-    } else {
+        $options = array();
+        add_settings_error('dm_API_credentials', 'dm_API_credentials_error', "Your API credentials seem to be invalid.");
+        return $options;
+    }
+
+    if (isset($account_info["Properties"])) {
         foreach ($account_info["Properties"] as $info) {
             switch ($info["Name"]) {
                 case "ApiEndpoint":
@@ -593,7 +595,6 @@ function dm_API_credentials_validate($input) {
                     $api_endpoint = get_option( 'dm_api_endpoint' );
                     if ( ( $api_endpoint == false ) || ( $api_endpoint != $acc_dets['ApiEndpoint'] ) ) {
                         update_option( 'dm_api_endpoint', $acc_dets['ApiEndpoint']);
-
                     }
                     break;
             }
@@ -601,10 +602,8 @@ function dm_API_credentials_validate($input) {
         $options['dm_API_username'] = trim($input['dm_API_username']);
         $options['dm_API_password'] = trim($input['dm_API_password']);
         add_settings_error('dm_API_credentials', 'dm_API_credentials_error', "Settings saved.", 'updated');
-
-
     }
-    
+
     return $options;
 }
 
@@ -667,7 +666,6 @@ function dm_settings_menu_display() {
 	    ] );
         $dm_account_books = $connection->listAddressBooks();
         $dm_data_fields = $connection->listDataFields();
-        $account_info = $connection->getAccountInfo();
         $_SESSION['connection'] = serialize($connection);
         $_SESSION['dm_account_books'] = serialize($dm_account_books);
         $_SESSION['dm_data_fields'] = serialize($dm_data_fields);
@@ -695,14 +693,12 @@ function dm_settings_menu_display() {
             </h2>
         <?php
         if ($active_tab == 'my_address_books') {
-
-
-            if ($dm_account_books) {
+            if (isset($dm_account_books)) {
                 ?>
 
                     <div class="metabox-holder columns-2 newdmstyle" id="post-body">
                         <div id="post-body-content">
-                            <div id="namediv" class="stuffbox">
+                            <div id="namediv" class="postbox">
                                 <form action="options.php" method="post">
                     <?php settings_fields('dm_API_address_books'); ?>
                     <?php do_settings_sections('address_books_section'); ?>
@@ -717,8 +713,6 @@ function dm_settings_menu_display() {
                 <input name="Submit" type="submit" value="Save Changes" class="button-primary action">
                 </form>
 
-
-
                     <?php
                 } else {
                     ?>
@@ -728,11 +722,9 @@ function dm_settings_menu_display() {
                             <tr valign="top">
                                 <td>
                                     <div id="post-body-content">
-                                        <div id="namediv" class="stuffbox">
+                                        <div id="namediv" class="postbox">
                                             <h3>You're not up and running yet...</h3>
                                             <div class="inside">
-
-
                                                 <p>Before you can use this tab, you need to enter your API credentials. See our <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2" target="_blank">user guide</a> on how to get started</p>
                                             </div>
                                         </div>
@@ -748,15 +740,11 @@ function dm_settings_menu_display() {
         }
 
         if ($active_tab == 'my_data_fields') {
-
-
-
-
-            if ($dm_data_fields) {
+            if (isset($dm_data_fields)) {
                 ?>
                 <div class="metabox-holder columns-2 newdmstyle" id="post-body">
                     <div id="post-body-content">
-                        <div id="namediv" class="stuffbox">
+                        <div id="namediv" class="postbox">
                             <form action="options.php" method="post">
             <?php settings_fields('dm_API_data_fields'); ?>
             <?php do_settings_sections('data_fields_section'); ?>
@@ -776,7 +764,7 @@ function dm_settings_menu_display() {
                         <tr valign="top">
                             <td>
                                 <div id="post-body-content">
-                                    <div id="namediv" class="stuffbox">
+                                    <div id="namediv" class="postbox">
                                         <h3>You're not up and running yet...</h3>
                                         <div class="inside">
 
@@ -899,10 +887,10 @@ function dm_settings_menu_display() {
         </form>
 
         <?php
-        if (isset($account_info)) {
-
-            ?>
-
+	    if (isset($connection)) {
+	        $account_info = $connection->getAccountInfo();
+	        if (isset($account_info["Properties"])) {
+        ?>
             <div class="metabox-holder columns-2 newdmstyle" id="post-body">
                 <table width="100%" cellspacing="0" cellpadding="0">
                     <tbody>
@@ -938,7 +926,6 @@ function dm_settings_menu_display() {
                                 }
                             }
 
-
                             echo "<p style='font-weight:bold;'>Account holder name:</p> {$acc_dets['Name']}";
                             echo "<p style='font-weight:bold;'>Main account email address:</p> {$acc_dets['MainEmail']}";
                             echo "<p style='font-weight:bold;'>API calls in last hour:</p> {$acc_dets['ApiCallsInLastHour']}";
@@ -953,14 +940,11 @@ function dm_settings_menu_display() {
                     </tbody>
                 </table>
             </div>
-                                            <?php
-                                        }
-                                    }
+        <?php } // if (isset($account_info["Properties"]))
+        } // end if ($active_tab == 'api_credentials')
+    } // end if isset($connection)
 
-
-        if ($active_tab == 'my_form_msg') {
-                                        ?>
-
+    if ($active_tab == 'my_form_msg') { ?>
 
         <div class="metabox-holder columns-2 newdmstyle" id="post-body">
             <div id="post-body-content">
@@ -976,14 +960,10 @@ function dm_settings_menu_display() {
         <input name="Submit" type="submit" value="Save Changes" class="button-primary action">
         </form>
 
-
-
-
         <?php
     }
 
-        if ($active_tab == 'my_redirections') {
-                                        ?>
+    if ($active_tab == 'my_redirections') { ?>
 
         <div class="metabox-holder columns-2 newdmstyle" id="post-body">
             <div id="post-body-content">
@@ -997,20 +977,9 @@ function dm_settings_menu_display() {
         </div>
         <input name="Submit" type="submit" value="Save Changes" class="button-primary action">
         </form>
-
-
-
-
         <?php
-    }
-
-    ?>
-
-
-
+    } ?>
     </div>
-
-
     <?php
 }
 ?>
