@@ -2,8 +2,8 @@
 /*
   Plugin Name: Dotdigital Signup Form
   Plugin URI: https://integrations.dotdigital.com/technology-partners/wordpress
-  Description: Add a "Subscribe to Newsletter" widget to your WordPress powered website that will insert your contact in one of your dotdigital address books.
-  Version: 5.0.2
+  Description: Add a "Subscribe to Newsletter" widget to your WordPress powered website that will insert your contact in one of your Dotdigital address books.
+  Version: 5.0.3
   Author: dotdigital
   Author URI: https://www.dotdigital.com/
  */
@@ -795,40 +795,11 @@ function dm_settings_menu_display() {
                                 <div id="namediv" class="postbox">
                                     <h3>What it does</h3>
                                     <div class="inside">
-                                        <p>Capture the email addresses of visitors and put them in your Dotdigital address books. You can also collect contact data
-                                            field information, too.</p>
+                                        <p>Add the Dotdigital signup form plugin to your site and allow your visitors to sign up to your dotdigital-powered newsletter and email marketing campaigns. The email addresses of new subscribers can be added to multiple Dotdigital address books, and you can capture contact data fields too.</p>
 
-										<b>What’s new in version 4.0:</b>
+                                        <p>If you're not a Dotdigital user already you can find out more about us at <a href="https://www.dotdigital.com">dotdigital.com</a>.</p>
 
-                                        <ul style="list-style-type: circle; list-style-position: inside;">
-											<li>The core of the plugin is rewritten using the v2 (REST) API</li>
-											<li>The plugin now discovers your endpoint server and uses it for future requests.</li>
-                                        </ul>
-
-										<b>What’s new in version 3.4:</b>
-
-                                        <ul style="list-style-type: circle; list-style-position: inside;">
-											<li>Redirection options in plugin admin, now you can redirect your users to a Thank You page after subscription</li>
-											<li>Redirection attribute for the shortcode, which lets you use redirections locally from your form shortcodes</li>
-                                        </ul>
-
-                                        <b>What’s new in version 3.3:</b>
-
-                                        <ul style="list-style-type: circle; list-style-position: inside;">
-											<li>Now you can add the Dotdigital form with the [dotmailer-signup] shortcode to your posts and pages. <a href="http://wordpress.org/plugins/dotdigital-signup-form/faq/" target="_blank">Read more here...</a></li>
-											<li>Several bugfixes and code cleanup</li>
-                                        </ul>
-
-                                        <b>What’s new in version 3.2:</b>
-
-                                        <ul style="list-style-type: circle; list-style-position: inside;">
-                                            <li>Fix: Remove warning in the widget if no contact data was saved into the DB</li>
-                                            <li>Fix: Version number confusion</li>
-                                            <li>Mod: Now initial default messages are save automatically to the database during plugin activation, so users need one step less to set it up properly.</li>
-                                            <li>Mod: Now user settings are not deleted on plugin deactivation. Settings are only deleted if you uninstall the plugin.</li>
-                                        </ul>
-
-                                        <a href="https://wordpress.org/plugins/dotdigital-signup-form/changelog/" target="_blank">See the full changelog here...</a>
+                                        <p></p><a href="https://wordpress.org/plugins/dotmailer-sign-up-widget/#developers" target="_blank">See the full changelog here...</a></div>
 
                                     </div>
                                 </div>
