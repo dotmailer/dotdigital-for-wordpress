@@ -67,14 +67,11 @@ class DM_Widget extends WP_Widget {
 					$dataFields_posted = $_POST['datafields'];
 
 					$required = returnRequiredFields($dataFields_posted);
-					if (isset($required)) {
+					if (!empty($required)) {
 						$validation_errors = validateRequiredFields($required);
-
-						if ($validation_errors != NULL) {
-							foreach ($validation_errors as $field => $validation_error) {
-								$formErrors[$field] = $validation_error;
-							}
-						}
+                        foreach ($validation_errors as $field => $validation_error) {
+                            $formErrors[$field] = $validation_error;
+                        }
 					}
 				} else {
 					$dataFields_posted = array();
