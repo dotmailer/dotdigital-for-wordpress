@@ -3,9 +3,9 @@ Contributors: dotMailer, bsstaveley, amucklow, fstrezos
 Donate link: http://dotdigital.com
 Tags: email marketing, newsletter signup
 Requires at least: 4.0
-Tested up to: 5.8
+Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 5.0.2
+Stable tag: 5.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,9 +18,9 @@ If you're not a dotdigital user already you can find out more about us at <a hre
 
 == Installation ==
 
-If you already have v1 installed, a message will pop up in the admin area of your WordPress account informing you that a new version is available. Simply update from there.
+If you already have the plugin installed, a message will pop up in the admin area of your WordPress account informing you that a new version is available. Simply update from there.
 
-If you don't already have v1, log into your WordPress account and follow these steps:
+If you don't already have the plugin, log into your WordPress account and follow these steps:
 
 1. Go to 'Plugins' in the left-hand menu
 2. Select 'Add New'
@@ -74,7 +74,7 @@ Since plugin version 5, [dotdigital-signup] can also be used with the same param
 
 == Copyright ==
 
-Copyright 2014-2021  dotdigital (email : support@dotdigital.com)
+Copyright 2014-2022  Dotdigital (email : support@dotdigital.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -109,6 +109,15 @@ Source: https://getcomposer.org/
 
 
 == Changelog ==
+
+= 5.0.3 =
+
+**Improvements**
+- We've improved handling of account info when entering API credentials.
+- We repaired some errors to do with validating required data fields.
+
+**Bug fixes**
+- Redirection now works as expected when using our shortcode in posts and pages.
 
 = 5.0.2 =
 

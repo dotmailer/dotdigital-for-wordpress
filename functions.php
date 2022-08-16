@@ -7,17 +7,19 @@ function shutdown() {
     }
 }
 
-function returnRequiredFields($post = array()) {
-    $required = NULL;
-    if (!empty($post)) {
-        foreach ($post as $field_id => $field) {
-            if ($field[2] == "required")
-                $required[$field_id] = $field;
-        }
-        return $required;
-    }else {
-        return NULL;
+/**
+ * @param array $posts
+ *
+ * @return array
+ */
+function returnRequiredFields($posts = array()) {
+    $required = [];
+    foreach ( $posts as $field_id => $field ) {
+	    if ( $field[2] == "required" ) {
+		    $required[ $field_id ] = $field;
+	    }
     }
+	return $required;
 }
 
 register_shutdown_function('shutdown');
@@ -95,17 +97,22 @@ function writeFormBooks($bookId, $bookWording, $isVisible) {
     }
 }
 
+/**
+ * @param $requiredFields
+ *
+ * @return array
+ */
 function validateRequiredFields($requiredFields) {
     $messages_option = get_option('dm_API_messages');
-    if (isset($messages_option)) {
+	$field_missing_error = '';
+	$formErrors = [];
 
+    if (isset($messages_option)) {
         $field_missing_error = $messages_option['dm_API_fill_required'];
     }
-    $formErrors = "";
 
     foreach ($requiredFields as $field_id => $requiredField) {
         if (trim($requiredField[0]) == "") {
-
             $formErrors[$field_id] = $field_missing_error;
         }
     }
