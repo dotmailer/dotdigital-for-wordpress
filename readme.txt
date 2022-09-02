@@ -4,7 +4,7 @@ Donate link: http://dotdigital.com
 Tags: email marketing, newsletter signup
 Requires at least: 4.0
 Tested up to: 6.0
-Requires PHP: 5.6
+Requires PHP: 7.4
 Stable tag: 5.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -74,7 +74,7 @@ Since plugin version 5, [dotdigital-signup] can also be used with the same param
 
 == Copyright ==
 
-Copyright 2014-2022  Dotdigital (email : support@dotdigital.com)
+Copyright 2014-2022  dotdigital (email : support@dotdigital.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -89,23 +89,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
-Dotdigital Signup Form bundles the following third-party resources:
-
-dotMailer API v2 PHP client
-v1.1.2, Copyright 2014-2015 Roman Piták
-Licenses: The MIT License (MIT)
-Source: https://github.com/romanpitak/dotMailer-API-v2-PHP-client
-
-PHP REST Client
-v1.2.1, Copyright 2014-2015 Roman Piták
-Licenses: The MIT License (MIT)
-Source: https://github.com/romanpitak/PHP-REST-Client
-
-Composer
-v1.0.0-alpha11, Copyright 2012-2015 Nils Adermann, Jordi Boggiano
-Licenses: The MIT License (MIT)
-Source: https://getcomposer.org/
 
 
 == Changelog ==
