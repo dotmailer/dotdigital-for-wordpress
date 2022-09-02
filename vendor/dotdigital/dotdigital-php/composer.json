@@ -1,0 +1,26 @@
+{
+    "name": "dotdigital/dotdigital-php",
+    "description": "Dotdigital PHP Library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Dotdigital\\": "src/",
+            "Dotdigital\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "ext-json": "*",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "php-http/client-common": "^2.4",
+        "php-http/discovery": "^1.14"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^7.4",
+        "symplify/easy-coding-standard": "^9.4",
+        "phpstan/phpstan": "^1.0",
+        "phpunit/phpunit": "^9.5",
+        "php-http/curl-client": "^2.2"
+    }
+}
