@@ -3,14 +3,14 @@
   Plugin Name: Dotdigital Signup Form
   Plugin URI: https://integrations.dotdigital.com/technology-partners/wordpress
   Description: Add a "Subscribe to Newsletter" widget to your WordPress powered website that will insert your contact in one of your Dotdigital address books.
-  Version: 5.0.3
+  Version: 6.0.0
   Author: dotdigital
   Author URI: https://www.dotdigital.com/
  */
 
 
 /*
-  Copyright 2014-2021  dotdigital (email : support@dotdigital.com)
+  Copyright 2014-2022 Dotdigital (email : support@dotdigital.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f5afb0c1d25e6210626c3407d57838f8",
+    "content-hash": "6c1b96f05ee17f6cfe1e5e4770fac45f",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -74,16 +74,16 @@
         },
         {
             "name": "dotdigital/dotdigital-php",
-            "version": "dev-develop",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotmailer/dotdigital-php.git",
-                "reference": "1c56af2e2631e3c9de5af8524b1cbef63c0d6536"
+                "reference": "310753341c24735d3b7f39eca7cebbd7a4985d74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotmailer/dotdigital-php/zipball/1c56af2e2631e3c9de5af8524b1cbef63c0d6536",
-                "reference": "1c56af2e2631e3c9de5af8524b1cbef63c0d6536",
+                "url": "https://api.github.com/repos/dotmailer/dotdigital-php/zipball/310753341c24735d3b7f39eca7cebbd7a4985d74",
+                "reference": "310753341c24735d3b7f39eca7cebbd7a4985d74",
                 "shasum": ""
             },
             "require": {
@@ -115,9 +115,9 @@
             "description": "Dotdigital PHP Library",
             "support": {
                 "issues": "https://github.com/dotmailer/dotdigital-php/issues",
-                "source": "https://github.com/dotmailer/dotdigital-php/tree/develop"
+                "source": "https://github.com/dotmailer/dotdigital-php/tree/v1.0.0"
             },
-            "time": "2022-08-22T10:54:51+00:00"
+            "time": "2022-09-05T11:52:01+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1653,6 +1653,65 @@
             "time": "2021-12-30T16:37:40+00:00"
         },
         {
+            "name": "phpstan/phpstan",
+            "version": "1.8.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "eed4c9da531f6ebb4787235b6fb486e2c20f34e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/eed4c9da531f6ebb4787235b6fb486e2c20f34e5",
+                "reference": "eed4c9da531f6ebb4787235b6fb486e2c20f34e5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "keywords": [
+                "dev",
+                "static analysis"
+            ],
+            "support": {
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "source": "https://github.com/phpstan/phpstan/tree/1.8.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-09-03T13:08:04+00:00"
+        },
+        {
             "name": "squizlabs/php_codesniffer",
             "version": "3.7.1",
             "source": {
@@ -1762,9 +1821,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "dotdigital/dotdigital-php": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
