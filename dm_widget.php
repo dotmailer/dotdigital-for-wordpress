@@ -80,18 +80,12 @@ class DM_Widget extends WP_Widget {
 			}
 
 			if ( empty( $formErrors ) ) {
-				$valuesArray = array();
 				$books = $_POST['books'];
 				$redirection = isset( $_POST['dotMailer_redirection'] ) ? clean( $_POST['dotMailer_redirection'] ) : null;
 
-				if ( ! empty( $dataFields_posted ) ) {
-					$i = 0;
-					foreach ( $dataFields_posted as $fieldName => $field ) {
-						$valuesArray[ $i ]['key'] = $fieldName;
-						$valuesArray[ $i ]['value'] = $field[0];
-						$i++;
-					}
-				}
+                foreach ( $dataFields_posted as $fieldName => $fieldData ) {
+	                $dataFields_posted[$fieldName] = $fieldData[0];
+                }
 
 				$dm_api_credentials = get_option( 'dm_API_credentials' );
 				$api = new DotdigitalConnect(
@@ -103,11 +97,11 @@ class DM_Widget extends WP_Widget {
 
 				if ( $api->getContactByEmail( $email ) ) {
 					foreach ( $books as $book ) {
-						$result[] = $api->resubscribeContactToAddressBook( $email, $book, $valuesArray );
+						$result[] = $api->resubscribeContactToAddressBook( $email, $book, $dataFields_posted );
 					}
 				} else {
 					foreach ( $books as $book ) {
-						$result[] = $api->addContactToAddressBook( $email, $book, $valuesArray );
+						$result[] = $api->addContactToAddressBook( $email, $book, $dataFields_posted );
 					}
 				}
 

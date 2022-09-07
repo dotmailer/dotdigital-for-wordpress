@@ -3,6 +3,8 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Dotdigital\Client;
+use Dotdigital\Models\Contact;
+use Dotdigital\Models\ContactList;
 
 class DotdigitalConnect {
 
@@ -53,6 +55,14 @@ class DotdigitalConnect {
 		return $this->client->dataFields->show();
 	}
 
+	/**
+	 * @param string $email
+	 * @param string $addressBookId
+	 * @param array $datafields
+	 *
+	 * @return bool
+	 * @throws \Http\Client\Exception
+	 */
 	public function addContactToAddressBook( $email, $addressBookId, $datafields = array() ) {
 		try {
 			$apiContact = new Dotdigital\Models\Contact(
@@ -65,7 +75,8 @@ class DotdigitalConnect {
 				)
 			);
 
-			  $result = $addressBookId == -1 ? $this->client->contacts->postContacts( $apiContact ) :
+			$result = $addressBookId == -1 ?
+				$this->client->contacts->postContacts( $apiContact->getEmail() ) :
 				$this->client->addressBooks->addContactToAddressBook(
 					$addressBookId,
 					$apiContact->getEmail(),
@@ -80,6 +91,15 @@ class DotdigitalConnect {
 		return (bool) $result->getId();
 	}
 
+	/**
+	 * @param string $email
+	 * @param string $addressBookId
+	 * @param array $datafields
+	 *
+	 * @return bool
+	 * @throws \Dotdigital\Exception\ResponseValidationException
+	 * @throws \Http\Client\Exception
+	 */
 	public function resubscribeContactToAddressBook( $email, $addressBookId, $datafields = array() ) {
 		$apiContact = new Dotdigital\Models\Contact(
 			array(
@@ -92,15 +112,15 @@ class DotdigitalConnect {
 		);
 
 		$result = $addressBookId == -1 ? $this->client->contacts->resubscribe( $apiContact->getEmail(), $apiContact->getDataFields() ) :
-			$this->client->contacts->resubscribeContactToAddressBook( $addressBookId, $apiContact->getEmail(), $apiContact->getDataFields() );
+			$this->client->addressBooks->resubscribeContactToAddressBook( $addressBookId, $apiContact->getEmail(), $apiContact->getDataFields() );
 
-		return (bool) $result->getId();
+		return ($result instanceof ContactList) && property_exists($result, 'contact');
 	}
 
 	/**
 	 * @param string $email
 	 *
-	 * @return Dotdigital\Models\Contact|false
+	 * @return Contact|false
 	 */
 	public function getContactByEmail( $email ) {
 		try {
