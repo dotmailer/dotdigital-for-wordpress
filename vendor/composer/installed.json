@@ -71,17 +71,17 @@
         },
         {
             "name": "dotdigital/dotdigital-php",
-            "version": "dev-develop",
-            "version_normalized": "dev-develop",
+            "version": "v1.0.0",
+            "version_normalized": "1.0.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotmailer/dotdigital-php.git",
-                "reference": "1c56af2e2631e3c9de5af8524b1cbef63c0d6536"
+                "reference": "310753341c24735d3b7f39eca7cebbd7a4985d74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotmailer/dotdigital-php/zipball/1c56af2e2631e3c9de5af8524b1cbef63c0d6536",
-                "reference": "1c56af2e2631e3c9de5af8524b1cbef63c0d6536",
+                "url": "https://api.github.com/repos/dotmailer/dotdigital-php/zipball/310753341c24735d3b7f39eca7cebbd7a4985d74",
+                "reference": "310753341c24735d3b7f39eca7cebbd7a4985d74",
                 "shasum": ""
             },
             "require": {
@@ -99,7 +99,7 @@
                 "phpunit/phpunit": "^9.5",
                 "symplify/easy-coding-standard": "^9.4"
             },
-            "time": "2022-08-22T10:54:51+00:00",
+            "time": "2022-09-05T11:52:01+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -115,7 +115,7 @@
             "description": "Dotdigital PHP Library",
             "support": {
                 "issues": "https://github.com/dotmailer/dotdigital-php/issues",
-                "source": "https://github.com/dotmailer/dotdigital-php/tree/develop"
+                "source": "https://github.com/dotmailer/dotdigital-php/tree/v1.0.0"
             },
             "install-path": "../dotdigital/dotdigital-php"
         },

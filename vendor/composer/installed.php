@@ -1,8 +1,8 @@
 <?php return array(
     'root' => array(
         'name' => 'dotdigital/dotdigital-signup-form',
-        'pretty_version' => '5.0.3',
-        'version' => '5.0.3.0',
+        'pretty_version' => '6.0.0',
+        'version' => '6.0.0.0',
         'reference' => NULL,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
@@ -20,17 +20,17 @@
             'dev_requirement' => false,
         ),
         'dotdigital/dotdigital-php' => array(
-            'pretty_version' => 'dev-develop',
-            'version' => 'dev-develop',
-            'reference' => '1c56af2e2631e3c9de5af8524b1cbef63c0d6536',
+            'pretty_version' => 'v1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => '310753341c24735d3b7f39eca7cebbd7a4985d74',
             'type' => 'library',
             'install_path' => __DIR__ . '/../dotdigital/dotdigital-php',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'dotdigital/dotdigital-signup-form' => array(
-            'pretty_version' => '5.0.3',
-            'version' => '5.0.3.0',
+            'pretty_version' => '6.0.0',
+            'version' => '6.0.0.0',
             'reference' => NULL,
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
