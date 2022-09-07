@@ -7,15 +7,26 @@
  */
 function dm_shortcode_signup( $atts ) {
 
-	$a = shortcode_atts( array(
-        'showtitle' => 1,
-        'showdesc' => 1,
-        'redirection' => NULL
-    ), $atts );
+	$a = shortcode_atts(
+		array(
+			'showtitle' => 1,
+			'showdesc' => 1,
+			'redirection' => null,
+		),
+		$atts
+	);
 
 	ob_start();
 
-	the_widget ( 'DM_Widget', array(), array( "showtitle" => $a["showtitle"], "showdesc" => $a["showdesc"], "redirection" => $a["redirection"] ) );
+	the_widget(
+		'DM_Widget',
+		array(),
+		array(
+			'showtitle' => $a['showtitle'],
+			'showdesc' => $a['showdesc'],
+			'redirection' => $a['redirection'],
+		)
+	);
 
 	$widget = ob_get_contents();
 
@@ -28,4 +39,4 @@ function dm_shortcode_signup( $atts ) {
 add_shortcode( 'dotmailer-signup', 'dm_shortcode_signup' ); // deprecated
 add_shortcode( 'dotdigital-signup', 'dm_shortcode_signup' );
 
-?>
+

@@ -2,19 +2,19 @@
 Contributors: dotMailer, bsstaveley, amucklow, fstrezos
 Donate link: http://dotdigital.com
 Tags: email marketing, newsletter signup
-Requires at least: 4.0
-Tested up to: 6.0
-Requires PHP: 5.6
-Stable tag: 5.0.3
+Requires at least: 5.3
+Tested up to: 6.0.2
+Requires PHP: 7.4
+Stable tag: 6.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 == Description ==
 
-Add the Dotdigital signup form plugin to your site and allow your visitors to sign up to your dotdigital-powered newsletter and email marketing campaigns. The email addresses of new subscribers can be added to multiple dotdigital address books.
+Add the Dotdigital signup form plugin to your site and allow your visitors to sign up to your Dotdigital-powered newsletter and email marketing campaigns. The email addresses of new subscribers can be added to multiple Dotdigital address books.
 
-If you're not a dotdigital user already you can find out more about us at <a href="https://www.dotdigital.com">dotdigital.com</a>.
+If you're not a Dotdigital user already you can find out more about us at <a href="https://www.dotdigital.com">Dotdigital.com</a>.
 
 == Installation ==
 
@@ -45,15 +45,15 @@ A. Yes you can. This latest version of the plugin allows you to put addresses in
 A. Yes they can.
 
 = Q. My contacts are not appearing in my address book. Why is this? =
-A. Check you have followed the installation steps correctly and that your API email and API password appear exactly as they do in your dotdigital account. Remember that the API email is automatically generated and should not be changed.
+A. Check you have followed the installation steps correctly and that your API email and API password appear exactly as they do in your Dotdigital account. Remember that the API email is automatically generated and should not be changed.
 
 = Q. Can I send the user to a custom Thank You page after subscription? =
 A. From plugin version 3.4 it is possible. You can find the redirection options under the Redirections tab in the plugin dashboard. Here you can set up 3 options:
 * No redirection (default): the user will stay on the same page where a short message will be displayed about the result of the subscription
-* Local page: you can select a page from your website that will be your dotdigital Thank you page
+* Local page: you can select a page from your website that will be your Thank you page
 * Custom URL: with this option you can redirect your user wherever you want to. If you choose this option, please use a valid URL starting with "http://" or "https://" here.
 
-= Q. How can I insert the dotmailer form into my posts and pages? =
+= Q. How can I insert a signup form into my posts and pages? =
 A. From plugin version 3.3, you can use the [dotmailer-signup] shortcode to show the form inside the post's content. Shortcode parameters (works only when you use the form with a shortcode):
 
 showtitle=0 - Hide the title of the widget
@@ -74,7 +74,7 @@ Since plugin version 5, [dotdigital-signup] can also be used with the same param
 
 == Copyright ==
 
-Copyright 2014-2022  Dotdigital (email : support@dotdigital.com)
+Copyright 2014-2022 Dotdigital (email : support@dotdigital.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -90,25 +90,17 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-Dotdigital Signup Form bundles the following third-party resources:
-
-dotMailer API v2 PHP client
-v1.1.2, Copyright 2014-2015 Roman Piták
-Licenses: The MIT License (MIT)
-Source: https://github.com/romanpitak/dotMailer-API-v2-PHP-client
-
-PHP REST Client
-v1.2.1, Copyright 2014-2015 Roman Piták
-Licenses: The MIT License (MIT)
-Source: https://github.com/romanpitak/PHP-REST-Client
-
-Composer
-v1.0.0-alpha11, Copyright 2012-2015 Nils Adermann, Jordi Boggiano
-Licenses: The MIT License (MIT)
-Source: https://getcomposer.org/
-
 
 == Changelog ==
+
+= 6.0.0 =
+
+**What's new**
+- We've replaced the romanpitak API client library with our own PHP SDK for the Dotdigital API.
+- This plugin now requires PHP 7.4 and is compatible with WordPress 5.3+.
+
+**Improvements**
+- We've started to bring the codebase in line with WordPress coding standards.
 
 = 5.0.3 =
 
@@ -145,7 +137,7 @@ Source: https://getcomposer.org/
 
 **Bug fixes**
 * We fixed a bug to do with error detection in the `shutdown()` function.
-* We've updated our check for contact status when a contact is retrieved from dotdigital.
+* We've updated our check for contact status when a contact is retrieved from Dotdigital.
 * We improved error handling for invalid API credentials.
 
 4.0.5 (2017-11-28)
