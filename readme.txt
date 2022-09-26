@@ -93,10 +93,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 == Changelog ==
 
-= 6.0.1 = 
+= 6.0.1 =
 
 **Bug fixes**
-- Incorrect API credentials could cause a fatal error after upgrade to v6.0.0; such errors are now handled appropriately. 
+- Incorrect API credentials could cause a fatal error after upgrade to v6.0.0; such errors are now handled appropriately.
 
 = 6.0.0 =
 
