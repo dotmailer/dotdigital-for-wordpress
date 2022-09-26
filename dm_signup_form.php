@@ -3,7 +3,7 @@
   Plugin Name: Dotdigital Signup Form
   Plugin URI: https://integrations.dotdigital.com/technology-partners/wordpress
   Description: Add a "Subscribe to Newsletter" widget to your WordPress powered website that will insert your contact in one of your Dotdigital address books.
-  Version: 6.0.0
+  Version: 6.0.1
   Author: dotdigital
   Author URI: https://www.dotdigital.com/
  */
@@ -26,6 +26,8 @@
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+
+use Dotdigital\Exception\ResponseValidationException;
 
 require_once( plugin_dir_path( __FILE__ ) . 'functions.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'dm_widget.php' );
@@ -682,11 +684,15 @@ function dm_settings_menu_display() {
 				'password' => $options['dm_API_password'],
 			)
 		);
-		$dm_account_books = $connection->listAddressBooks();
-		$dm_data_fields = $connection->listDataFields();
-		$_SESSION['connection'] = 1;
-		$_SESSION['dm_account_books'] = serialize( $dm_account_books );
-		$_SESSION['dm_data_fields'] = serialize( $dm_data_fields );
+		try {
+			$dm_account_books = $connection->listAddressBooks();
+			$dm_data_fields = $connection->listDataFields();
+			$_SESSION['connection'] = 1;
+			$_SESSION['dm_account_books'] = serialize( $dm_account_books );
+			$_SESSION['dm_data_fields'] = serialize( $dm_data_fields );
+		} catch (ResponseValidationException $responseValidationException) {
+			add_settings_error( 'dm_API_credentials', 'dm_API_credentials_error', 'Your API credentials seem to be invalid.' );
+		}
 	}
 	?>
 		<style>
@@ -878,7 +884,7 @@ function dm_settings_menu_display() {
 			<?php
 			if ( isset( $connection ) ) {
 				$account_info = $connection->getAccountInfo();
-				if ( $account_info->getProperties() ) {
+				if ( $account_info && $account_info->getProperties() ) {
 					?>
 			<div class="metabox-holder columns-2 newdmstyle" id="post-body">
 				<table width="100%" cellspacing="0" cellpadding="0">

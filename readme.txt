@@ -5,7 +5,7 @@ Tags: email marketing, newsletter signup
 Requires at least: 5.3
 Tested up to: 6.0.2
 Requires PHP: 7.4
-Stable tag: 6.0.0
+Stable tag: 6.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +92,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 == Changelog ==
+
+= 6.0.1 = 
+
+**Bug fixes**
+- Incorrect API credentials could cause a fatal error after upgrade to v6.0.0; such errors are now handled appropriately. 
 
 = 6.0.0 =
 
