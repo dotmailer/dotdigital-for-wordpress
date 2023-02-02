@@ -3,7 +3,7 @@
   Plugin Name: Dotdigital Signup Form
   Plugin URI: https://integrations.dotdigital.com/technology-partners/wordpress
   Description: Add a "Subscribe to Newsletter" widget to your WordPress powered website that will insert your contact in one of your Dotdigital address books.
-  Version: 6.0.1
+  Version: 6.0.2
   Author: dotdigital
   Author URI: https://www.dotdigital.com/
  */
@@ -332,16 +332,16 @@ function dm_API_address_books_input() {
 
 	if ( isset( $_GET['order'] ) ) {
 		if ( $_GET['order'] == 'asc' ) {
-			uasort( $dm_account_books, 'bookSortAsc' );
+			uasort( $dm_account_books, 'dotdigitalItemSortAsc' );
 			$neworder = '&order=desc';
 		} elseif ( $_GET['order'] == 'desc' ) {
-			uasort( $dm_account_books, 'bookSortDesc' );
+			uasort( $dm_account_books, 'dotdigitalItemSortDesc' );
 			$neworder = '&order=asc';
 		}
 	} else {
-
-		$neworder = '&order=desc';
-	}
+        uasort( $dm_account_books, 'dotdigitalItemSortAsc' );
+        $neworder = '&order=desc';
+    }
 	?>
 	<table class="wp-list-table widefat fixed " cellspacing="0">
 		<thead>
@@ -436,19 +436,9 @@ function dm_API_address_books_input() {
 				<tr id="<?php echo $account_book->getId(); ?>" class="dragger">
 					<th scope="row"><span class="handle" ><img src="<?php echo plugins_url( 'images/large.png', __FILE__ ); ?>" class="drag_image" /></span><input class="bookselector" type="checkbox" value="<?php echo $account_book->getId(); ?>" name="dm_API_address_books[<?php echo $account_book->getName(); ?>][id]" <?php echo $selected; ?>/></th>
 					<td class="addressbook column-addressbook"><strong><?php echo $account_book->getName(); ?></strong></td>
-					<td><input type="text" disabled="disabled" name="dm_API_address_books[<?php echo $account_book->getName(); ?>][label]" value ="
-																									 <?php
-																										if ( ! empty( $label ) ) {
-																											echo $label;
-																										} else {
-																											echo $account_book->getName();
-																										}
-																										?>
-				"/></td>
+					<td><input type="text" disabled="disabled" name="dm_API_address_books[<?php echo $account_book->getName(); ?>][label]" value="<?php echo !empty($label) ? $label : $account_book->getName(); ?>"/></td>
 					<td style="text-align: center;" class=""><input disabled="disabled" value="false" type="hidden" name="dm_API_address_books[<?php echo $account_book->getName(); ?>][isVisible]" />
 						<input value="true" type="checkbox" name="dm_API_address_books[<?php echo $account_book->getName(); ?>][isVisible]" disabled="disabled" <?php echo $visible; ?>/></td>
-
-
 				</tr>
 
 				<?php
@@ -468,14 +458,15 @@ function dm_API_data_fields_input() {
 
 	if ( isset( $_GET['order'] ) ) {
 		if ( $_GET['order'] == 'asc' ) {
-			uasort( $dm_API_data_fields, 'bookSortAsc' );
+			uasort( $dm_API_data_fields, 'dotdigitalItemSortAsc' );
 			$neworder = '&order=desc';
 		} elseif ( $_GET['order'] == 'desc' ) {
-			uasort( $dm_API_data_fields, 'bookSortDesc' );
+			uasort( $dm_API_data_fields, 'dotdigitalItemSortDesc' );
 			$neworder = '&order=asc';
 		}
 	} else {
-		$neworder = '&order=desc';
+        uasort( $dm_API_data_fields, 'dotdigitalItemSortAsc' );
+        $neworder = '&order=desc';
 	}
 	?>
 		<table class="wp-list-table widefat fixed ">
@@ -564,15 +555,7 @@ function dm_API_data_fields_input() {
 				<tr id="<?php echo $dm_API_data_field->getName(); ?>" class="dragger">
 					<th  scope="row" ><span class="handle"><img src="<?php echo plugins_url( 'images/large.png', __FILE__ ); ?>" class="drag_image" /></span><input class="bookselector" type="checkbox" value="<?php echo $dm_API_data_field->getName(); ?>" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][name]" <?php echo $selected; ?>/> </th>
 					<td><strong><?php echo $dm_API_data_field->getName(); ?></strong></td>
-					<td><input  size="50" type="text" disabled="disabled" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][label]" value ="
-																											  <?php
-																												if ( ! empty( $label ) ) {
-																													echo $label;
-																												} else {
-																													echo ucwords( strtolower( $dm_API_data_field->getName() ) );
-																												}
-																												?>
-		" /></td>
+					<td><input  size="50" type="text" disabled="disabled" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][label]" value ="<?php echo !empty($label) ? $label : ucwords( strtolower( $dm_API_data_field->getName() ) )?>" /></td>
 					<td class="" style="text-align: center;"><input  disabled="disabled" value="false" type="hidden" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][isRequired]"/>
 						<input value="true" type="checkbox" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][isRequired]"  disabled="disabled" <?php echo $required; ?>/>
 						<input disabled="disabled" value="<?php echo $dm_API_data_field->getName(); ?>" type="hidden" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][type]" /></td>

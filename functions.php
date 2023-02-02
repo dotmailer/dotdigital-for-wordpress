@@ -25,27 +25,29 @@ function returnRequiredFields( $posts = array() ) {
 register_shutdown_function( 'shutdown' );
 
 /**
- * @param array $a
- * @param array $b
+ * @param object $a
+ * @param object $b
  * @return int
  */
-function bookSortDesc( array $a, array $b ) {
-	if ( ! isset( $a['Name'] ) || ! isset( $b['Name'] ) ) {
-		return 0;
-	}
-	return ( strtolower( $a['Name'] ) == strtolower( $b['Name'] ) ? 0 : ( strtolower( $a['Name'] ) > strtolower( $b['Name'] ) ) ) ? 1 : -1;
+function dotdigitalItemSortDesc( object $a, object $b ) {
+    if ( ! method_exists( $a ,'getName' ) || ! method_exists($b, 'getName') ) {
+        return 0;
+    }
+
+    return strtolower( $a->getName() ) < strtolower($b->getName());
 }
 
 /**
- * @param array $a
- * @param array $b
+ * @param object $a
+ * @param object $b
  * @return int
  */
-function bookSortAsc( array $a, array $b ) {
-	if ( ! isset( $a['Name'] ) || ! isset( $b['Name'] ) ) {
+function dotdigitalItemSortAsc( object $a, object $b ) {
+	if ( ! method_exists( $a ,'getName' ) || ! method_exists($b, 'getName') ) {
 		return 0;
 	}
-	return ( strtolower( $a['Name'] ) == strtolower( $b['Name'] ) ? 0 : ( strtolower( $a['Name'] ) > strtolower( $b['Name'] ) ) ) ? -1 : 1;
+
+    return strtolower( $a->getName() ) > strtolower($b->getName());
 }
 
 function clean( $data ) {
