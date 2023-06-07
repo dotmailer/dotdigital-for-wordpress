@@ -34,7 +34,14 @@ function dotdigitalItemSortDesc( object $a, object $b ) {
         return 0;
     }
 
-    return strtolower( $a->getName() ) < strtolower($b->getName());
+	$aName = strtolower($a->getName());
+	$bName = strtolower($b->getName());
+
+	if ($aName === $bName) {
+		return 0;
+	}
+
+	return $aName > $bName ? -1 : 1;
 }
 
 /**
@@ -47,7 +54,14 @@ function dotdigitalItemSortAsc( object $a, object $b ) {
 		return 0;
 	}
 
-    return strtolower( $a->getName() ) > strtolower($b->getName());
+	$aName = strtolower($a->getName());
+	$bName = strtolower($b->getName());
+
+	if ($aName === $bName) {
+		return 0;
+	}
+
+	return $aName > $bName ? 1 : -1;
 }
 
 function clean( $data ) {
