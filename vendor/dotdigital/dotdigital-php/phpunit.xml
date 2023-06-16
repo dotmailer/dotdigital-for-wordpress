@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="vendor/autoload.php">
     <testsuites>
-        <testsuite name="Dotdigital">
-            <directory suffix=".php">./tests/</directory>
+        <testsuite name="Dotdigital_V2">
+            <directory>./tests/V2</directory>
+        </testsuite>
+        <testsuite name="Dotdigital_V3">
+            <directory>./tests/V3</directory>
         </testsuite>
     </testsuites>
 </phpunit>
