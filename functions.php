@@ -25,29 +25,47 @@ function returnRequiredFields( $posts = array() ) {
 register_shutdown_function( 'shutdown' );
 
 /**
- * @param object $a
- * @param object $b
+ * Sort descending.
+ *
+ * @param object $a Object A.
+ * @param object $b Object B.
  * @return int
  */
-function dotdigitalItemSortDesc( object $a, object $b ) {
-    if ( ! method_exists( $a ,'getName' ) || ! method_exists($b, 'getName') ) {
-        return 0;
-    }
-
-    return strtolower( $a->getName() ) < strtolower($b->getName());
-}
-
-/**
- * @param object $a
- * @param object $b
- * @return int
- */
-function dotdigitalItemSortAsc( object $a, object $b ) {
-	if ( ! method_exists( $a ,'getName' ) || ! method_exists($b, 'getName') ) {
+function dotdigital_item_sort_desc( object $a, object $b ) {
+	if ( ! method_exists( $a, 'getName' ) || ! method_exists( $b, 'getName' ) ) {
 		return 0;
 	}
 
-    return strtolower( $a->getName() ) > strtolower($b->getName());
+	$a_name = strtolower( $a->getName() );
+	$b_name = strtolower( $b->getName() );
+
+	if ( $a_name === $b_name ) {
+		return 0;
+	}
+
+	return $a_name > $b_name ? -1 : 1;
+}
+
+/**
+ * Sort ascending.
+ *
+ * @param object $a Object A.
+ * @param object $b Object B.
+ * @return int
+ */
+function dotdigital_item_sort_asc( object $a, object $b ) {
+	if ( ! method_exists( $a, 'getName' ) || ! method_exists( $b, 'getName' ) ) {
+		return 0;
+	}
+
+	$a_name = strtolower( $a->getName() );
+	$b_name = strtolower( $b->getName() );
+
+	if ( $a_name === $b_name ) {
+		return 0;
+	}
+
+	return $a_name > $b_name ? 1 : -1;
 }
 
 function clean( $data ) {
@@ -66,28 +84,34 @@ function writeFormLine( $fieldType, $fieldName, $fieldWording, $required ) {
 		$asterisk = '';
 	}
 
-	if ( strtolower( $fieldType ) == 'date' ) {
-		echo "<label style='display:block;'  for='{$fieldName}'>$fieldWording$asterisk</label>";
-		echo "<input style='display:block;' class='$fieldType'  type='text' id='$fieldName' name='datafields[{$fieldName}][]'/>";
-		echo "<input   type='hidden' id='$fieldName' name='datafields[{$fieldName}][]' value='{$fieldType}'/>";
-		echo "<input   type='hidden' id='$required' name='datafields[{$fieldName}][]' value='{$required}'/>";
-	} elseif ( strtolower( $fieldType ) == 'boolean' ) {
-		$fieldType = 'radio';
-		echo "<label style='display:block;' for='{$fieldName}'>$fieldWording$asterisk</label>";
-		echo "Yes <input  class='$fieldType $required'  type='radio' id='$fieldName' name='datafields[{$fieldName}][]' value='TRUE' checked/>";
-		echo "No <input class='$fieldType'  type='radio' id='$fieldName' name='datafields[{$fieldName}][]' value='FALSE'/>";
-		echo "<input   type='hidden' id='$fieldName' name='datafields[{$fieldName}][]' value='$fieldType'/>";
-		echo "<input   type='hidden' id='$required' name='datafields[{$fieldName}][]' value='{$required}'/>";
-	} elseif ( strtolower( $fieldType ) == 'string' ) {
-		echo "<label style='display:block;' for='{$fieldName}'>$fieldWording$asterisk</label>";
-		echo "<input style='display:block;' class='$fieldType'  type='text' id='$fieldName' name='datafields[{$fieldName}][]'/>";
-		echo "<input   type='hidden' id='$fieldName' name='datafields[{$fieldName}][]' value='$fieldType'/>";
-		echo "<input   type='hidden' id='$required' name='datafields[{$fieldName}][]' value='{$required}'/>";
-	} else {
-		echo "<label style='display:block;' for='{$fieldName}'>$fieldWording$asterisk</label>";
-		echo "<input style='display:block;' class='$fieldType'  type='{$fieldType}' id='$fieldName' name='datafields[{$fieldName}][]'/>";
-		echo "<input   type='hidden' id='$fieldName' name='datafields[{$fieldName}][]' value='$fieldType'/>";
-		echo "<input   type='hidden' id='$required' name='datafields[{$fieldName}][]' value='{$required}'/>";
+	switch ( $fieldType ) {
+		case 'date':
+			echo "<label style='display:block;' for='{$fieldName}'>$fieldWording$asterisk</label>";
+			echo "<input style='display:block;' class='$fieldType' type='date' id='$fieldName' name='datafields[{$fieldName}][]'/>";
+			echo "<input type='hidden' id='$fieldName' name='datafields[{$fieldName}][]' value='{$fieldType}'/>";
+			echo "<input type='hidden' id='$required' name='datafields[{$fieldName}][]' value='{$required}'/>";
+			break;
+		case 'boolean':
+			echo "<span style='display:block;'>$fieldWording$asterisk</span>";
+			echo "<input class='radio $required' type='radio' id='yes' name='datafields[{$fieldName}][]' value='TRUE' checked/>";
+			echo "<label for=''>Yes</label><br>";
+			echo "<input class='radio' type='radio' id='no' name='datafields[{$fieldName}][]' value='FALSE'/>";
+			echo "<label for=''>No</label><br>";
+			echo "<input type='hidden' id='$fieldName' name='datafields[{$fieldName}][]' value='radio'/>";
+			echo "<input type='hidden' id='$required' name='datafields[{$fieldName}][]' value='{$required}'/>";
+			break;
+		case 'string':
+			echo "<label style='display:block;' for='{$fieldName}'>$fieldWording$asterisk</label>";
+			echo "<input style='display:block;' class='$fieldType' type='text' id='$fieldName' name='datafields[{$fieldName}][]'/>";
+			echo "<input type='hidden' id='$fieldName' name='datafields[{$fieldName}][]' value='$fieldType'/>";
+			echo "<input type='hidden' id='$required' name='datafields[{$fieldName}][]' value='{$required}'/>";
+			break;
+		case 'numeric':
+			echo "<label style='display:block;' for='{$fieldName}'>$fieldWording$asterisk</label>";
+			echo "<input style='display:block;' class='$fieldType' type='number' id='$fieldName' name='datafields[{$fieldName}][]'/>";
+			echo "<input type='hidden' id='$fieldName' name='datafields[{$fieldName}][]' value='$fieldType'/>";
+			echo "<input type='hidden' id='$required' name='datafields[{$fieldName}][]' value='{$required}'/>";
+			break;
 	}
 }
 

@@ -332,14 +332,14 @@ function dm_API_address_books_input() {
 
 	if ( isset( $_GET['order'] ) ) {
 		if ( $_GET['order'] == 'asc' ) {
-			uasort( $dm_account_books, 'dotdigitalItemSortAsc' );
+			uasort( $dm_account_books, 'dotdigital_item_sort_asc' );
 			$neworder = '&order=desc';
 		} elseif ( $_GET['order'] == 'desc' ) {
-			uasort( $dm_account_books, 'dotdigitalItemSortDesc' );
+			uasort( $dm_account_books, 'dotdigital_item_sort_desc' );
 			$neworder = '&order=asc';
 		}
 	} else {
-        uasort( $dm_account_books, 'dotdigitalItemSortAsc' );
+        uasort( $dm_account_books, 'dotdigital_item_sort_asc' );
         $neworder = '&order=desc';
     }
 	?>
@@ -458,14 +458,14 @@ function dm_API_data_fields_input() {
 
 	if ( isset( $_GET['order'] ) ) {
 		if ( $_GET['order'] == 'asc' ) {
-			uasort( $dm_API_data_fields, 'dotdigitalItemSortAsc' );
+			uasort( $dm_API_data_fields, 'dotdigital_item_sort_asc' );
 			$neworder = '&order=desc';
 		} elseif ( $_GET['order'] == 'desc' ) {
-			uasort( $dm_API_data_fields, 'dotdigitalItemSortDesc' );
+			uasort( $dm_API_data_fields, 'dotdigital_item_sort_desc' );
 			$neworder = '&order=asc';
 		}
 	} else {
-        uasort( $dm_API_data_fields, 'dotdigitalItemSortAsc' );
+        uasort( $dm_API_data_fields, 'dotdigital_item_sort_asc' );
         $neworder = '&order=desc';
 	}
 	?>
@@ -558,7 +558,7 @@ function dm_API_data_fields_input() {
 					<td><input  size="50" type="text" disabled="disabled" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][label]" value ="<?php echo !empty($label) ? $label : ucwords( strtolower( $dm_API_data_field->getName() ) )?>" /></td>
 					<td class="" style="text-align: center;"><input  disabled="disabled" value="false" type="hidden" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][isRequired]"/>
 						<input value="true" type="checkbox" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][isRequired]"  disabled="disabled" <?php echo $required; ?>/>
-						<input disabled="disabled" value="<?php echo $dm_API_data_field->getName(); ?>" type="hidden" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][type]" /></td>
+						<input disabled="disabled" value="<?php echo $dm_API_data_field->getType(); ?>" type="hidden" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][type]" /></td>
 				</tr>
 				<?php
 	}

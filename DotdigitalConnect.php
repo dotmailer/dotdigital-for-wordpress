@@ -2,9 +2,9 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Dotdigital\Client;
-use Dotdigital\Models\Contact;
-use Dotdigital\Models\ContactList;
+use Dotdigital\V2\Client;
+use Dotdigital\V2\Models\Contact;
+use Dotdigital\V2\Models\ContactList;
 
 class DotdigitalConnect {
 
@@ -28,7 +28,7 @@ class DotdigitalConnect {
 	}
 
 	/**
-	 * @return \Dotdigital\Models\AccountInfo|bool
+	 * @return \Dotdigital\V2\Models\AccountInfo|bool
 	 * @throws \Http\Client\Exception
 	 */
 	public function getAccountInfo() {
@@ -40,19 +40,21 @@ class DotdigitalConnect {
 	}
 
 	/**
-	 * @return \Dotdigital\Models\AddressBookList
+	 * @return \Dotdigital\V2\Models\AddressBook[]
 	 * @throws \Http\Client\Exception
 	 */
 	public function listAddressBooks() {
-		return $this->client->addressBooks->show();
+		$apiLists = $this->client->addressBooks->show();
+		return $apiLists->getList();
 	}
 
 	/**
-	 * @return \Dotdigital\Models\DataField[]|\Dotdigital\Models\DataFieldList
+	 * @return \Dotdigital\V2\Models\DataField[]
 	 * @throws \Http\Client\Exception
 	 */
 	public function listDataFields() {
-		return $this->client->dataFields->show();
+		$apiDataFields = $this->client->dataFields->show();
+		return $apiDataFields->getList();
 	}
 
 	/**
@@ -65,7 +67,7 @@ class DotdigitalConnect {
 	 */
 	public function addContactToAddressBook( $email, $addressBookId, $datafields = array() ) {
 		try {
-			$apiContact = new Dotdigital\Models\Contact(
+			$apiContact = new Dotdigital\V2\Models\Contact(
 				array(
 					'id'        => -1,
 					'email'     => $email,
@@ -101,7 +103,7 @@ class DotdigitalConnect {
 	 * @throws \Http\Client\Exception
 	 */
 	public function resubscribeContactToAddressBook( $email, $addressBookId, $datafields = array() ) {
-		$apiContact = new Dotdigital\Models\Contact(
+		$apiContact = new Dotdigital\V2\Models\Contact(
 			array(
 				'id'        => -1,
 				'email'     => $email,

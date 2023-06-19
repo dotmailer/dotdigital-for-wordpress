@@ -12,7 +12,7 @@ return array(
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-factory/src', $vendorDir . '/psr/http-message/src'),
     'Psr\\Http\\Client\\' => array($vendorDir . '/psr/http-client/src'),
     'Http\\Promise\\' => array($vendorDir . '/php-http/promise/src'),
-    'Http\\Message\\' => array($vendorDir . '/php-http/message/src', $vendorDir . '/php-http/message-factory/src'),
+    'Http\\Message\\' => array($vendorDir . '/php-http/message/src'),
     'Http\\Discovery\\' => array($vendorDir . '/php-http/discovery/src'),
     'Http\\Client\\Common\\' => array($vendorDir . '/php-http/client-common/src'),
     'Http\\Client\\' => array($vendorDir . '/php-http/httplug/src'),
@@ -20,7 +20,6 @@ return array(
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
-    'Dotdigital\\Tests\\' => array($vendorDir . '/dotdigital/dotdigital-php/tests'),
     'Dotdigital\\' => array($vendorDir . '/dotdigital/dotdigital-php/src'),
     'Clue\\StreamFilter\\' => array($vendorDir . '/clue/stream-filter/src'),
 );
