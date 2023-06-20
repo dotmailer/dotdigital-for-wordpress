@@ -2,20 +2,18 @@
 
 namespace Dotdigital\Tests;
 
-use Dotdigital\Client;
+use Dotdigital\AbstractClient;
 use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\TestCase;
 
 trait ApiConfigurationTrait
 {
     /**
-     * @var Client
+     * @var AbstractClient
      */
-    protected Client $client;
+    protected AbstractClient $client;
 
     protected function clientInit(): void
     {
-        $this->client = new Client();
         $this->client::setApiUser('demo@apiconnector.com');
         $this->client::setApiPassword('demo');
         $this->client::setApiEndpoint('https://r1-api.dotmailer.com');
