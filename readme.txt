@@ -2,9 +2,9 @@
 Contributors: dotMailer, bsstaveley, amucklow, fstrezos
 Tags: email marketing, newsletter signup
 Requires at least: 5.3
-Tested up to: 6.1.1
+Tested up to: 6.2.2
 Requires PHP: 7.4
-Stable tag: 6.0.2
+Stable tag: 6.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 == Changelog ==
+
+= 6.0.3 =
+
+**Bug fixes**
+- We repaired HTML input types for data fields displayed in the signup widget.
 
 = 6.0.2 =
 

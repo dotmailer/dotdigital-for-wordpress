@@ -1,8 +1,8 @@
 <?php return array(
     'root' => array(
         'name' => 'dotdigital/dotdigital-signup-form',
-        'pretty_version' => '6.0.2',
-        'version' => '6.0.2.0',
+        'pretty_version' => '6.0.3',
+        'version' => '6.0.3.0',
         'reference' => NULL,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
