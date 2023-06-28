@@ -1,8 +1,8 @@
 <?php return array(
     'root' => array(
         'name' => 'dotdigital/dotdigital-signup-form',
-        'pretty_version' => '6.0.3',
-        'version' => '6.0.3.0',
+        'pretty_version' => '6.0.4',
+        'version' => '6.0.4.0',
         'reference' => NULL,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
@@ -29,8 +29,8 @@
             'dev_requirement' => false,
         ),
         'dotdigital/dotdigital-signup-form' => array(
-            'pretty_version' => '6.0.2',
-            'version' => '6.0.2.0',
+            'pretty_version' => '6.0.4',
+            'version' => '6.0.4.0',
             'reference' => NULL,
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
@@ -67,8 +67,8 @@
         'php-http/async-client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
         'php-http/client-common' => array(
@@ -83,25 +83,25 @@
         'php-http/client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
-        'php-http/discovery' => array(
-            'pretty_version' => '1.18.1',
-            'version' => '1.18.1.0',
-            'reference' => 'f258b3a1d16acb7b21f3b42d7a2494a733365237',
-            'type' => 'composer-plugin',
-            'install_path' => __DIR__ . '/../php-http/discovery',
+        'php-http/curl-client' => array(
+            'pretty_version' => '2.3.0',
+            'version' => '2.3.0.0',
+            'reference' => 'f7352c0796549949900d28fe991e19c90572386a',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../php-http/curl-client',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'php-http/guzzle7-adapter' => array(
-            'pretty_version' => '1.0.0',
-            'version' => '1.0.0.0',
-            'reference' => 'fb075a71dbfa4847cf0c2938c4e5a9c478ef8b01',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../php-http/guzzle7-adapter',
+        'php-http/discovery' => array(
+            'pretty_version' => '1.19.0',
+            'version' => '1.19.0.0',
+            'reference' => '1856a119a0b0ba8da8b5c33c080aa7af8fac25b4',
+            'type' => 'composer-plugin',
+            'install_path' => __DIR__ . '/../php-http/discovery',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
