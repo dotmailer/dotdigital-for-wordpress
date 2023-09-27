@@ -9,8 +9,8 @@ function dm_shortcode_signup( $atts ) {
 
 	$a = shortcode_atts(
 		array(
-			'showtitle' => 1,
-			'showdesc' => 1,
+			'showtitle'   => 1,
+			'showdesc'    => 1,
 			'redirection' => null,
 		),
 		$atts
@@ -33,10 +33,7 @@ function dm_shortcode_signup( $atts ) {
 	ob_end_clean();
 
 	return $widget;
-
 }
 
 add_shortcode( 'dotmailer-signup', 'dm_shortcode_signup' ); // deprecated
 add_shortcode( 'dotdigital-signup', 'dm_shortcode_signup' );
-
-

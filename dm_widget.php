@@ -37,7 +37,7 @@ class DM_Widget extends WP_Widget {
 			<?php
 			return;
 		}
-		require_once( plugin_dir_path( __FILE__ ) . 'DotdigitalConnect.php' );
+		require_once plugin_dir_path( __FILE__ ) . 'DotdigitalConnect.php';
 
 		$messages_option = get_option( 'dm_API_messages' );
 		if ( isset( $messages_option ) ) {
@@ -83,9 +83,9 @@ class DM_Widget extends WP_Widget {
 				$books = $_POST['books'];
 				$redirection = isset( $_POST['dotMailer_redirection'] ) ? clean( $_POST['dotMailer_redirection'] ) : null;
 
-                foreach ( $dataFields_posted as $fieldName => $fieldData ) {
-	                $dataFields_posted[$fieldName] = $fieldData[0];
-                }
+				foreach ( $dataFields_posted as $fieldName => $fieldData ) {
+					$dataFields_posted[ $fieldName ] = $fieldData[0];
+				}
 
 				$dm_api_credentials = get_option( 'dm_API_credentials' );
 				$api = new DotdigitalConnect(
@@ -151,7 +151,7 @@ class DM_Widget extends WP_Widget {
 				$dmdatafields = get_option( 'dm_API_data_fields' );
 
 				foreach ( $dmdatafields as $key => $value ) {
-					writeFormLine( strtolower($value['type']), $value['name'], $value['label'], $value['isRequired'] );
+					writeFormLine( strtolower( $value['type'] ), $value['name'], $value['label'], $value['isRequired'] );
 					if ( isset( $formErrors[ $value['name'] ] ) ) {
 						echo "<p class='error_message'>" . $formErrors[ $value['name'] ] . '</p>';
 					}

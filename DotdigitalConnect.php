@@ -60,7 +60,7 @@ class DotdigitalConnect {
 	/**
 	 * @param string $email
 	 * @param string $addressBookId
-	 * @param array $datafields
+	 * @param array  $datafields
 	 *
 	 * @return bool
 	 * @throws \Http\Client\Exception
@@ -96,7 +96,7 @@ class DotdigitalConnect {
 	/**
 	 * @param string $email
 	 * @param string $addressBookId
-	 * @param array $datafields
+	 * @param array  $datafields
 	 *
 	 * @return bool
 	 * @throws \Dotdigital\Exception\ResponseValidationException
@@ -116,7 +116,7 @@ class DotdigitalConnect {
 		$result = $addressBookId == -1 ? $this->client->contacts->resubscribe( $apiContact->getEmail(), $apiContact->getDataFields() ) :
 			$this->client->addressBooks->resubscribeContactToAddressBook( $addressBookId, $apiContact->getEmail(), $apiContact->getDataFields() );
 
-		return ($result instanceof ContactList) && property_exists($result, 'contact');
+		return ( $result instanceof ContactList ) && property_exists( $result, 'contact' );
 	}
 
 	/**

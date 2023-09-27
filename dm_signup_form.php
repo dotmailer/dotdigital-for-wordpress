@@ -29,10 +29,10 @@
 
 use Dotdigital\Exception\ResponseValidationException;
 
-require_once( plugin_dir_path( __FILE__ ) . 'functions.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'dm_widget.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'dm_shortcode.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'DotdigitalConnect.php' );
+require_once plugin_dir_path( __FILE__ ) . 'functions.php';
+require_once plugin_dir_path( __FILE__ ) . 'dm_widget.php';
+require_once plugin_dir_path( __FILE__ ) . 'dm_shortcode.php';
+require_once plugin_dir_path( __FILE__ ) . 'DotdigitalConnect.php';
 register_uninstall_hook( __FILE__, 'dotMailer_widget_uninstall' );
 register_activation_hook( __FILE__, 'dotMailer_widget_activate' );
 
@@ -169,7 +169,6 @@ function dotMailer_set_initial_messages() {
 	if ( ! get_option( 'dm_API_messages' ) ) {
 		add_option( 'dm_API_messages', $messages );
 	}
-
 }
 
 function dm_redirections_input() {
@@ -258,14 +257,12 @@ function dm_redirections_input() {
 	echo '" /></td>
 </tr>
 </table>';
-
 }
 
 function dm_API_form_title_input() {
 
 	$options = get_option( 'dm_API_messages' );
 	echo "<input id='dm_form_title' name='dm_API_messages[dm_API_form_title]' size='40' type='text' value='{$options['dm_API_form_title']}' />";
-
 }
 
 function dm_API_invalid_email_input() {
@@ -339,111 +336,111 @@ function dm_API_address_books_input() {
 			$neworder = '&order=asc';
 		}
 	} else {
-        uasort( $dm_account_books, 'dotdigital_item_sort_asc' );
-        $neworder = '&order=desc';
-    }
+		uasort( $dm_account_books, 'dotdigital_item_sort_asc' );
+		$neworder = '&order=desc';
+	}
 	?>
 	<table class="wp-list-table widefat fixed " cellspacing="0">
 		<thead>
-			<tr>
-				<th scope="col"  class="manage-column column-cb check-column " style=""><input class="multiselector" type="checkbox"/></th>
-				<th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_address_books
+		<tr>
+			<th scope="col"  class="manage-column column-cb check-column " style=""><input class="multiselector" type="checkbox"/></th>
+			<th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_address_books
 				<?php
 				if ( isset( $neworder ) ) {
 					echo $neworder;}
 				?>
 					"><span>Address Books</span><span class="sorting-indicator"></span></a></th>
-				<th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
-				<th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Visible?</th>
-			</tr>
+			<th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
+			<th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Visible?</th>
+		</tr>
 		</thead>
 		<tfoot>
-			<tr>
-				<th scope="col" id="cb" class="manage-column column-cb check-column" style=""><input class="multiselector" type="checkbox"/></th>
-				<th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_address_books
+		<tr>
+			<th scope="col" id="cb" class="manage-column column-cb check-column" style=""><input class="multiselector" type="checkbox"/></th>
+			<th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_address_books
 				<?php
 				if ( isset( $neworder ) ) {
 					echo $neworder;}
 				?>
 					"><span>Address Books</span><span class="sorting-indicator"></span></a></th>
-				<th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
-				<th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Visible?</th>
-			</tr>
+			<th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
+			<th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Visible?</th>
+		</tr>
 		</tfoot>
 		<tbody id="the-list" class="sort_books">
-			<?php
-			$selected_books = get_option( 'dm_API_address_books' );
+		<?php
+		$selected_books = get_option( 'dm_API_address_books' );
 
-			$indexes_to_replace = array();
-			$elements_to_swap = array();
-			// re-sort
-			if ( ! empty( $selected_books ) ) {
-				$swapped_array = array();
-				foreach ( $dm_account_books as $account_book ) {
+		$indexes_to_replace = array();
+		$elements_to_swap = array();
+		// re-sort
+		if ( ! empty( $selected_books ) ) {
+			$swapped_array = array();
+			foreach ( $dm_account_books as $account_book ) {
 
-					if ( in_array( $account_book->getName(), array_keys( $selected_books ) ) ) {
-						$indexes_to_replace[] = array_search(
-							$account_book,
-							$dm_account_books
-						);
-						$elements_to_swap[] = $account_book;
-					}
+				if ( in_array( $account_book->getName(), array_keys( $selected_books ) ) ) {
+					$indexes_to_replace[] = array_search(
+						$account_book,
+						$dm_account_books
+					);
+					$elements_to_swap[] = $account_book;
 				}
+			}
 
-				foreach ( $selected_books as $book_name => $book_details ) {
-					foreach ( $elements_to_swap as $index => $element ) {
+			foreach ( $selected_books as $book_name => $book_details ) {
+				foreach ( $elements_to_swap as $index => $element ) {
 
-						if ( $book_name == $element->getName() ) {
-							$swapped_array[] = $element;
-						}
-					}
-				}
-
-				if ( ! empty( $indexes_to_replace ) ) {
-					$new_order = array_combine( $indexes_to_replace, $swapped_array );
-					foreach ( $new_order as $new_key => $element ) {
-						$old_index = array_search( $element, $dm_account_books );
-						$temp = $dm_account_books[ $new_key ];
-						$dm_account_books[ $new_key ] = $element;
-						$dm_account_books[ $old_index ] = $temp;
+					if ( $book_name == $element->getName() ) {
+						$swapped_array[] = $element;
 					}
 				}
 			}
 
-			foreach ( $dm_account_books as $account_book ) {
-				$selected = '';
-				$label = '';
-				$visible = '';
-
-				if ( $account_book->getName() == 'Test' ) {
-					continue;
+			if ( ! empty( $indexes_to_replace ) ) {
+				$new_order = array_combine( $indexes_to_replace, $swapped_array );
+				foreach ( $new_order as $new_key => $element ) {
+					$old_index = array_search( $element, $dm_account_books );
+					$temp = $dm_account_books[ $new_key ];
+					$dm_account_books[ $new_key ] = $element;
+					$dm_account_books[ $old_index ] = $temp;
 				}
-				if ( ! empty( $selected_books ) ) {
+			}
+		}
 
-					if ( in_array( $account_book->getName(), array_keys( $selected_books ) ) ) {
+		foreach ( $dm_account_books as $account_book ) {
+			$selected = '';
+			$label = '';
+			$visible = '';
 
-						$selected = " checked='checked'";
-						$book_values = $selected_books[ $account_book->getName() ];
-						$label = $book_values['label'];
+			if ( $account_book->getName() == 'Test' ) {
+				continue;
+			}
+			if ( ! empty( $selected_books ) ) {
 
-						if ( $book_values['isVisible'] == 'true' ) {
-							$visible = " checked='checked'";
-						}
+				if ( in_array( $account_book->getName(), array_keys( $selected_books ) ) ) {
+
+					$selected = " checked='checked'";
+					$book_values = $selected_books[ $account_book->getName() ];
+					$label = $book_values['label'];
+
+					if ( $book_values['isVisible'] == 'true' ) {
+						$visible = " checked='checked'";
 					}
 				}
-				?>
-
-				<tr id="<?php echo $account_book->getId(); ?>" class="dragger">
-					<th scope="row"><span class="handle" ><img src="<?php echo plugins_url( 'images/large.png', __FILE__ ); ?>" class="drag_image" /></span><input class="bookselector" type="checkbox" value="<?php echo $account_book->getId(); ?>" name="dm_API_address_books[<?php echo $account_book->getName(); ?>][id]" <?php echo $selected; ?>/></th>
-					<td class="addressbook column-addressbook"><strong><?php echo $account_book->getName(); ?></strong></td>
-					<td><input type="text" disabled="disabled" name="dm_API_address_books[<?php echo $account_book->getName(); ?>][label]" value="<?php echo !empty($label) ? $label : $account_book->getName(); ?>"/></td>
-					<td style="text-align: center;" class=""><input disabled="disabled" value="false" type="hidden" name="dm_API_address_books[<?php echo $account_book->getName(); ?>][isVisible]" />
-						<input value="true" type="checkbox" name="dm_API_address_books[<?php echo $account_book->getName(); ?>][isVisible]" disabled="disabled" <?php echo $visible; ?>/></td>
-				</tr>
-
-				<?php
 			}
 			?>
+
+			<tr id="<?php echo $account_book->getId(); ?>" class="dragger">
+				<th scope="row"><span class="handle" ><img src="<?php echo plugins_url( 'images/large.png', __FILE__ ); ?>" class="drag_image" /></span><input class="bookselector" type="checkbox" value="<?php echo $account_book->getId(); ?>" name="dm_API_address_books[<?php echo $account_book->getName(); ?>][id]" <?php echo $selected; ?>/></th>
+				<td class="addressbook column-addressbook"><strong><?php echo $account_book->getName(); ?></strong></td>
+				<td><input type="text" disabled="disabled" name="dm_API_address_books[<?php echo $account_book->getName(); ?>][label]" value="<?php echo ! empty( $label ) ? $label : $account_book->getName(); ?>"/></td>
+				<td style="text-align: center;" class=""><input disabled="disabled" value="false" type="hidden" name="dm_API_address_books[<?php echo $account_book->getName(); ?>][isVisible]" />
+					<input value="true" type="checkbox" name="dm_API_address_books[<?php echo $account_book->getName(); ?>][isVisible]" disabled="disabled" <?php echo $visible; ?>/></td>
+			</tr>
+
+			<?php
+		}
+		?>
 		</tbody>
 	</table>
 
@@ -465,106 +462,106 @@ function dm_API_data_fields_input() {
 			$neworder = '&order=asc';
 		}
 	} else {
-        uasort( $dm_API_data_fields, 'dotdigital_item_sort_asc' );
-        $neworder = '&order=desc';
+		uasort( $dm_API_data_fields, 'dotdigital_item_sort_asc' );
+		$neworder = '&order=desc';
 	}
 	?>
-		<table class="wp-list-table widefat fixed ">
-			<thead>
-				<th scope="col" id="cb" class="manage-column column-cb check-column " style=""><input class="multiselector" type="checkbox"/></th>
-				<th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_data_fields
+	<table class="wp-list-table widefat fixed ">
+		<thead>
+		<th scope="col" id="cb" class="manage-column column-cb check-column " style=""><input class="multiselector" type="checkbox"/></th>
+		<th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_data_fields
 				<?php
 				if ( isset( $neworder ) ) {
 					echo $neworder;}
 				?>
 				"><span>Contact data fields</span><span class="sorting-indicator"></span></a></th>
-				<th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
-				<th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Required?</th>
-			</thead>
-			<tfoot>
-				<tr>
-					<th scope="col" id="cb" class="manage-column column-cb check-column " style=""><input class="multiselector" type="checkbox"/></th>
-					<th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_data_fields
+		<th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
+		<th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Required?</th>
+		</thead>
+		<tfoot>
+		<tr>
+			<th scope="col" id="cb" class="manage-column column-cb check-column " style=""><input class="multiselector" type="checkbox"/></th>
+			<th scope="col" id="addressbook" class="manage-column column-addressbook sortable desc" style=""><a href="?page=dm_form_settings&tab=my_data_fields
 					<?php
 					if ( isset( $neworder ) ) {
 						echo $neworder;}
 					?>
 					"><span>Contact data fields</span><span class="sorting-indicator"></span></a></th>
-					<th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
-					<th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Required?</th>
-				</tr>
-			</tfoot>
-			<tbody id="the-list" class="sort_fields">
+			<th scope="col" id="changelabel" class="manage-column column-changelabel" style="">Change label</th>
+			<th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">Required?</th>
+		</tr>
+		</tfoot>
+		<tbody id="the-list" class="sort_fields">
 
-	<?php
-	$selected_fields = get_option( 'dm_API_data_fields' );
+		<?php
+		$selected_fields = get_option( 'dm_API_data_fields' );
 
-	// sorting data fields
-	$indexes_to_replace = array();
-	$elements_to_swap = array();
-	// re-sort
-	if ( ! empty( $selected_fields ) ) {
-		$swapped_array = array();
-		foreach ( $dm_API_data_fields as $data_field ) {
-			if ( in_array( $data_field->getName(), array_keys( $selected_fields ) ) ) {
-				$indexes_to_replace[] = array_search( $data_field, $dm_API_data_fields );
-				$elements_to_swap[] = $data_field;
-			}
-		}
-
-		foreach ( $selected_fields as $field_name => $field_details ) {
-			foreach ( $elements_to_swap as $element ) {
-				if ( $field_name == $element->getName() ) {
-					$swapped_array[] = $element;
-				}
-			}
-		}
-
-		if ( ! empty( $indexes_to_replace ) ) {
-			$new_order = array_combine( $indexes_to_replace, $swapped_array );
-
-			foreach ( $new_order as $new_key => $element ) {
-				$old_index = array_search( $element, $dm_API_data_fields );
-				$temp = $dm_API_data_fields[ $new_key ];
-				$dm_API_data_fields[ $new_key ] = $element;
-				$dm_API_data_fields[ $old_index ] = $temp;
-			}
-		}
-	}
-
-	// end of sorting
-	foreach ( $dm_API_data_fields as $dm_API_data_field ) {
-
-		$selected = '';
-		$label = '';
-		$required = '';
-
+		// sorting data fields
+		$indexes_to_replace = array();
+		$elements_to_swap = array();
+		// re-sort
 		if ( ! empty( $selected_fields ) ) {
-			if ( in_array( $dm_API_data_field->getName(), array_keys( $selected_fields ) ) ) {
-				$selected = " checked='checked'";
-
-				$fields_values = $selected_fields[ $dm_API_data_field->getName() ];
-
-				$label = $fields_values['label'];
-				if ( $fields_values['isRequired'] == 'true' ) {
-					$required = " checked='checked'";
+			$swapped_array = array();
+			foreach ( $dm_API_data_fields as $data_field ) {
+				if ( in_array( $data_field->getName(), array_keys( $selected_fields ) ) ) {
+					$indexes_to_replace[] = array_search( $data_field, $dm_API_data_fields );
+					$elements_to_swap[] = $data_field;
 				}
 			}
+
+			foreach ( $selected_fields as $field_name => $field_details ) {
+				foreach ( $elements_to_swap as $element ) {
+					if ( $field_name == $element->getName() ) {
+						$swapped_array[] = $element;
+					}
+				}
+			}
+
+			if ( ! empty( $indexes_to_replace ) ) {
+				$new_order = array_combine( $indexes_to_replace, $swapped_array );
+
+				foreach ( $new_order as $new_key => $element ) {
+					$old_index = array_search( $element, $dm_API_data_fields );
+					$temp = $dm_API_data_fields[ $new_key ];
+					$dm_API_data_fields[ $new_key ] = $element;
+					$dm_API_data_fields[ $old_index ] = $temp;
+				}
+			}
+		}
+
+		// end of sorting
+		foreach ( $dm_API_data_fields as $dm_API_data_field ) {
+
+			$selected = '';
+			$label = '';
+			$required = '';
+
+			if ( ! empty( $selected_fields ) ) {
+				if ( in_array( $dm_API_data_field->getName(), array_keys( $selected_fields ) ) ) {
+					$selected = " checked='checked'";
+
+					$fields_values = $selected_fields[ $dm_API_data_field->getName() ];
+
+					$label = $fields_values['label'];
+					if ( $fields_values['isRequired'] == 'true' ) {
+						$required = " checked='checked'";
+					}
+				}
+			}
+			?>
+			<tr id="<?php echo $dm_API_data_field->getName(); ?>" class="dragger">
+				<th  scope="row" ><span class="handle"><img src="<?php echo plugins_url( 'images/large.png', __FILE__ ); ?>" class="drag_image" /></span><input class="bookselector" type="checkbox" value="<?php echo $dm_API_data_field->getName(); ?>" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][name]" <?php echo $selected; ?>/> </th>
+				<td><strong><?php echo $dm_API_data_field->getName(); ?></strong></td>
+				<td><input  size="50" type="text" disabled="disabled" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][label]" value ="<?php echo ! empty( $label ) ? $label : ucwords( strtolower( $dm_API_data_field->getName() ) ); ?>" /></td>
+				<td class="" style="text-align: center;"><input  disabled="disabled" value="false" type="hidden" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][isRequired]"/>
+					<input value="true" type="checkbox" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][isRequired]"  disabled="disabled" <?php echo $required; ?>/>
+					<input disabled="disabled" value="<?php echo $dm_API_data_field->getType(); ?>" type="hidden" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][type]" /></td>
+			</tr>
+			<?php
 		}
 		?>
-				<tr id="<?php echo $dm_API_data_field->getName(); ?>" class="dragger">
-					<th  scope="row" ><span class="handle"><img src="<?php echo plugins_url( 'images/large.png', __FILE__ ); ?>" class="drag_image" /></span><input class="bookselector" type="checkbox" value="<?php echo $dm_API_data_field->getName(); ?>" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][name]" <?php echo $selected; ?>/> </th>
-					<td><strong><?php echo $dm_API_data_field->getName(); ?></strong></td>
-					<td><input  size="50" type="text" disabled="disabled" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][label]" value ="<?php echo !empty($label) ? $label : ucwords( strtolower( $dm_API_data_field->getName() ) )?>" /></td>
-					<td class="" style="text-align: center;"><input  disabled="disabled" value="false" type="hidden" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][isRequired]"/>
-						<input value="true" type="checkbox" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][isRequired]"  disabled="disabled" <?php echo $required; ?>/>
-						<input disabled="disabled" value="<?php echo $dm_API_data_field->getType(); ?>" type="hidden" name="dm_API_data_fields[<?php echo $dm_API_data_field->getName(); ?>][type]" /></td>
-				</tr>
-				<?php
-	}
-	?>
-			</tbody>
-		</table>
+		</tbody>
+	</table>
 	<?php
 }
 
@@ -673,176 +670,176 @@ function dm_settings_menu_display() {
 			$_SESSION['connection'] = 1;
 			$_SESSION['dm_account_books'] = serialize( $dm_account_books );
 			$_SESSION['dm_data_fields'] = serialize( $dm_data_fields );
-		} catch (ResponseValidationException $responseValidationException) {
+		} catch ( ResponseValidationException $responseValidationException ) {
 			add_settings_error( 'dm_API_credentials', 'dm_API_credentials_error', 'Your API credentials seem to be invalid.' );
 		}
 	}
 	?>
-		<style>
-			#namediv input.bookselector[type="checkbox"] {width: auto !important;}
-		</style>
+	<style>
+		#namediv input.bookselector[type="checkbox"] {width: auto !important;}
+	</style>
 
-		<div class="wrap">
-			<div id="icon-dotdigital" class="icon32"></div>
-			<h2 style="padding:9px 15px 4px 0;">Dotdigital Signup Form</h2>
-		<?php settings_errors(); ?>
-		<?php
-		$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'about_dm';
-		?>
+	<div class="wrap">
+	<div id="icon-dotdigital" class="icon32"></div>
+	<h2 style="padding:9px 15px 4px 0;">Dotdigital Signup Form</h2>
+	<?php settings_errors(); ?>
+	<?php
+	$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'about_dm';
+	?>
 
-			<h2 class='nav-tab-wrapper'>
-				<a href='?page=dm_form_settings&tab=about_dm' class="nav-tab <?php echo $active_tab == 'about_dm' ? 'nav-tab-active' : ''; ?>">About</a>
-				<a href='?page=dm_form_settings&tab=api_credentials' class="nav-tab <?php echo $active_tab == 'api_credentials' ? 'nav-tab-active' : ''; ?>">API credentials</a>
-				<a href='?page=dm_form_settings&tab=my_address_books' class="nav-tab <?php echo $active_tab == 'my_address_books' ? 'nav-tab-active' : ''; ?>">My address books</a>
-				<a href='?page=dm_form_settings&tab=my_data_fields' class="nav-tab <?php echo $active_tab == 'my_data_fields' ? 'nav-tab-active' : ''; ?>">My contact data fields</a>
-				<a href='?page=dm_form_settings&tab=my_form_msg' class="nav-tab <?php echo $active_tab == 'my_form_msg' ? 'nav-tab-active' : ''; ?>">Messages</a>
-				<a href='?page=dm_form_settings&tab=my_redirections' class="nav-tab <?php echo $active_tab == 'my_redirections' ? 'nav-tab-active' : ''; ?>">Redirections</a>
-			</h2>
-		<?php
-		if ( $active_tab == 'my_address_books' ) {
-			if ( isset( $dm_account_books ) ) {
-				?>
+	<h2 class='nav-tab-wrapper'>
+		<a href='?page=dm_form_settings&tab=about_dm' class="nav-tab <?php echo $active_tab == 'about_dm' ? 'nav-tab-active' : ''; ?>">About</a>
+		<a href='?page=dm_form_settings&tab=api_credentials' class="nav-tab <?php echo $active_tab == 'api_credentials' ? 'nav-tab-active' : ''; ?>">API credentials</a>
+		<a href='?page=dm_form_settings&tab=my_address_books' class="nav-tab <?php echo $active_tab == 'my_address_books' ? 'nav-tab-active' : ''; ?>">My address books</a>
+		<a href='?page=dm_form_settings&tab=my_data_fields' class="nav-tab <?php echo $active_tab == 'my_data_fields' ? 'nav-tab-active' : ''; ?>">My contact data fields</a>
+		<a href='?page=dm_form_settings&tab=my_form_msg' class="nav-tab <?php echo $active_tab == 'my_form_msg' ? 'nav-tab-active' : ''; ?>">Messages</a>
+		<a href='?page=dm_form_settings&tab=my_redirections' class="nav-tab <?php echo $active_tab == 'my_redirections' ? 'nav-tab-active' : ''; ?>">Redirections</a>
+	</h2>
+	<?php
+	if ( $active_tab == 'my_address_books' ) {
+		if ( isset( $dm_account_books ) ) {
+			?>
 
-					<div class="metabox-holder columns-2 newdmstyle" id="post-body">
-						<div id="post-body-content">
-							<div id="namediv" class="postbox">
-								<form action="options.php" method="post">
-					<?php settings_fields( 'dm_API_address_books' ); ?>
-					<?php do_settings_sections( 'address_books_section' ); ?>
-									<p><a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2#My%20address%20books" target="_blank">Find out more...</a></p>
+			<div class="metabox-holder columns-2 newdmstyle" id="post-body">
+				<div id="post-body-content">
+					<div id="namediv" class="postbox">
+						<form action="options.php" method="post">
+							<?php settings_fields( 'dm_API_address_books' ); ?>
+							<?php do_settings_sections( 'address_books_section' ); ?>
+							<p><a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2#My%20address%20books" target="_blank">Find out more...</a></p>
 
 
 
-							</div>
-						</div>
 					</div>
 				</div>
-				<input name="Submit" type="submit" value="Save Changes" class="button-primary action">
-				</form>
-
-					<?php
-			} else {
-				?>
-				<div class="metabox-holder columns-2 newdmstyle" id="post-body">
-					<table width="100%" cellspacing="0" cellpadding="0">
-						<tbody>
-							<tr valign="top">
-								<td>
-									<div id="post-body-content">
-										<div id="namediv" class="postbox">
-											<h3>You're not up and running yet...</h3>
-											<div class="inside">
-												<p>Before you can use this tab, you need to enter your API credentials. See our <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2" target="_blank">user guide</a> on how to get started</p>
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-
-				<?php
-			}
-		}
-
-		if ( $active_tab == 'my_data_fields' ) {
-			if ( isset( $dm_data_fields ) ) {
-				?>
-				<div class="metabox-holder columns-2 newdmstyle" id="post-body">
-					<div id="post-body-content">
-						<div id="namediv" class="postbox">
-							<form action="options.php" method="post">
-				<?php settings_fields( 'dm_API_data_fields' ); ?>
-				<?php do_settings_sections( 'data_fields_section' ); ?>
-								<p><a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2#My%20contact%20data%20fields" target="_blank">Find out more...</a></p>
-						</div>
-					</div>
-				</div>
+			</div>
 			</div>
 			<input name="Submit" type="submit" value="Save Changes" class="button-primary action">
 			</form>
-				<?php
-			} else {
-				?>
+
+			<?php
+		} else {
+			?>
 			<div class="metabox-holder columns-2 newdmstyle" id="post-body">
 				<table width="100%" cellspacing="0" cellpadding="0">
 					<tbody>
-						<tr valign="top">
-							<td>
-								<div id="post-body-content">
-									<div id="namediv" class="postbox">
-										<h3>You're not up and running yet...</h3>
-										<div class="inside">
-
-
-											<p>Before you can use this tab, you need to enter your API credentials. See our <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2" target="_blank">user guide</a> on how to get started</p>
-										</div>
-									</div>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-
-				<?php
-			}
-		}
-
-		if ( $active_tab == 'about_dm' ) {
-			?>
-
-		<div class="metabox-holder columns-2 newdmstyle" id="post-body">
-			<table width="100%" cellspacing="0" cellpadding="0">
-				<tbody>
 					<tr valign="top">
 						<td>
 							<div id="post-body-content">
 								<div id="namediv" class="postbox">
-									<h3>What it does</h3>
+									<h3>You're not up and running yet...</h3>
 									<div class="inside">
-										<p>Add the Dotdigital signup form plugin to your site and allow your visitors to sign up to your dotdigital-powered newsletter and email marketing campaigns. The email addresses of new subscribers can be added to multiple Dotdigital address books, and you can capture contact data fields too.</p>
-
-										<p>If you're not a Dotdigital user already you can find out more about us at <a href="https://www.dotdigital.com">dotdigital.com</a>.</p>
-
-										<p></p><a href="https://wordpress.org/plugins/dotmailer-sign-up-widget/#developers" target="_blank">See the full changelog here...</a></div>
-
+										<p>Before you can use this tab, you need to enter your API credentials. See our <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2" target="_blank">user guide</a> on how to get started</p>
 									</div>
-								</div>
-							</div>
-
-							<div id="post-body-content">
-								<div id="namediv" class="postbox">
-									<h3>Setup advice</h3>
-									<div class="inside">
-										<p>To get you up and running, we have full setup
-											instructions on the <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2" target="_blank">Dotdigital knowledge base</a>.</p>
-									</div>
-								</div>
-							</div>
-
-
-						</td>
-						<td width="10"></td>
-						<td width="350">
-							<div class="postbox">
-								<h3 style="cursor: default;">Dotdigital</h3>
-								<div class="inside">
-									<img src="<?php echo plugins_url( '/images/dotdigital-logo.png', ( __FILE__ ) ); ?>" alt="dotdigital" /> <p>Powerful email marketing made easy - with the most intuitive, easy to use email marketing platform you will find. Grab yourself a free 30-day trial now from our website.&nbsp;Visit <a href="http://dotdigital.com" target="_blank" >dotdigital.com &gt;&gt;</a></p>
 								</div>
 							</div>
 						</td>
 					</tr>
-				</tbody>
-			</table>
-		</div>
+					</tbody>
+				</table>
+			</div>
 
 			<?php
 		}
+	}
 
-		if ( $active_tab == 'api_credentials' ) {
+	if ( $active_tab == 'my_data_fields' ) {
+		if ( isset( $dm_data_fields ) ) {
 			?>
+			<div class="metabox-holder columns-2 newdmstyle" id="post-body">
+				<div id="post-body-content">
+					<div id="namediv" class="postbox">
+						<form action="options.php" method="post">
+							<?php settings_fields( 'dm_API_data_fields' ); ?>
+							<?php do_settings_sections( 'data_fields_section' ); ?>
+							<p><a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2#My%20contact%20data%20fields" target="_blank">Find out more...</a></p>
+					</div>
+				</div>
+			</div>
+			</div>
+			<input name="Submit" type="submit" value="Save Changes" class="button-primary action">
+			</form>
+			<?php
+		} else {
+			?>
+			<div class="metabox-holder columns-2 newdmstyle" id="post-body">
+				<table width="100%" cellspacing="0" cellpadding="0">
+					<tbody>
+					<tr valign="top">
+						<td>
+							<div id="post-body-content">
+								<div id="namediv" class="postbox">
+									<h3>You're not up and running yet...</h3>
+									<div class="inside">
+
+
+										<p>Before you can use this tab, you need to enter your API credentials. See our <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2" target="_blank">user guide</a> on how to get started</p>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<?php
+		}
+	}
+
+	if ( $active_tab == 'about_dm' ) {
+		?>
+
+		<div class="metabox-holder columns-2 newdmstyle" id="post-body">
+			<table width="100%" cellspacing="0" cellpadding="0">
+				<tbody>
+				<tr valign="top">
+					<td>
+						<div id="post-body-content">
+							<div id="namediv" class="postbox">
+								<h3>What it does</h3>
+								<div class="inside">
+									<p>Add the Dotdigital signup form plugin to your site and allow your visitors to sign up to your dotdigital-powered newsletter and email marketing campaigns. The email addresses of new subscribers can be added to multiple Dotdigital address books, and you can capture contact data fields too.</p>
+
+									<p>If you're not a Dotdigital user already you can find out more about us at <a href="https://www.dotdigital.com">dotdigital.com</a>.</p>
+
+									<p></p><a href="https://wordpress.org/plugins/dotmailer-sign-up-widget/#developers" target="_blank">See the full changelog here...</a></div>
+
+							</div>
+						</div>
+		</div>
+
+		<div id="post-body-content">
+			<div id="namediv" class="postbox">
+				<h3>Setup advice</h3>
+				<div class="inside">
+					<p>To get you up and running, we have full setup
+						instructions on the <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2" target="_blank">Dotdigital knowledge base</a>.</p>
+				</div>
+			</div>
+		</div>
+
+
+		</td>
+		<td width="10"></td>
+		<td width="350">
+			<div class="postbox">
+				<h3 style="cursor: default;">Dotdigital</h3>
+				<div class="inside">
+					<img src="<?php echo plugins_url( '/images/dotdigital-logo.png', ( __FILE__ ) ); ?>" alt="dotdigital" /> <p>Powerful email marketing made easy - with the most intuitive, easy to use email marketing platform you will find. Grab yourself a free 30-day trial now from our website.&nbsp;Visit <a href="http://dotdigital.com" target="_blank" >dotdigital.com &gt;&gt;</a></p>
+				</div>
+			</div>
+		</td>
+		</tr>
+		</tbody>
+		</table>
+		</div>
+
+		<?php
+	}
+
+	if ( $active_tab == 'api_credentials' ) {
+		?>
 
 		<div class="metabox-holder columns-2 newdmstyle" id="post-body">
 			<div id="post-body-content">
@@ -851,9 +848,9 @@ function dm_settings_menu_display() {
 
 					<form action="options.php" method="post">
 
-			<?php settings_fields( 'dm_API_credentials' ); ?>
+						<?php settings_fields( 'dm_API_credentials' ); ?>
 
-			<?php do_settings_sections( 'credentials_section' ); ?>
+						<?php do_settings_sections( 'credentials_section' ); ?>
 						<p><a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2#API%20credentials" target="_blank">Find out more...</a></p>
 				</div>
 			</div>
@@ -864,74 +861,74 @@ function dm_settings_menu_display() {
 		<input name="Submit" type="submit" value="Save Changes" class="button-secondary action">
 		</form>
 
-			<?php
-			if ( isset( $connection ) ) {
-				$account_info = $connection->getAccountInfo();
-				if ( $account_info && $account_info->getProperties() ) {
-					?>
-			<div class="metabox-holder columns-2 newdmstyle" id="post-body">
-				<table width="100%" cellspacing="0" cellpadding="0">
-					<tbody>
+		<?php
+		if ( isset( $connection ) ) {
+			$account_info = $connection->getAccountInfo();
+			if ( $account_info && $account_info->getProperties() ) {
+				?>
+				<div class="metabox-holder columns-2 newdmstyle" id="post-body">
+					<table width="100%" cellspacing="0" cellpadding="0">
+						<tbody>
 						<tr valign="top">
 							<td>
 								<div id="post-body-content">
 									<div id="namediv" class="postbox">
 										<h3>Account details</h3>
 										<div class="inside">
-							<?php
-							$acc_dets = array();
-							foreach ( $account_info->getProperties() as $info ) {
-								switch ( $info['name'] ) {
-									case 'Name':
-										$acc_dets['Name'] = $info['value'];
-										break;
-									case 'MainEmail':
-										$acc_dets['MainEmail'] = $info['value'];
-										break;
-									case 'ApiCallsInLastHour':
-										$acc_dets['ApiCallsInLastHour'] = $info['value'];
-										break;
-									case 'ApiCallsRemaining':
-										$acc_dets['ApiCallsRemaining'] = $info['value'];
-										break;
-									case 'ApiEndpoint':
-										$acc_dets['ApiEndpoint'] = $info['value'];
-										$api_endpoint = get_option( 'dm_api_endpoint' );
-										if ( ( $api_endpoint == false ) || ( $api_endpoint != $acc_dets['ApiEndpoint'] ) ) {
-											update_option( 'dm_api_endpoint', $acc_dets['ApiEndpoint'] );
-										}
-										break;
-								}
-							}
+											<?php
+											$acc_dets = array();
+											foreach ( $account_info->getProperties() as $info ) {
+												switch ( $info['name'] ) {
+													case 'Name':
+														$acc_dets['Name'] = $info['value'];
+														break;
+													case 'MainEmail':
+														$acc_dets['MainEmail'] = $info['value'];
+														break;
+													case 'ApiCallsInLastHour':
+														$acc_dets['ApiCallsInLastHour'] = $info['value'];
+														break;
+													case 'ApiCallsRemaining':
+														$acc_dets['ApiCallsRemaining'] = $info['value'];
+														break;
+													case 'ApiEndpoint':
+														$acc_dets['ApiEndpoint'] = $info['value'];
+														$api_endpoint = get_option( 'dm_api_endpoint' );
+														if ( ( $api_endpoint == false ) || ( $api_endpoint != $acc_dets['ApiEndpoint'] ) ) {
+															update_option( 'dm_api_endpoint', $acc_dets['ApiEndpoint'] );
+														}
+														break;
+												}
+											}
 
-							echo "<p style='font-weight:bold;'>Account holder name:</p> {$acc_dets['Name']}";
-							echo "<p style='font-weight:bold;'>Main account email address:</p> {$acc_dets['MainEmail']}";
-							echo "<p style='font-weight:bold;'>API calls in last hour:</p> {$acc_dets['ApiCallsInLastHour']}";
-							echo "<p style='font-weight:bold;'>API calls remaining:</p> {$acc_dets['ApiCallsRemaining']}";
-							echo "<p style='font-weight:bold;'>API endpoint:</p> {$acc_dets['ApiEndpoint']}";
-							?>
+											echo "<p style='font-weight:bold;'>Account holder name:</p> {$acc_dets['Name']}";
+											echo "<p style='font-weight:bold;'>Main account email address:</p> {$acc_dets['MainEmail']}";
+											echo "<p style='font-weight:bold;'>API calls in last hour:</p> {$acc_dets['ApiCallsInLastHour']}";
+											echo "<p style='font-weight:bold;'>API calls remaining:</p> {$acc_dets['ApiCallsRemaining']}";
+											echo "<p style='font-weight:bold;'>API endpoint:</p> {$acc_dets['ApiEndpoint']}";
+											?>
 										</div>
 									</div>
 								</div>
 							</td>
 						</tr>
-					</tbody>
-				</table>
-			</div>
-					<?php
-				} // if ($account_info->getProperties())
-			} // end if ($active_tab == 'api_credentials')
-		} // end if isset($connection)
+						</tbody>
+					</table>
+				</div>
+				<?php
+			} // if ($account_info->getProperties())
+		} // end if ($active_tab == 'api_credentials')
+	} // end if isset($connection)
 
-		if ( $active_tab == 'my_form_msg' ) {
-			?>
+	if ( $active_tab == 'my_form_msg' ) {
+		?>
 
 		<div class="metabox-holder columns-2 newdmstyle" id="post-body">
 			<div id="post-body-content">
 				<div id="namediv" class="postbox" style="padding-bottom:10px;">
 					<form action="options.php" method="post">
-										<?php settings_fields( 'dm_API_messages' ); ?>
-										<?php do_settings_sections( 'messages_section' ); ?>
+						<?php settings_fields( 'dm_API_messages' ); ?>
+						<?php do_settings_sections( 'messages_section' ); ?>
 						<p><a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2#Messages" target="_blank">Find out more...</a></p>
 				</div>
 			</div>
@@ -940,27 +937,27 @@ function dm_settings_menu_display() {
 		<input name="Submit" type="submit" value="Save Changes" class="button-primary action">
 		</form>
 
-			<?php
-		}
+		<?php
+	}
 
-		if ( $active_tab == 'my_redirections' ) {
-			?>
+	if ( $active_tab == 'my_redirections' ) {
+		?>
 
 		<div class="metabox-holder columns-2 newdmstyle" id="post-body">
 			<div id="post-body-content">
 				<div id="namediv" class="postbox" style="padding-bottom:10px;">
 					<form action="options.php" method="post">
-								<?php settings_fields( 'dm_redirections' ); ?>
-								<?php do_settings_sections( 'redirections_section' ); ?>
+						<?php settings_fields( 'dm_redirections' ); ?>
+						<?php do_settings_sections( 'redirections_section' ); ?>
 				</div>
 			</div>
 		</div>
 		</div>
 		<input name="Submit" type="submit" value="Save Changes" class="button-primary action">
 		</form>
-			<?php
-		}
-		?>
+		<?php
+	}
+	?>
 	</div>
 	<?php
 }
