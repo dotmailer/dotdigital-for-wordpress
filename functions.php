@@ -163,3 +163,46 @@ function checkBooksVisibility( $booksArray ) {
 		return false;
 	}
 }
+
+
+// *********************
+// *  Install Blocks   *
+// *********************
+function create_dotdigital_signup_form_block() {
+	register_block_type(
+		__DIR__ . '/build/signup-form'
+	);
+}
+add_action( 'init', 'create_dotdigital_signup_form_block' );
+
+/**
+ * Return Widget content
+ */
+function dotdigital_widget_content( $request )
+{
+	ob_start();
+	the_widget(
+		'DM_Widget',
+		array(),
+		array(
+			'showtitle' => $request['showtitle'] ?? false,
+			'showdesc' => $request['showdesc'] ?? false,
+			'redirection' => $request['redirecturl'] ?? '',
+		)
+	);
+	return ob_get_clean();
+}
+
+add_action( 'rest_api_init', function () {
+	register_rest_route(
+		'dotdigital/v1',
+		'/signup-widget',
+		[
+			'methods'  => 'GET',
+			'callback' => 'dotdigital_widget_content',
+			'permission_callback' => '__return_true'
+		]
+	);
+} );
+
+

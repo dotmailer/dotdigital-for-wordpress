@@ -5,10 +5,10 @@ class DM_Widget extends WP_Widget {
 	function __construct() {
 		$widget_ops = array(
 			'classname' => 'dm_widget',
-			'description' => __( 'Put a signup form on your WordPress website.', 'dm_widget' ),
+			'description' => __( 'Deprecated - please use the new Dotdigital Signup Form block.', 'dm_widget' ),
 		);
 		$control_ops = array( 'id_base' => 'dm_widget' );
-		parent::__construct( 'dm_widget', __( 'Dotdigital Signup Form', 'dm_widget' ), $widget_ops, $control_ops );
+		parent::__construct( 'dm_widget', __( 'Dotdigital Signup Form [Legacy]', 'dm_widget' ), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -24,7 +24,7 @@ class DM_Widget extends WP_Widget {
 		if ( empty( $creds ) ) {
 			?>
 			<div>
-				<?php echo "<p class='error_message'>The Dotdigital Signup Form plugin cannot be activated. Please use Dotdigital settings from your admin area to customise your form.</p>"; ?>
+				<?php echo "<p class='error_message'>Dotdigital Signup Form: invalid API credentials. Please check your API credentials in the plugin settings.</p>"; ?>
 			</div>
 			<?php
 			return;
@@ -32,7 +32,7 @@ class DM_Widget extends WP_Widget {
 		if ( empty( $msgs ) ) {
 			?>
 			<div>
-				<?php echo "<p class='error_message'>The Dotdigital Signup Form plugin cannot be activated. No messages have been set up. Please use the messages tab to set them up.</p>"; ?>
+				<?php echo "<p class='error_message'>Dotdigital Signup Form: no messages configured. Please set form messages via the 'Messages' tab in the plugin settings.</p>"; ?>
 			</div>
 			<?php
 			return;

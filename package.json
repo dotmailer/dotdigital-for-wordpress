@@ -1,0 +1,36 @@
+{
+  "name": "dotdigital-signup-form",
+  "version": "0.1.0",
+  "description": "Dotdigital Signup Form",
+  "author": "Dotdigital",
+  "license": "GPL-2.0-or-later",
+  "homepage": "#",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "wp-scripts build --webpack-src-dir=blocks --output-path=build --webpack-copy-php",
+    "format": "wp-scripts format --webpack-src-dir=blocks",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "packages-update": "wp-scripts packages-update",
+    "plugin-zip": "wp-scripts build --webpack-src-dir=blocks --output-path=build --webpack-copy-php && wp-scripts plugin-zip",
+    "start": "wp-scripts start --webpack-src-dir=blocks --output-path=build --webpack-copy-php"
+  },
+  "dependencies": {
+    "classnames": "^2.3.2"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^24.1.0",
+    "eslint": "^8.10.0"
+  },
+  "files": [
+    "vendor",
+    "build",
+    "css",
+    "images",
+    "js",
+    "dm_shortcode.php",
+    "dm_signup_form.php",
+    "dm_widget.php",
+    "functions.php"
+  ]
+}
