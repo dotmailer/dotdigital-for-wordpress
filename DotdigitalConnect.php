@@ -58,6 +58,15 @@ class DotdigitalConnect {
 	}
 
 	/**
+	 * @return array
+	 */
+	public function listSurveys()
+	{
+		$surveys = $this->client->surveys->show();
+		return $surveys->getList();
+	}
+
+	/**
 	 * @param string $email
 	 * @param string $addressBookId
 	 * @param array  $datafields

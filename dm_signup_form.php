@@ -961,4 +961,64 @@ function dm_settings_menu_display() {
 	</div>
 	<?php
 }
+/**
+ * Registers the block using the metadata loaded from the `block.json` file.
+ * Behind the scenes, it registers also all assets so they can be enqueued
+ * through the block editor in the corresponding context.
+ *
+ * @see https://developer.wordpress.org/reference/functions/register_block_type/
+ */
+function pages_and_forms_block_init() {
+    register_block_type( __DIR__ . '/build/pages-and-forms' );
+}
+add_action( 'init', 'pages_and_forms_block_init' );
+
+/* Create Custom Endpoint */
+function register_surveys_and_forms_endpoint() {
+	register_rest_route('dotdigital/v1', '/surveys/', array(
+			'methods' => 'GET',
+			'callback' => 'fetch_surveys',
+			'permission_callback' => function() {
+				return current_user_can('manage_options');
+			}
+	));
+}
+add_action('rest_api_init', 'register_surveys_and_forms_endpoint');
+
+function fetch_surveys($request) {
+	// Your logic to handle the API request and generate the response
+	$options = get_option( 'dm_API_credentials' );
+
+	if ( isset( $options['dm_API_username'] ) && isset( $options['dm_API_password'] ) ) {
+		$connection = new DotdigitalConnect(
+				array(
+						'username' => $options['dm_API_username'],
+						'password' => $options['dm_API_password'],
+				)
+		);
+		try {
+			$surveys = $connection->listSurveys();
+		} catch ( ResponseValidationException $responseValidationException ) {
+			add_settings_error( 'dm_API_credentials', 'dm_API_credentials_error', 'Your API credentials seem to be invalid.' );
+		}
+	}
+
+	$forms = array_map(function ($survey) {
+		if ($survey->getState() == 'Active' && strpos($survey->getUrl(), '/p/')) {
+			return [
+					'label' => $survey->getName(),
+					'value' => $survey->getUrl()
+			];
+		}
+		return false;
+	}, $surveys);
+
+	array_unshift($forms, [
+			'label' => '-- Please select --',
+			'value' => ''
+	]);
+
+	$forms = array_values(array_filter($forms));
+	return rest_ensure_response($forms);
+}
 ?>

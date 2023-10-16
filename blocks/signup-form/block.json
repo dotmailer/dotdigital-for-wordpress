@@ -10,7 +10,7 @@
 		"html": true,
 		"anchor": true
 	},
-	"textdomain": "dm_widget",
+	"textdomain": "dotdigital-for-wordpress",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"render": "file:./render.php",
