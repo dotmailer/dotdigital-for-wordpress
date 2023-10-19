@@ -5,7 +5,11 @@
     <!-- What to scan -->
     <file>.</file>
     <exclude-pattern>/vendor/</exclude-pattern>
+    <exclude-pattern>/build/</exclude-pattern>
+    <exclude-pattern>/node_modules/</exclude-pattern>
     <exclude-pattern>/tests/</exclude-pattern>
+
+
 
     <!-- How to scan -->
     <!-- Usage instructions: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Usage -->
@@ -26,5 +30,12 @@
     <!-- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards -->
     <!-- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties -->
     <config name="minimum_supported_wp_version" value="5.2"/>
-    <rule ref="WordPress"/>
+    <rule ref="WordPress">
+    	<exclude name="Squiz.Commenting.ClassComment.Missing" />
+    	<exclude name="Generic.Commenting.DocComment.MissingShort" />
+    	<exclude name="Squiz.Commenting.FunctionComment.MissingParamName" />
+    	<exclude name="Squiz.Commenting.FunctionComment.MissingParamComment" />
+    	<exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType" />
+    </rule>
+
 </ruleset>

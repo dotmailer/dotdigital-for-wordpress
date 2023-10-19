@@ -1,7 +1,7 @@
 {
-  "name": "dotdigital-signup-form",
+  "name": "dotdigital-for-wordpress",
   "version": "0.1.0",
-  "description": "Dotdigital Signup Form",
+  "description": "Dotdigital for WordPress",
   "author": "Dotdigital",
   "license": "GPL-2.0-or-later",
   "homepage": "#",
@@ -22,16 +22,5 @@
   "devDependencies": {
     "@wordpress/scripts": "^24.1.0",
     "eslint": "^8.10.0"
-  },
-  "files": [
-    "vendor",
-    "build",
-    "css",
-    "images",
-    "js",
-    "dm_shortcode.php",
-    "dm_signup_form.php",
-    "dm_widget.php",
-    "functions.php"
-  ]
+  }
 }

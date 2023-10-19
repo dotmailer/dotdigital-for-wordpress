@@ -4,7 +4,8 @@ import {
 	URLInputButton,
 } from '@wordpress/block-editor';
 import { CheckboxControl, Panel, PanelBody, PanelRow, Spinner } from '@wordpress/components';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
+
 /**
  * Editor styles.
  *
@@ -38,19 +39,11 @@ export default function Edit( { attributes, setAttributes } ) {
 		setAttributes( {
 			showtitle: val,
 		} );
-		setWidgetLoading( true );
-		fetchWidget().then( () => {
-			setWidgetLoading( false );
-		} );
 	};
 
 	const onChangeShowDescription = ( val ) => {
 		setAttributes( {
 			showdesc: val,
-		} );
-		setWidgetLoading( true );
-		fetchWidget().then( () => {
-			setWidgetLoading( false );
 		} );
 	};
 
@@ -65,20 +58,19 @@ export default function Edit( { attributes, setAttributes } ) {
 		padding: '20px',
 	};
 
-	const fetchWidget = () => {
+	useEffect( () => {
 		const params = new URLSearchParams();
 		params.append( 'showtitle', showtitle ? 1 : 0 );
 		params.append( 'showdesc', showdesc ? 1 : 0 );
 		params.append( 'redirection', redirecturl ?? '' );
-
-		return fetch( `//${ window.location.host }?rest_route=/dotdigital/v1/signup-widget&${ params.toString() }` )
+		setWidgetLoading( true );
+		fetch( `//${ window.location.host }?rest_route=/dotdigital/v1/signup-widget&${ params.toString() }` )
 			.then( ( response ) => response.json() )
 			.then( ( data ) => {
 				setWidgetContent( data );
-			} );
-	};
-
-	fetchWidget();
+			} )
+			.finally( () => setWidgetLoading( false ) );
+	}, [ attributes ] );
 
 	return (
 		<>

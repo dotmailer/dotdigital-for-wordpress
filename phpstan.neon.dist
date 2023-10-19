@@ -1,0 +1,7 @@
+parameters:
+	level: 2
+	bootstrapFiles:
+		- tests/phpstan/bootstrap.php
+	excludePaths:
+		- vendor
+		- node_modules

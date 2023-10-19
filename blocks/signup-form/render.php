@@ -2,7 +2,7 @@
 /**
  * Block Name: Dotdigital Signup Form
  *
- * @package dotdigital/dotdigital-signup-form
+ * @package    Dotdigital_WordPress
  * @var array $attributes
  */
 

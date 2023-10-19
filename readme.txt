@@ -1,8 +1,8 @@
-=== Dotdigital Signup Form ===
-Contributors: dotMailer, bsstaveley, amucklow, fstrezos
+=== Dotdigital for WordPress ===
+Contributors: dotMailer, bsstaveley, amucklow, fstrezos, pvpcookie
 Tags: email marketing, newsletter signup
 Requires at least: 5.3
-Tested up to: 6.2.2
+Tested up to: 6.3.1
 Requires PHP: 7.4
 Stable tag: 6.0.3
 License: GPLv2 or later
@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Add the Dotdigital signup form plugin to your site and allow your visitors to sign up to your Dotdigital-powered newsletter and email marketing campaigns. The email addresses of new subscribers can be added to multiple Dotdigital address books.
+Add the Dotdigital for WordPress plugin to your site and allow your visitors to sign up to your Dotdigital-powered newsletter and email marketing campaigns. The email addresses of new subscribers can be added to multiple Dotdigital lists.
 
 If you're not a Dotdigital user already you can find out more about us at <a href="https://www.dotdigital.com">Dotdigital.com</a>.
 
@@ -23,7 +23,7 @@ If you don't already have the plugin, log into your WordPress account and follow
 
 1. Go to 'Plugins' in the left-hand menu
 2. Select 'Add New'
-3. Search for 'Dotdigital Signup Form'
+3. Search for 'Dotdigital for WordPress'
 4. Click on 'Install Now'
 5. When installed, click on 'Activate Plugin'
 
@@ -37,13 +37,13 @@ The plugin will appear as 'Dotdigital Signup Form' in your left-hand menu.
 = Q. My site is hosted by WordPress.com. Will the plugin work for me? =
 A. No. The plugin can only be uploaded to the installed version of WordPress (WordPress.org), not the hosted version (WordPress.com).
 
-= Q. Can I select more than one address book to sign contacts up to? =
-A. Yes you can. This latest version of the plugin allows you to put addresses into multiple address books.
+= Q. Can I select more than one list to sign contacts up to? =
+A. Yes you can. This latest version of the plugin allows you to put addresses into multiple lists.
 
 = Q. Can contacts who have previously unsubscribed from my mailing lists re-subscribe through the plugin? =
 A. Yes they can.
 
-= Q. My contacts are not appearing in my address book. Why is this? =
+= Q. My contacts are not appearing in my list. Why is this? =
 A. Check you have followed the installation steps correctly and that your API email and API password appear exactly as they do in your Dotdigital account. Remember that the API email is automatically generated and should not be changed.
 
 = Q. Can I send the user to a custom Thank You page after subscription? =
@@ -66,9 +66,9 @@ Since plugin version 5, [dotdigital-signup] can also be used with the same param
 == Screenshots ==
 
 1. The plugin will appear as 'Dotdigital Signup Form' in your left-hand menu
-2. Selecting an address book
-3. Changing address book visibility
-4. Reordering address books
+2. Selecting a list
+3. Changing list visibility
+4. Reordering lists
 5. Adding the form to your website
 
 == Copyright ==

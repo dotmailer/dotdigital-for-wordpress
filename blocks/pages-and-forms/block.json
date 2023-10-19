@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "dotdigital-signup-form/pages-and-forms",
+	"name": "dotdigital-for-wordpress/pages-and-forms",
 	"version": "0.1.0",
   	"title": "Dotdigital Surveys, Pages, and Forms",
 	"category": "widgets",

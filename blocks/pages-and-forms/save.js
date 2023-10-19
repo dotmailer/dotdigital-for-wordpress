@@ -36,11 +36,11 @@ export default function save( { attributes } ) {
 	const form_url = parseUrl( selectedOption );
 	const domain = form_url.hostname;
 	const scriptPath = formStyle === 'popover' ? '/resources/sharing/popoverv2.js?' : '/resources/sharing/embed.js?';
+	const form_id = getFormId( form_url.pathname );
+	const form_slug = form_id.replace( /[^a-zA-Z0-9_ -]/s, '-' );
 
 	const form_data = formStyle === 'popover' ? {
 		sharing: 'lp-popover',
-		domain: form_url.hostname,
-		id: getFormId( form_url.pathname ),
 		delay: attributes.showAfter ?? 0,
 		mobile: attributes.showMobile ?? '',
 		keydismiss: attributes.useEsc ?? '',
@@ -48,12 +48,17 @@ export default function save( { attributes } ) {
 		appearance: attributes.stopDisplaying === 'uc' ? 'uc' : '',
 	} : {
 		sharing: 'lp-embedded',
-		domain: form_url.hostname,
-		id: getFormId( form_url.pathname ),
 	};
 
+	form_data.id = form_id;
+	form_data.domain = form_url.hostname;
+	form_data.attach = '#ddg-form-' + form_slug;
+
 	const script_vars = new URLSearchParams( form_data );
+
 	return (
-		<script { ...useBlockProps.save() } src={ '//' + domain + scriptPath + script_vars }></script>
+		<div id={ 'ddg-form-' + form_slug }>
+			<script { ...useBlockProps.save() } src={ '//' + domain + scriptPath + script_vars }></script>
+		</div>
 	);
 }
