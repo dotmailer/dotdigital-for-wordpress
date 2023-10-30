@@ -5,3 +5,6 @@ parameters:
 	excludePaths:
 		- vendor
 		- node_modules
+		- scoper.inc.php
+		- php-scoper.phar
+		- build
