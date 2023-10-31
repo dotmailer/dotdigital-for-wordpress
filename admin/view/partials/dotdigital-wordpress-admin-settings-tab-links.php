@@ -13,7 +13,7 @@
 	<?php foreach ( $tabs as $tab_key => $tab_item ) : ?>
 		<a
 			href='?page=<?php echo esc_attr( $page_slug ); ?>&tab=<?php echo esc_attr( $tab_item->get_url_slug() ); ?>'
-			class="nav-tab <?php echo $active_tab == $tab_item->get_url_slug() ? 'nav-tab_item-active' : ''; ?>">
+			class="nav-tab <?php echo $active_tab == $tab_item->get_url_slug() ? 'nav-tab-active' : ''; ?>">
 			<?php echo esc_html( $tab_item->get_title() ); ?>
 		</a>
 	<?php endforeach; ?>
