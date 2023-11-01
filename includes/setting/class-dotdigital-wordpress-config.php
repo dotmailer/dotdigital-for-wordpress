@@ -20,6 +20,7 @@ class Dotdigital_WordPress_Config {
 	public const SETTING_DATAFIELDS_PATH           = 'dm_API_data_fields';
 	public const SETTING_MESSAGES_PATH             = 'dm_API_messages';
 	public const SETTING_REDIRECTS_PATH            = 'dm_redirections';
+	public const SETTING_INTEGRATION_INSIGHTS      = 'dotdigital_for_wordpress_integration_insights';
 
 	/**
 	 * Get the settings value.

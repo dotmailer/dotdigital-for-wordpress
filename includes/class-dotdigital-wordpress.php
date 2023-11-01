@@ -11,6 +11,8 @@
 namespace Dotdigital_WordPress\Includes;
 
 use Dotdigital_WordPress\Admin\Dotdigital_WordPress_Admin;
+use Dotdigital_Wordpress\Includes\Cron\Dotdigital_Wordpress_Integration_Insights;
+use Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config;
 use Dotdigital_WordPress\Pub\Dotdigital_WordPress_Public;
 use Dotdigital_WordPress\Includes\Rest\Dotdigital_WordPress_Signup_Widget_Controller;
 use Dotdigital_WordPress\Includes\Rest\Dotdigital_WordPress_Surveys_Controller;
@@ -57,6 +59,7 @@ class Dotdigital_WordPress {
 		$this->define_widgets_hooks();
 		$this->define_blocks_hooks();
 		$this->define_rest_hooks();
+		$this->define_cron_schedules();
 	}
 
 	/**
@@ -209,5 +212,19 @@ class Dotdigital_WordPress {
 	 */
 	private function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Define cron schedules.
+	 *
+	 * @return void
+	 */
+	private function define_cron_schedules() {
+		$integration_insights = new Dotdigital_Wordpress_Integration_Insights();
+
+		$this->loader->add_action( 'integration_insights', $integration_insights, 'send_integration_insights' );
+		if ( ! wp_next_scheduled( 'integration_insights' ) && get_option( Dotdigital_WordPress_Config::SETTING_INTEGRATION_INSIGHTS, true ) ) {
+			wp_schedule_event( time(), 'daily', 'integration_insights' );
+		}
 	}
 }

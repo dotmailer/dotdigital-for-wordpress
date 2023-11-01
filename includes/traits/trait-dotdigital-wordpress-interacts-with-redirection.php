@@ -22,11 +22,11 @@ trait Dotdigital_WordPress_Interacts_With_Redirection_Trait {
 			Dotdigital_WordPress_Config::SETTING_REDIRECTS_PATH
 		);
 
-		if ( array_key_exists( 'page', $redirection_settings ) ) {
+		if ( is_array( $redirection_settings ) && array_key_exists( 'page', $redirection_settings ) ) {
 			return get_permalink( $redirection_settings['page'] );
 		}
 
-		if ( array_key_exists( 'url', $redirection_settings ) ) {
+		if ( is_array( $redirection_settings ) && array_key_exists( 'url', $redirection_settings ) ) {
 			return $redirection_settings['url'];
 		}
 

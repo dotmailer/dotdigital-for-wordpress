@@ -221,17 +221,18 @@ class Dotdigital_WordPress_Lists_Admin implements Dotdigital_WordPress_Page_Tab_
 	}
 
 	/**
-	 * @param array $options
+	 * @param array|null $options
 	 *
 	 * @return array|array[]
 	 */
-	public function save( $options = array() ) {
+	public function save( $options ) {
 		$array_structure = array(
 			'id'        => '',
 			'label'     => '',
 			'isVisible' => false,
 		);
 
+		$options = $options ?? array();
 		$options = array_map(
 			function ( $list_option ) use ( $array_structure ) {
 				$current_option              = array_merge( $array_structure, $list_option );

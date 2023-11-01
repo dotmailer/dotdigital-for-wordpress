@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40a20adf9938a2ece76340733b6184d6",
+    "content-hash": "704ca0e4d4c3286eb623a51fef1a7e12",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -74,16 +74,16 @@
         },
         {
             "name": "dotdigital/dotdigital-php",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotmailer/dotdigital-php.git",
-                "reference": "18f7b5982e7f2d7d576bb8d160bfc2590070a973"
+                "reference": "d23b8954f29fba731a96acdb6b402494717735b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotmailer/dotdigital-php/zipball/18f7b5982e7f2d7d576bb8d160bfc2590070a973",
-                "reference": "18f7b5982e7f2d7d576bb8d160bfc2590070a973",
+                "url": "https://api.github.com/repos/dotmailer/dotdigital-php/zipball/d23b8954f29fba731a96acdb6b402494717735b9",
+                "reference": "d23b8954f29fba731a96acdb6b402494717735b9",
                 "shasum": ""
             },
             "require": {
@@ -100,8 +100,8 @@
                 "guzzlehttp/guzzle": "^7.4",
                 "php-http/curl-client": "^2.2",
                 "phpstan/phpstan": "^1.0",
-                "phpunit/phpunit": "^10.1.1",
-                "symfony/dotenv": "^6.2",
+                "phpunit/phpunit": "^9.6",
+                "symfony/dotenv": "^5.4",
                 "symplify/easy-coding-standard": "^9.4"
             },
             "type": "library",
@@ -117,9 +117,9 @@
             "description": "Dotdigital PHP Library",
             "support": {
                 "issues": "https://github.com/dotmailer/dotdigital-php/issues",
-                "source": "https://github.com/dotmailer/dotdigital-php/tree/v2.2.0"
+                "source": "https://github.com/dotmailer/dotdigital-php/tree/v2.3.0"
             },
-            "time": "2023-10-12T12:57:06+00:00"
+            "time": "2023-10-31T10:15:18+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1576,16 +1576,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v5.4.24",
+            "version": "v5.4.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "de237e59c5833422342be67402d487fbf50334ff"
+                "reference": "8560dc532e4e48d331937532a7cbfd2a9f9f53ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/de237e59c5833422342be67402d487fbf50334ff",
-                "reference": "de237e59c5833422342be67402d487fbf50334ff",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/8560dc532e4e48d331937532a7cbfd2a9f9f53ce",
+                "reference": "8560dc532e4e48d331937532a7cbfd2a9f9f53ce",
                 "shasum": ""
             },
             "require": {
@@ -1653,7 +1653,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v5.4.24"
+                "source": "https://github.com/symfony/translation/tree/v5.4.30"
             },
             "funding": [
                 {
@@ -1669,7 +1669,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-19T12:34:17+00:00"
+            "time": "2023-10-28T09:19:54+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -2287,16 +2287,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.39",
+            "version": "1.10.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "d9dedb0413f678b4d03cbc2279a48f91592c97c4"
+                "reference": "93c84b5bf7669920d823631e39904d69b9c7dc5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d9dedb0413f678b4d03cbc2279a48f91592c97c4",
-                "reference": "d9dedb0413f678b4d03cbc2279a48f91592c97c4",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/93c84b5bf7669920d823631e39904d69b9c7dc5d",
+                "reference": "93c84b5bf7669920d823631e39904d69b9c7dc5d",
                 "shasum": ""
             },
             "require": {
@@ -2345,7 +2345,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-10-17T15:46:26+00:00"
+            "time": "2023-10-30T14:48:31+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -2542,5 +2542,5 @@
         "php": "^7.4 || ^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
