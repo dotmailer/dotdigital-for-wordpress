@@ -17,6 +17,13 @@ use Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config;
 class Dotdigital_WordPress_Client {
 
 	/**
+	 * @deprecated
+	 *
+	 * Preserved for backwards compatibility.
+	 */
+	private const LEGACY_CONFIG_PATH = 'dotdigital-signup-form';
+
+	/**
 	 * The plugin name.
 	 *
 	 * @var string $plugin_name
@@ -65,7 +72,7 @@ class Dotdigital_WordPress_Client {
 	 * @return void
 	 */
 	public function store_api_endpoint( $api_endpoint ) {
-		update_option( "{$this->plugin_name}_api_endpoint", $api_endpoint );
+		update_option( self::LEGACY_CONFIG_PATH . '_api_endpoint', $api_endpoint );
 	}
 
 	/**
@@ -74,7 +81,7 @@ class Dotdigital_WordPress_Client {
 	 * @return string
 	 */
 	public function get_api_endpoint(): string {
-		$host = get_option( "{$this->plugin_name}_api_endpoint" );
+		$host = get_option( self::LEGACY_CONFIG_PATH . '_api_endpoint' );
 		if ( ! empty( $host ) ) {
 			return $host;
 		}
