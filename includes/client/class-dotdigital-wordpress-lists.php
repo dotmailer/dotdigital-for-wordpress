@@ -11,6 +11,8 @@ use Dotdigital\V2\Resources\AddressBooks;
 
 class Dotdigital_WordPress_Lists {
 
+	private const SELECT_LIMIT = 1000;
+
 	/**
 	 * Dotdigital client.
 	 *
@@ -36,13 +38,10 @@ class Dotdigital_WordPress_Lists {
 		if ( ! $formatted_lists ) {
 			$formatted_lists = array();
 			try {
-				do {
-					$lists = $this->dotdigital_client->get_client()->addressBooks->show( count( $formatted_lists ) );
-					foreach ( $lists->getList() as $list ) {
-						$formatted_lists[ $list->getId() ] = $list;
-					}
-					$count_fetched_lists = count( $lists->getList() );
-				} while ( AddressBooks::SELECT_LIMIT === $count_fetched_lists );
+				$lists = $this->dotdigital_client->get_client()->addressBooks->show( 0, self::SELECT_LIMIT );
+				foreach ( $lists->getList() as $list ) {
+					$formatted_lists[ $list->getId() ] = $list;
+				}
 			} catch ( \Exception $exception ) {
 				throw $exception;
 			}
