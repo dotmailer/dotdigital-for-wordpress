@@ -6,13 +6,16 @@
  *
  * @var array $lists
  * @var string $identifier
+ * @var bool $has_visible_lists
  */
 
 if ( empty( $lists ) ) {
 	return;
 }
 ?>
+<?php if ( $has_visible_lists ) : ?>
 <p style="margin:10px 0 10px 0;font-weight:bold;">Subscribe to:</p>
+<?php endif; ?>
 <div class="ddg-form-group">
 	<?php foreach ( $lists as $list ) : ?>
 		<?php

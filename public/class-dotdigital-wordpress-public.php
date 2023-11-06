@@ -78,6 +78,14 @@ class Dotdigital_WordPress_Public {
 	public function render_public_lists() {
 		$identifier = apply_filters( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-lists-identifier', 'lists' );
 		$lists      = get_option( Dotdigital_WordPress_Config::SETTING_LISTS_PATH, array() );
+		$has_visible_lists = count(
+			array_filter(
+				$lists,
+				function ( $list ) {
+					return $list['isVisible'];
+				}
+			)
+		) > 0;
 		require DOTDIGITAL_WORDPRESS_PLUGIN_PATH . 'public/view/partial/dotdigital-wordpress-public-lists.php';
 	}
 
