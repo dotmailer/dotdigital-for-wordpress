@@ -96,14 +96,13 @@ class Dotdigital_WordPress_Sign_Up_Widget extends WP_Widget {
 			array(
 				'showtitle'   => 1,
 				'showdesc'    => 1,
-				'redirection' => $this->get_redirection(),
 			)
 		);
 
 		$domain      = strval( DOTDIGITAL_WORDPRESS_PLUGIN_NAME );
 		$showtitle   = $args['showtitle'] ?? 1;
 		$showdesc    = $args['showdesc'] ?? 1;
-		$redirection = $args['redirection'] ?? false;
+		$redirection = $args['redirection'] ?? $this->get_redirection();
 		$widget = $this;
 		require DOTDIGITAL_WORDPRESS_PLUGIN_PATH . 'public/view/widget/dotdigital-wordpress-widget-sign-up.php';
 		require DOTDIGITAL_WORDPRESS_PLUGIN_PATH . 'public/view/widget/dotdigital-wordpress-widget-sign-up-messages.php';

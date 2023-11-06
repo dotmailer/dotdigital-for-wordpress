@@ -41,7 +41,7 @@ use Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget;
 
 	<?php do_action( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-datafields' ); ?>
 	<?php do_action( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-lists' ); ?>
-	<input type="hidden" name="redirection" value="<?php echo esc_attr( $widget->get_redirection() ); ?>" />
+	<input type="hidden" name="redirection" value="<?php echo esc_attr( $redirection ); ?>" />
 	<input type="hidden" name="widget_id" value="<?php echo esc_attr( $widget->id ); ?>" />
 	<input type="hidden" name="origin" value="<?php echo esc_attr( $widget->get_origin_url() ); ?>" />
 	<div class="dotdigital-form-submit">

@@ -12,6 +12,6 @@ the_widget(
 	array(
 		'showtitle' => $attributes['showtitle'] ?? false,
 		'showdesc' => $attributes['showdesc'] ?? false,
-		'redirection' => $attributes['redirecturl'] ?? false,
+		'redirection' => $attributes['redirecturl'] ?? null,
 	)
 );

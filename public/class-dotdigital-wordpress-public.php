@@ -107,9 +107,9 @@ class Dotdigital_WordPress_Public {
 	public function render_signup_widget( $atts = array(), $tag = '' ) {
 		$attributes = shortcode_atts(
 			array(
-				'showtitle'   => 1,
-				'showdesc'    => 1,
-				'redirecturl' => null,
+				'showtitle'   => $atts['showtitle'] ?? 1,
+				'showdesc'    => $atts['showdesc'] ?? 1,
+				'redirecturl' => $atts['redirection'] ?? null,
 			),
 			$atts,
 			$tag
