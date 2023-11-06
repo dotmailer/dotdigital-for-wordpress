@@ -113,7 +113,7 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 			);
 		}
 
-		if ( $this->has_missing_required_data_fields( $data['datafields'] ) ) {
+		if ( $this->has_missing_required_data_fields( $data ) ) {
 			return wp_redirect(
 				add_query_arg(
 					array(
@@ -130,7 +130,7 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 			$contact = new Contact();
 			$contact->setIdentifiers( array( 'email' => $data['email'] ) );
 			$contact->setLists( array_values( $data['lists'] ?? array() ) );
-			$contact->setDataFields( $this->prepare_data_fields( $data['datafields'] ) );
+			$contact->setDataFields( $this->prepare_data_fields( $data['datafields'] ?? array() ) );
 			$this->dotdigital_contact->create_or_update( $contact );
 		} catch ( \Exception $e ) {
 			error_log( $e->getMessage() );
@@ -184,11 +184,12 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 	 * @return bool
 	 */
 	private function has_missing_required_data_fields( array $datafields ) {
-		foreach ( $datafields as $datafield ) {
+		foreach ( $datafields['datafields'] ?? array() as $datafield ) {
 			if ( $datafield['required'] && empty( $datafield['value'] ) ) {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
