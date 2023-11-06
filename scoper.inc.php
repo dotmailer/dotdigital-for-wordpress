@@ -31,6 +31,7 @@ return [
 		'Dotdigital_WordPress'
 	],
 	'exclude-files' => [
+		'dm_signup_form.php',
 		'includes/legacy/DM_Widget.php'
 	],
 	'exclude-classes' => [
