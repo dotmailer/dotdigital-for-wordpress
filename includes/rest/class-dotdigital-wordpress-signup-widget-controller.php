@@ -9,6 +9,7 @@ namespace Dotdigital_WordPress\Includes\Rest;
 
 use Dotdigital\V3\Models\Contact;
 use Dotdigital_WordPress\Includes\Client\Dotdigital_WordPress_Contact;
+use Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config;
 use Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget;
 
 class Dotdigital_WordPress_Signup_Widget_Controller {
@@ -100,7 +101,7 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 			);
 		}
 
-		if ( $this->has_no_lists( $data ) ) {
+		if ( $this->has_no_lists_but_should_have( $data ) ) {
 			return wp_redirect(
 				add_query_arg(
 					array(
@@ -135,15 +136,13 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 		} catch ( \Exception $e ) {
 			error_log( $e->getMessage() );
 			return wp_redirect(
-				esc_url(
-					add_query_arg(
-						array(
-							'success' => false,
-							'message' => Dotdigital_WordPress_Sign_Up_Widget::get_failure_message(),
-							'widget_id' => $data['widget_id'],
-						),
-						$data['origin']
-					)
+				add_query_arg(
+					array(
+						'success' => false,
+						'message' => Dotdigital_WordPress_Sign_Up_Widget::get_failure_message(),
+						'widget_id' => $data['widget_id'],
+					),
+					$data['origin']
 				)
 			);
 		}
@@ -170,21 +169,34 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 	}
 
 	/**
+	 * Check if payload has lists.
+	 *
+	 * If any visible lists are configured, the payload must contain at least one list. Otherwise we don't mind.
+	 *
 	 * @param array $data
 	 *
 	 * @return bool
 	 */
-	private function has_no_lists( array $data ) {
-		return empty( $data['lists'] );
+	private function has_no_lists_but_should_have( array $data ) {
+		$has_visible_lists = count(
+			array_filter(
+				get_option( Dotdigital_WordPress_Config::SETTING_LISTS_PATH ),
+				function ( $list ) {
+					return $list['isVisible'];
+				}
+			)
+		) > 0;
+
+		return $has_visible_lists && empty( $data['lists'] );
 	}
 
 	/**
-	 * @param array $datafields
+	 * @param array $data
 	 *
 	 * @return bool
 	 */
-	private function has_missing_required_data_fields( array $datafields ) {
-		foreach ( $datafields['datafields'] ?? array() as $datafield ) {
+	private function has_missing_required_data_fields( array $data ) {
+		foreach ( $data['datafields'] ?? array() as $datafield ) {
 			if ( $datafield['required'] && empty( $datafield['value'] ) ) {
 				return true;
 			}

@@ -40,13 +40,9 @@ class Dotdigital_WordPress_Contact {
 	 * @throws \Http\Client\Exception If the API call fails.
 	 */
 	public function create_or_update( Contact $contact ) {
-		try {
-			$this->dotdigital_client
-				->get_client()
-				->contacts
-				->patchByIdentifier( $contact->getIdentifiers()->getEmail(), $contact );
-		} catch ( \Exception $exception ) {
-			error_log( $exception->getMessage() );
-		}
+		$this->dotdigital_client
+			->get_client()
+			->contacts
+			->patchByIdentifier( $contact->getIdentifiers()->getEmail(), $contact );
 	}
 }
