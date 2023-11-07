@@ -2,3 +2,7 @@ node_modules
 .DS_Store
 /.vs
 .idea/
+vendor/
+/vendor/**/.git
+build
+build_prefixed
