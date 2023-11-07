@@ -1,6 +1,6 @@
 {
-	"name": "dotdigital/dotdigital-signup-form",
-	"version": "6.1.0",
+	"name": "dotdigital/dotdigital-for-wordpress",
+	"version": "7.0.0",
 	"authors": [
 		{
 			"name": "Dotdigital",
@@ -10,7 +10,7 @@
 	],
 	"require": {
 		"php": "^7.4 || ^8.0",
-		"dotdigital/dotdigital-php": "2.3.0",
+		"dotdigital/dotdigital-php": "2.3.1",
 		"guzzlehttp/psr7": "^2.5",
 		"php-http/curl-client": "^2.3",
 		"guzzlehttp/guzzle": "^7.7",

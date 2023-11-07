@@ -2,9 +2,9 @@
 Contributors: dotMailer, bsstaveley, amucklow, fstrezos, pvpcookie
 Tags: email marketing, newsletter signup
 Requires at least: 5.3
-Tested up to: 6.3.1
+Tested up to: 6.3.2
 Requires PHP: 7.4
-Stable tag: 6.0.3
+Stable tag: 7.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,19 +17,7 @@ If you're not a Dotdigital user already you can find out more about us at <a hre
 
 == Installation ==
 
-If you already have the plugin installed, a message will pop up in the admin area of your WordPress account informing you that a new version is available. Simply update from there.
-
-If you don't already have the plugin, log into your WordPress account and follow these steps:
-
-1. Go to 'Plugins' in the left-hand menu
-2. Select 'Add New'
-3. Search for 'Dotdigital for WordPress'
-4. Click on 'Install Now'
-5. When installed, click on 'Activate Plugin'
-
-The plugin will appear as 'Dotdigital Signup Form' in your left-hand menu.
-
-<a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2#install">Read more detailed information on installation</a>.
+Please refer to our documentation for <a href="https://support.dotdigital.com/hc/en-gb/articles/8199395-use-the-dotdigital-wordpress-sign-up-form-plugin">detailed information on installation and usage</a>.
 
 
 == Frequently Asked Questions ==
@@ -73,7 +61,7 @@ Since plugin version 5, [dotdigital-signup] can also be used with the same param
 
 == Copyright ==
 
-Copyright 2014-2022 Dotdigital (email : support@dotdigital.com)
+Copyright 2014-2023 Dotdigital (email : support@dotdigital.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -91,6 +79,17 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 == Changelog ==
+
+= 7.0.0 =
+
+**What's new**
+- The plugin has been rewritten to fit a more modern, object-oriented boilerplate.
+- We have provided a new Gutenberg block - 'Dotdigital Signup Form' - for the main plugin widget.
+- A new block is also available to embed Surveys, Pages and Forms from Dotdigital.
+- We've added a daily cron to gather data from the plugin configuration and widget usage.
+
+**Improvements**
+- The plugin's vendor namespaces are now prefixed before SVN submission, to prevent namespace clashes.
 
 = 6.0.3 =
 
