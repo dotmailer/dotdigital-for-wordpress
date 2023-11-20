@@ -4,7 +4,7 @@ Tags: email marketing, newsletter signup
 Requires at least: 5.3
 Tested up to: 6.3.2
 Requires PHP: 7.4
-Stable tag: 7.0.0
+Stable tag: 7.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,8 +17,7 @@ If you're not a Dotdigital user already you can find out more about us at <a hre
 
 == Installation ==
 
-Please refer to our documentation for <a href="https://support.dotdigital.com/hc/en-gb/articles/8199395-use-the-dotdigital-wordpress-sign-up-form-plugin">detailed information on installation and usage</a>.
-
+Please refer to our documentation for <a href="https://support.dotdigital.com/en/articles/8199395">detailed information on installation and usage</a>.
 
 == Frequently Asked Questions ==
 
@@ -79,6 +78,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 == Changelog ==
+
+= 7.0.1 =
+
+**Improvements**
+- We updated a support link in our readme.txt.
 
 = 7.0.0 =
 
