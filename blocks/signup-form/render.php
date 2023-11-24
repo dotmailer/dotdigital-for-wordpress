@@ -12,6 +12,7 @@ the_widget(
 	array(
 		'showtitle' => $attributes['showtitle'] ?? false,
 		'showdesc' => $attributes['showdesc'] ?? false,
+		'is_ajax' => $attributes['is_ajax'] ?? false,
 		'redirection' => $attributes['redirecturl'] ?? null,
 	)
 );

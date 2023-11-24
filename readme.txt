@@ -2,7 +2,7 @@
 Contributors: dotMailer, bsstaveley, amucklow, fstrezos, pvpcookie
 Tags: email marketing, newsletter signup
 Requires at least: 5.3
-Tested up to: 6.3.2
+Tested up to: 6.4.1
 Requires PHP: 7.4
 Stable tag: 7.0.1
 License: GPLv2 or later

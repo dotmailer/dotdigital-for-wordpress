@@ -73,6 +73,7 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 				'showtitle'   => $request['showtitle'] ?? false,
 				'showdesc'    => $request['showdesc'] ?? false,
 				'redirection' => $request['redirecturl'] ?? '',
+				'is_ajax' => $request['is_ajax'] ?? false,
 			)
 		);
 		return ob_get_clean();
@@ -83,89 +84,61 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 	 *
 	 * @param \WP_REST_Request $request
 	 *
-	 * @return bool
+	 * @return bool|null
 	 */
 	public function post( \WP_REST_Request $request ) {
 		$data = $request->get_params();
 
-		if ( $this->has_invalid_email( $data['email'] ) ) {
-			return wp_redirect(
-				add_query_arg(
-					array(
-						'success' => false,
-						'message' => Dotdigital_WordPress_Sign_Up_Widget::get_invalid_email_message(),
-						'widget_id' => $data['widget_id'],
-					),
-					$data['origin']
-				)
-			);
+		if ( $data['is_ajax'] && ( ! isset( $_SERVER['HTTP_X_WP_NONCE'] ) || ! wp_verify_nonce( wp_unslash( $_SERVER['HTTP_X_WP_NONCE'] ), 'wp_rest' ) ) ) {  // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			return $this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_fill_required_message(), $data );
 		}
 
-		if ( $this->has_no_lists_but_should_have( $data ) ) {
-			return wp_redirect(
-				add_query_arg(
-					array(
-						'success' => false,
-						'message' => Dotdigital_WordPress_Sign_Up_Widget::get_nobook_message(),
-						'widget_id' => $data['widget_id'],
-					),
-					$data['origin']
-				)
-			);
+		$email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+		$datafields = isset( $_POST['datafields'] ) ? wp_unslash( $_POST['datafields'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$lists = isset( $_POST['lists'] ) ? wp_unslash( $_POST['lists'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+		if ( $this->has_invalid_email( $email ) ) {
+			return $this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_invalid_email_message(), $data );
 		}
 
-		if ( $this->has_missing_required_data_fields( $data ) ) {
-			return wp_redirect(
-				add_query_arg(
-					array(
-						'success' => false,
-						'message' => Dotdigital_WordPress_Sign_Up_Widget::get_fill_required_message(),
-						'widget_id' => $data['widget_id'],
-					),
-					$data['origin']
-				)
-			);
+		if ( $this->has_no_lists_but_should_have( $lists ) ) {
+			return $this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_nobook_message(), $data );
 		}
 
+		if ( $this->has_missing_required_data_fields( $datafields ) ) {
+			return $this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_fill_required_message(), $data );
+		}
+
+		return $this->create_contact( $data );
+	}
+
+	/**
+	 * Create and subscribe the contact.
+	 *
+	 * @param array $data
+	 * @return bool|null
+	 */
+	private function create_contact( $data ) {
 		try {
 			$contact = new Contact();
 			$contact->setIdentifiers( array( 'email' => $data['email'] ) );
 			$contact->setLists( array_values( $data['lists'] ?? array() ) );
-			$contact->setDataFields( $this->prepare_data_fields( $data['datafields'] ?? array() ) );
+			$contact->setDataFields( $this->prepare_data_fields( $data['datafields'] ?? array(), $data['is_ajax'] ?? false ) );
 			$this->dotdigital_contact->create_or_update( $contact );
 		} catch ( \Exception $e ) {
 			error_log( $e->getMessage() );
-			return wp_redirect(
-				add_query_arg(
-					array(
-						'success' => false,
-						'message' => Dotdigital_WordPress_Sign_Up_Widget::get_failure_message(),
-						'widget_id' => $data['widget_id'],
-					),
-					$data['origin']
-				)
-			);
+			return $this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_failure_message(), $data );
 		}
-
-		return wp_redirect(
-			add_query_arg(
-				array(
-					'success' => true,
-					'message' => Dotdigital_WordPress_Sign_Up_Widget::get_success_message(),
-					'widget_id' => $data['widget_id'],
-				),
-				$data['redirection']
-			)
-		);
+		return $this->process_response( true, Dotdigital_WordPress_Sign_Up_Widget::get_success_message(), $data );
 	}
 
 	/**
 	 * @param string $email
 	 *
-	 * @return mixed
+	 * @return bool
 	 */
 	private function has_invalid_email( string $email ) {
-		return ! filter_var( $email, FILTER_VALIDATE_EMAIL );
+		return filter_var( $email, FILTER_VALIDATE_EMAIL ) === false;
 	}
 
 	/**
@@ -173,11 +146,10 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 	 *
 	 * If any visible lists are configured, the payload must contain at least one list. Otherwise we don't mind.
 	 *
-	 * @param array $data
-	 *
+	 * @param array $lists
 	 * @return bool
 	 */
-	private function has_no_lists_but_should_have( array $data ) {
+	private function has_no_lists_but_should_have( array $lists ) {
 		$has_visible_lists = count(
 			array_filter(
 				get_option( Dotdigital_WordPress_Config::SETTING_LISTS_PATH ),
@@ -187,16 +159,15 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 			)
 		) > 0;
 
-		return $has_visible_lists && empty( $data['lists'] );
+		return $has_visible_lists && empty( $lists );
 	}
 
 	/**
-	 * @param array $data
-	 *
+	 * @param array $datafields
 	 * @return bool
 	 */
-	private function has_missing_required_data_fields( array $data ) {
-		foreach ( $data['datafields'] ?? array() as $datafield ) {
+	private function has_missing_required_data_fields( $datafields ) {
+		foreach ( $datafields as $datafield ) {
 			if ( $datafield['required'] && empty( $datafield['value'] ) ) {
 				return true;
 			}
@@ -207,14 +178,99 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 
 	/**
 	 * @param array $datafields
-	 *
+	 * @param bool $is_ajax
 	 * @return array
 	 */
-	private function prepare_data_fields( array $datafields ) {
-		$prepared = array();
-		foreach ( $datafields as $name => $value ) {
-			$prepared[ $name ] = $value['value'];
+	private function prepare_data_fields( array $datafields, bool $is_ajax ) {
+
+		if ( $is_ajax ) {
+			return $this->prepare_data_fields_for_ajax( $datafields );
 		}
-		return $prepared;
+
+		return $this->prepare_data_fields_for_http_post( $datafields );
+	}
+
+	/**
+	 * @param array $datafields
+	 * @return array
+	 */
+	private function prepare_data_fields_for_ajax( array $datafields ) {
+		$processed_datafield = array();
+		foreach ( $datafields as $datafield ) {
+			$processed_datafield[ $datafield['key'] ] = $datafield['value'];
+		}
+
+		return $processed_datafield;
+	}
+
+	/**
+	 * @param array $datafields
+	 * @return array
+	 */
+	private function prepare_data_fields_for_http_post( array $datafields ) {
+		$processed_datafield = array();
+		foreach ( $datafields as $key => $datafield ) {
+			$processed_datafield[ $key ] = $datafield['value'];
+		}
+
+		return $processed_datafield;
+	}
+
+	/**
+	 * @param bool $success
+	 * @param string $message
+	 * @param array $data
+	 * @return bool|null
+	 */
+	private function process_response( bool $success, string $message, array $data ) {
+		if ( $data['is_ajax'] ) {
+			$this->ajax_response( $success, $message, $data['redirection'] );
+			return null;
+		} else {
+			return $this->post_response( $success, $message, $data );
+		}
+	}
+
+	/**
+	 * @param bool $success
+	 * @param string $message
+	 * @param array $data
+	 * @return bool|null
+	 */
+	private function post_response( $success, $message, $data ) {
+		if ( ! empty( $data['redirection'] ) ) {
+			return wp_redirect( $data['redirection'] );
+		}
+
+		return wp_redirect(
+			add_query_arg(
+				array(
+					'success' => (int) $success,
+					'message' => $message,
+					'widget_id' => $data['widget_id'],
+				),
+				$data['origin']
+			)
+		);
+	}
+
+	/**
+	 * @param bool $success
+	 * @param string $message
+	 * @param string $redirection
+	 * @return null
+	 */
+	private function ajax_response( $success, $message, $redirection ) {
+		$data = array(
+			'success' => $success,
+			'message' => $message,
+		);
+
+		if ( ! empty( $redirection ) ) {
+			$data['redirection'] = $redirection;
+		}
+
+		wp_send_json( $data );
+		return null;
 	}
 }

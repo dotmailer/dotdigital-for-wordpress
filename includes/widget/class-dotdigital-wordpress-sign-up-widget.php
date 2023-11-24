@@ -53,6 +53,11 @@ class Dotdigital_WordPress_Sign_Up_Widget extends WP_Widget {
 	private $dotdigital_account_info;
 
 	/**
+	 * @var int
+	 */
+	private $widget_instance_id = 1;
+
+	/**
 	 * Construct.
 	 */
 	public function __construct() {
@@ -102,8 +107,10 @@ class Dotdigital_WordPress_Sign_Up_Widget extends WP_Widget {
 		$domain      = strval( DOTDIGITAL_WORDPRESS_PLUGIN_NAME );
 		$showtitle   = $args['showtitle'] ?? 1;
 		$showdesc    = $args['showdesc'] ?? 1;
-		$redirection = $args['redirection'] ?? $this->get_redirection();
+		$redirection = ! empty( $args['redirection'] ) ? $args['redirection'] : $this->get_redirection();
+		$is_ajax = $args['is_ajax'] ?? false;
 		$widget = $this;
+		$dd_widget_id = $widget->id . '-' . $this->widget_instance_id++;
 		require DOTDIGITAL_WORDPRESS_PLUGIN_PATH . 'public/view/widget/dotdigital-wordpress-widget-sign-up.php';
 		require DOTDIGITAL_WORDPRESS_PLUGIN_PATH . 'public/view/widget/dotdigital-wordpress-widget-sign-up-messages.php';
 	}
@@ -128,11 +135,11 @@ class Dotdigital_WordPress_Sign_Up_Widget extends WP_Widget {
 	public function get_message_class( $widget_id ) {
 		switch ( $this->get_success( $widget_id ) ) {
 			case 1:
-				return 'success';
+				return 'dd-wordpress-success-msg';
 			case 0:
-				return 'error';
+				return 'dd-wordpress-error-msg';
 			default:
-				return 'info';
+				return 'dd-wordpress-info-msg';
 		}
 	}
 

@@ -50,22 +50,29 @@ add_filter(
 
 		<?php if ( 'Boolean' === $data_type ) : ?>
 			<div class="ddg-radio-group">
-				<input class='radio' type='radio' id='yes' name='<?php echo esc_attr( $item_identifier ); ?>[value]' value='Yes' checked/>
-				<label for='yes'>Yes</label><br>
-				<input class='radio' type='radio' id='no' name='<?php echo esc_attr( $item_identifier ); ?>[value]' value='No'/>
-				<label for='no'>No</label><br>
+				<input
+						class="<?php echo esc_attr( apply_filters( 'public/datafield/' . $name . '/input/class', 'radio datafield' ) ); ?>"
+						type='radio'
+						id='yes'
+						name='<?php echo esc_attr( $item_identifier ); ?>[value]'
+						data-datafield-name="<?php echo esc_attr( $name ); ?>" value='Yes' checked/>
+				<label for='yes'><?php echo esc_attr( apply_filters( 'public/datafield/' . $name . '/input/radio/yes/label', 'Yes' ) ); ?></label><br>
+				<input class='radio datafield' type='radio' id='no' name='<?php echo esc_attr( $item_identifier ); ?>[value]' data-datafield-name="<?php echo esc_attr( $name ); ?>" value='No'/>
+				<label for='no'><?php echo esc_attr( apply_filters( 'public/datafield/' . $name . '/input/radio/no/label', 'No' ) ); ?></label><br>
 			</div>
 		<?php else : ?>
 			<input
-				class="<?php echo esc_attr( apply_filters( 'public/datafield/' . $name . '/input/class', 'form-control datafield' ) ); ?>"
-				type="<?php echo esc_attr( apply_filters( 'public/datafield/input/data_type', $data_type ) ); ?>"
-				id="<?php echo esc_attr( $item_identifier ); ?>[value]"
-				name="<?php echo esc_attr( $item_identifier ); ?>[value]"
-				<?php echo esc_attr( apply_filters( 'public/datafield/' . $name . '/input/attributes', '' ) ); ?>
-				<?php
-				if ( $is_required ) :
-					?>
-					required<?php endif; ?>
+					class="<?php echo esc_attr( apply_filters( 'public/datafield/' . $name . '/input/class', 'form-control datafield' ) ); ?>"
+					type="<?php echo esc_attr( apply_filters( 'public/datafield/input/data_type', $data_type ) ); ?>"
+					data-datafield-name="<?php echo esc_attr( $name ); ?>"
+					id="<?php echo esc_attr( $item_identifier ); ?>[value]"
+					name="<?php echo esc_attr( $item_identifier ); ?>[value]"
+					<?php echo esc_attr( apply_filters( 'public/datafield/' . $name . '/input/attributes', '' ) ); ?>
+					<?php
+					if ( $is_required ) :
+						?>
+						data-required="<?php echo 'required'; ?>"
+						required<?php endif; ?>
 			/>
 		<?php endif; ?>
 	</div>
