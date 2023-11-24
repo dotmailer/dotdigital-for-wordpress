@@ -16,10 +16,12 @@ use Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget;
  * @var bool $showtitle
  * @var bool $showdesc
  * @var mixed $redirection
+ * @var bool $is_ajax
+ * @var string $dd_widget_id
  */
 
 ?>
-<form id="<?php echo esc_attr( $widget->id ); ?>" class="dotdigital-signup-form widget" method="post" action="<?php esc_attr( get_bloginfo( 'url' ) ); ?>?rest_route=/dotdigital/v1/signup-widget" >
+<form id="<?php echo esc_attr( $dd_widget_id ); ?>" class="dotdigital-signup-form widget" method="post" action="<?php echo esc_attr( rest_url( 'dotdigital/v1/signup-widget' ) ); ?>">
 	<div class="<?php echo esc_attr( DOTDIGITAL_WORDPRESS_PLUGIN_NAME ); ?>-widget-title">
 		<?php if ( $showtitle ) : ?>
 			<h2><?php echo esc_html( $widget->get_form_title() ); ?></h2>
@@ -42,11 +44,10 @@ use Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget;
 	<?php do_action( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-datafields' ); ?>
 	<?php do_action( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-lists' ); ?>
 	<input type="hidden" name="redirection" value="<?php echo esc_attr( $redirection ); ?>" />
-	<input type="hidden" name="widget_id" value="<?php echo esc_attr( $widget->id ); ?>" />
+	<input type="hidden" name="widget_id" value="<?php echo esc_attr( $dd_widget_id ); ?>" />
 	<input type="hidden" name="origin" value="<?php echo esc_attr( $widget->get_origin_url() ); ?>" />
+	<input type="hidden" name="is_ajax" value="<?php echo esc_attr( $is_ajax ); ?>" />
 	<div class="dotdigital-form-submit">
 		<button type="submit"  name="dm_submit_btn"><?php echo esc_attr( $widget->get_subscribe_button_title() ); ?></button>
 	</div>
 </form>
-
-

@@ -23,10 +23,24 @@
 	display: inline;
 }
 
+.dd-wordpress-success-msg {
+	color: #4F8A10;
+}
+
+.dd-wordpress-error-msg {
+	color: #D8000C;
+}
+
+/**
+ * @deprecated Please use .dd-wordpress-success-msg
+ */
 .success {
 	color: #4F8A10;
 }
 
+/**
+ * @deprecated Please use .dd-wordpress-error-msg
+ */
 .error {
 	color: #D8000C;
 }

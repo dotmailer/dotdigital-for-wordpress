@@ -11,6 +11,7 @@
 namespace Dotdigital_WordPress\Pub;
 
 use Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config;
+use Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget;
 
 class Dotdigital_WordPress_Public {
 
@@ -50,7 +51,21 @@ class Dotdigital_WordPress_Public {
 	 * Register the JavaScript for the public-facing side of the site.
 	 */
 	public function enqueue_scripts() {
+		if ( is_admin() ) {
+			return;
+		}
+
 		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'dotdigital_for_wordpress_public_js', plugin_dir_url( __FILE__ ) . 'js/dotdigital-for-wordpress-public.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script(
+			'dotdigital_for_wordpress_public_js',
+			'dotdigital_form_data',
+			array(
+				'ajax_url' => get_rest_url(),
+				'nonce'    => wp_create_nonce( 'wp_rest' ),
+				'generic_failure_message' => Dotdigital_WordPress_Sign_Up_Widget::get_failure_message(),
+			)
+		);
 	}
 
 	/**

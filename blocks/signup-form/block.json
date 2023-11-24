@@ -2,7 +2,6 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
 	"name": "dotdigital-for-wordpress/signup-form",
-	"version": "0.1.0",
 	"title": "Dotdigital Signup Form",
 	"category": "widgets",
 	"description": "Add a signup form.",
@@ -25,6 +24,10 @@
 		},
 		"redirecturl": {
 			"type": "string"
+		},
+		"is_ajax": {
+		  "type": "boolean",
+		  "default": false
 		}
 	},
   "keywords": [

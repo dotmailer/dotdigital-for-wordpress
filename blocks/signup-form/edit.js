@@ -29,6 +29,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		showtitle,
 		showdesc,
 		redirecturl,
+		is_ajax,
 	} = attributes;
 
 	const blockProps = useBlockProps();
@@ -53,6 +54,12 @@ export default function Edit( { attributes, setAttributes } ) {
 		} );
 	};
 
+	const onChangeAjax = ( val ) => {
+		setAttributes( {
+			is_ajax: val,
+		} );
+	};
+
 	const blockStyle = {
 		backgroundColor: '#f6f7f7',
 		padding: '20px',
@@ -63,6 +70,8 @@ export default function Edit( { attributes, setAttributes } ) {
 		params.append( 'showtitle', showtitle ? 1 : 0 );
 		params.append( 'showdesc', showdesc ? 1 : 0 );
 		params.append( 'redirection', redirecturl ?? '' );
+		params.append( 'is_ajax', is_ajax ? 1 : 0 );
+
 		setWidgetLoading( true );
 		fetch( `//${ window.location.host }?rest_route=/dotdigital/v1/signup-widget&${ params.toString() }` )
 			.then( ( response ) => response.json() )
@@ -84,6 +93,9 @@ export default function Edit( { attributes, setAttributes } ) {
 							<CheckboxControl label="Show description" checked={ showdesc } onChange={ onChangeShowDescription } />
 						</PanelRow>
 						<PanelRow>
+							<CheckboxControl label="Enable AJAX submission" checked={ is_ajax } onChange={ onChangeAjax } />
+						</PanelRow>
+						<PanelRow>
 							<div className={ 'url-button-wrapper' }>
 								<URLInputButton __nextHasNoMarginBottom label="Redirect Url" url={ redirecturl } onChange={ onChangeRedirectUrl } />
 							</div>
@@ -100,17 +112,16 @@ export default function Edit( { attributes, setAttributes } ) {
 			<div
 				{ ...blockProps }
 				style={ blockStyle }>
-				<div className={ 'dd-widget-block-overlay' } style={ { display: widgetLoading ? 'block' : 'none' } } />
-				<Spinner
-					style={ { display: widgetLoading ? 'block' : 'none' } }
-					className={ 'dd-widget-block-loader' }
-				/>
-
 				{ widgetContent ? (
 					<div dangerouslySetInnerHTML={ { __html: widgetContent } } />
 				) : (
 					''
 				) }
+				<div className={ 'dd-widget-block-overlay' } style={ { display: widgetLoading ? 'block' : 'none' } } />
+				<Spinner
+					style={ { display: widgetLoading ? 'block' : 'none' } }
+					className={ 'dd-widget-block-loader' }
+				/>
 			</div>
 		</>
 	);

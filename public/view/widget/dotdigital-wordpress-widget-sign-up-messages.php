@@ -5,11 +5,14 @@
  * @package    Dotdigital_WordPress
  *
  * @var \Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget $widget
+ * @var string $dd_widget_id
  */
 
 ?>
+<?php $messages = get_option( \Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config::SETTING_MESSAGES_PATH ); ?>
 	<div class="form_messages">
-		<p class='<?php echo esc_attr( $widget->get_message_class( $widget->id ) ); ?>'><?php echo esc_html( $widget->get_message( $widget->id ) ); ?></p>
+		<?php if ( $widget->get_message( $dd_widget_id ) ) { ?>
+		<p class='<?php echo esc_attr( $widget->get_message_class( $dd_widget_id ) ); ?>'><?php echo esc_html( $widget->get_message( $dd_widget_id ) ); ?></p>
+		<?php } ?>
 	</div>
 <?php
-
