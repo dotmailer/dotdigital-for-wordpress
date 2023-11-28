@@ -4,7 +4,7 @@ Tags: email marketing, newsletter signup
 Requires at least: 5.3
 Tested up to: 6.4.1
 Requires PHP: 7.4
-Stable tag: 7.0.1
+Stable tag: 7.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,10 +22,10 @@ Please refer to our documentation for <a href="https://support.dotdigital.com/en
 == Frequently Asked Questions ==
 
 = Q. My site is hosted by WordPress.com. Will the plugin work for me? =
-A. No. The plugin can only be uploaded to the installed version of WordPress (WordPress.org), not the hosted version (WordPress.com).
+A. Yes, the plugin will work, but you will need the WordPress.com Business Plan to install plugins.
 
 = Q. Can I select more than one list to sign contacts up to? =
-A. Yes you can. This latest version of the plugin allows you to put addresses into multiple lists.
+A. You can opt to send contacts to multiple lists, some of which can be hidden from the user.
 
 = Q. Can contacts who have previously unsubscribed from my mailing lists re-subscribe through the plugin? =
 A. Yes they can.
@@ -34,52 +34,37 @@ A. Yes they can.
 A. Check you have followed the installation steps correctly and that your API email and API password appear exactly as they do in your Dotdigital account. Remember that the API email is automatically generated and should not be changed.
 
 = Q. Can I send the user to a custom Thank You page after subscription? =
-A. From plugin version 3.4 it is possible. You can find the redirection options under the Redirections tab in the plugin dashboard. Here you can set up 3 options:
+A. You can find the redirection options under the Redirections tab in the plugin dashboard. Here you can set up 3 options:
 * No redirection (default): the user will stay on the same page where a short message will be displayed about the result of the subscription
 * Local page: you can select a page from your website that will be your Thank you page
 * Custom URL: with this option you can redirect your user wherever you want to. If you choose this option, please use a valid URL starting with "http://" or "https://" here.
 
+You can also set redirection for any widget instance using the sidebar settings in the editor.
+
 = Q. How can I insert a signup form into my posts and pages? =
-A. From plugin version 3.3, you can use the [dotmailer-signup] shortcode to show the form inside the post's content. Shortcode parameters (works only when you use the form with a shortcode):
+A. The preferred approach is to use the WordPress editor, and simply drag either of our blocks into the content area. An alternative (useful if your posts and pages don't use the WordPress editor), you can also use the [dotdigital-signup] shortcode to show the form inside the post's content. Shortcode parameters:
 
 showtitle=0 - Hide the title of the widget
 showdesc=0 - Hide the description under the title
 redirection="URL" - Redirect the user to a custom URL after successful submission
 
-Example: [dotmailer-signup showtitle=0 showdesc=0 redirection="http://www.example.com"] (will show the form without a title and description and will redirect the user to http://www.example.com on success)
-
-Since plugin version 5, [dotdigital-signup] can also be used with the same parameters.
+Example: [dotdigital-signup showtitle=0 showdesc=0 redirection="http://www.example.com"] (will show the form without a title and description and will redirect the user to http://www.example.com on success)
 
 == Screenshots ==
 
-1. The plugin will appear as 'Dotdigital Signup Form' in your left-hand menu
-2. Selecting a list
-3. Changing list visibility
-4. Reordering lists
-5. Adding the form to your website
-
-== Copyright ==
-
-Copyright 2014-2023 Dotdigital (email : support@dotdigital.com)
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
+1. Enter your Dotdigital API credentials to get started.
+2. Select list(s).
+3. Capture additional contact data.
+4. Add a simple newsletter signup form in the WordPress editor.
+5. Add an embedded survey from Dotdigital.
+6. Add a popover form from Dotdigital.
 
 == Changelog ==
 
-= 7.0.1 =
+= 7.1.0 =
+
+**What's new**
+- Dotdigital Signup Form blocks can now be submitted via AJAX.
 
 **Improvements**
 - We updated a support link in our readme.txt.
