@@ -93,7 +93,7 @@ export default function Edit( { attributes, setAttributes } ) {
 							<CheckboxControl label="Show description" checked={ showdesc } onChange={ onChangeShowDescription } />
 						</PanelRow>
 						<PanelRow>
-							<CheckboxControl label="Enable AJAX submission" checked={ is_ajax } onChange={ onChangeAjax } />
+							<CheckboxControl label="Submit forms without reloading page (AJAX)" checked={ is_ajax } onChange={ onChangeAjax } />
 						</PanelRow>
 						<PanelRow>
 							<div className={ 'url-button-wrapper' }>

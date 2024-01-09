@@ -4,7 +4,7 @@ Tags: email marketing, newsletter signup
 Requires at least: 5.3
 Tested up to: 6.4.1
 Requires PHP: 7.4
-Stable tag: 7.1.0
+Stable tag: 7.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,11 @@ Example: [dotdigital-signup showtitle=0 showdesc=0 redirection="http://www.examp
 6. Add a popover form from Dotdigital.
 
 == Changelog ==
+
+= 7.1.1 =
+
+**Improvements**
+- We updated the label for the AJAX submission checkbox in our signup form block.
 
 = 7.1.0 =
 
