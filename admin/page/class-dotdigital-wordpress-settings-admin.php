@@ -56,6 +56,7 @@ class Dotdigital_WordPress_Settings_Admin {
 		wp_redirect(
 			admin_url( 'admin.php?page=' . $this->get_slug() . ( $tab ? '&tab=' . $tab : '' ) )
 		);
+		exit();
 	}
 
 	/**

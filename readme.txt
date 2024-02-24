@@ -2,11 +2,11 @@
 Contributors: dotMailer, bsstaveley, amucklow, fstrezos, pvpcookie
 Tags: email marketing, newsletter signup
 Requires at least: 5.3
-Tested up to: 6.4.1
+Tested up to: 6.4.3
 Requires PHP: 7.4
-Stable tag: 7.1.1
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Stable tag: 7.1.2
+License: MIT
+License URI: https://opensource.org/licenses/MIT
 
 
 == Description ==
@@ -60,6 +60,11 @@ Example: [dotdigital-signup showtitle=0 showdesc=0 redirection="http://www.examp
 6. Add a popover form from Dotdigital.
 
 == Changelog ==
+
+= 7.1.2 =
+
+**Bug fixes**
+- We fixed a problem with form submissions not redirecting from the REST endpoint.
 
 = 7.1.1 =
 

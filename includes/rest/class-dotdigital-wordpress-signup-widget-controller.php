@@ -84,13 +84,13 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 	 *
 	 * @param \WP_REST_Request $request
 	 *
-	 * @return bool|null
+	 * @return null
 	 */
 	public function post( \WP_REST_Request $request ) {
 		$data = $request->get_params();
 
 		if ( $data['is_ajax'] && ( ! isset( $_SERVER['HTTP_X_WP_NONCE'] ) || ! wp_verify_nonce( wp_unslash( $_SERVER['HTTP_X_WP_NONCE'] ), 'wp_rest' ) ) ) {  // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			return $this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_fill_required_message(), $data );
+			$this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_fill_required_message(), $data );
 		}
 
 		$email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
@@ -98,25 +98,26 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 		$lists = isset( $_POST['lists'] ) ? wp_unslash( $_POST['lists'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		if ( $this->has_invalid_email( $email ) ) {
-			return $this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_invalid_email_message(), $data );
+			$this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_invalid_email_message(), $data );
 		}
 
 		if ( $this->has_no_lists_but_should_have( $lists ) ) {
-			return $this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_nobook_message(), $data );
+			$this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_nobook_message(), $data );
 		}
 
 		if ( $this->has_missing_required_data_fields( $datafields ) ) {
-			return $this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_fill_required_message(), $data );
+			$this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_fill_required_message(), $data );
 		}
 
-		return $this->create_contact( $data );
+		$this->create_contact( $data );
+		return null;
 	}
 
 	/**
 	 * Create and subscribe the contact.
 	 *
 	 * @param array $data
-	 * @return bool|null
+	 * @return void
 	 */
 	private function create_contact( $data ) {
 		try {
@@ -127,9 +128,9 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 			$this->dotdigital_contact->create_or_update( $contact );
 		} catch ( \Exception $e ) {
 			error_log( $e->getMessage() );
-			return $this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_failure_message(), $data );
+			$this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_failure_message(), $data );
 		}
-		return $this->process_response( true, Dotdigital_WordPress_Sign_Up_Widget::get_success_message(), $data );
+		$this->process_response( true, Dotdigital_WordPress_Sign_Up_Widget::get_success_message(), $data );
 	}
 
 	/**
@@ -220,14 +221,13 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 	 * @param bool $success
 	 * @param string $message
 	 * @param array $data
-	 * @return bool|null
+	 * @return void
 	 */
 	private function process_response( bool $success, string $message, array $data ) {
 		if ( $data['is_ajax'] ) {
 			$this->ajax_response( $success, $message, $data['redirection'] );
-			return null;
 		} else {
-			return $this->post_response( $success, $message, $data );
+			$this->post_response( $success, $message, $data );
 		}
 	}
 
@@ -235,14 +235,15 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 	 * @param bool $success
 	 * @param string $message
 	 * @param array $data
-	 * @return bool|null
+	 * @return void
 	 */
 	private function post_response( $success, $message, $data ) {
 		if ( ! empty( $data['redirection'] ) ) {
-			return wp_redirect( $data['redirection'] );
+			wp_redirect( $data['redirection'] );
+			exit();
 		}
 
-		return wp_redirect(
+		wp_redirect(
 			add_query_arg(
 				array(
 					'success' => (int) $success,
@@ -252,13 +253,14 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 				$data['origin']
 			)
 		);
+		exit();
 	}
 
 	/**
 	 * @param bool $success
 	 * @param string $message
 	 * @param string $redirection
-	 * @return null
+	 * @return void
 	 */
 	private function ajax_response( $success, $message, $redirection ) {
 		$data = array(
@@ -271,6 +273,5 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 		}
 
 		wp_send_json( $data );
-		return null;
 	}
 }
