@@ -99,8 +99,9 @@ class Dotdigital_WordPress_Sign_Up_Widget extends WP_Widget {
 		wp_parse_args(
 			$args,
 			array(
-				'showtitle'   => 1,
-				'showdesc'    => 1,
+				'showtitle' => 1,
+				'showdesc'  => 1,
+				'is_ajax'   => 0,
 			)
 		);
 
@@ -108,7 +109,7 @@ class Dotdigital_WordPress_Sign_Up_Widget extends WP_Widget {
 		$showtitle   = $args['showtitle'] ?? 1;
 		$showdesc    = $args['showdesc'] ?? 1;
 		$redirection = ! empty( $args['redirection'] ) ? $args['redirection'] : $this->get_redirection();
-		$is_ajax = $args['is_ajax'] ?? false;
+		$is_ajax = $args['is_ajax'] ?? 0;
 		$widget = $this;
 		$dd_widget_id = $widget->id . '-' . $this->widget_instance_id++;
 		require DOTDIGITAL_WORDPRESS_PLUGIN_PATH . 'public/view/widget/dotdigital-wordpress-widget-sign-up.php';

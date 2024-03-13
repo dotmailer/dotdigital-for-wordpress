@@ -46,7 +46,7 @@ use Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget;
 	<input type="hidden" name="redirection" value="<?php echo esc_attr( $redirection ); ?>" />
 	<input type="hidden" name="widget_id" value="<?php echo esc_attr( $dd_widget_id ); ?>" />
 	<input type="hidden" name="origin" value="<?php echo esc_attr( $widget->get_origin_url() ); ?>" />
-	<input type="hidden" name="is_ajax" value="<?php echo esc_attr( $is_ajax ); ?>" />
+	<input type="hidden" name="is_ajax" value="<?php echo $is_ajax ? '1' : '0'; ?>" />
 	<div class="dotdigital-form-submit">
 		<button type="submit"  name="dm_submit_btn"><?php echo esc_attr( $widget->get_subscribe_button_title() ); ?></button>
 	</div>

@@ -44,11 +44,19 @@ You can also set redirection for any widget instance using the sidebar settings 
 = Q. How can I insert a signup form into my posts and pages? =
 A. The preferred approach is to use the WordPress editor, and simply drag either of our blocks into the content area. An alternative (useful if your posts and pages don't use the WordPress editor), you can also use the [dotdigital-signup] shortcode to show the form inside the post's content. Shortcode parameters:
 
-showtitle=0 - Hide the title of the widget
-showdesc=0 - Hide the description under the title
-redirection="URL" - Redirect the user to a custom URL after successful submission
+showtitle - Hide the title of the widget (defaults to 0)
+showdesc - Hide the description under the title (defaults to 0)
+with_ajax - Submit form without reloading page (defaults to 0)
+redirection - Redirect the user to a custom URL after successful submission
 
-Example: [dotdigital-signup showtitle=0 showdesc=0 redirection="http://www.example.com"] (will show the form without a title and description and will redirect the user to http://www.example.com on success)
+Example:
+[dotdigital-signup showtitle=0 showdesc=0 with_ajax=1 redirection="http://www.example.com"]
+
+The form will behave as follows:
+- no title
+- no description
+- form will submit without a page reload
+- user will be redirected to http://www.example.com on submit
 
 == Screenshots ==
 
