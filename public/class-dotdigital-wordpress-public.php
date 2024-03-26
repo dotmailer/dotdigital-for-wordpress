@@ -125,6 +125,7 @@ class Dotdigital_WordPress_Public {
 				'showtitle'   => $atts['showtitle'] ?? 1,
 				'showdesc'    => $atts['showdesc'] ?? 1,
 				'redirecturl' => $atts['redirection'] ?? null,
+				'is_ajax'     => $atts['with_ajax'] ?? 0,
 			),
 			$atts,
 			$tag
@@ -139,6 +140,7 @@ class Dotdigital_WordPress_Public {
 				'showtitle'   => $attributes['showtitle'],
 				'showdesc'    => $attributes['showdesc'],
 				'redirection' => $attributes['redirecturl'],
+				'is_ajax'   => $attributes['is_ajax'],
 			)
 		);
 

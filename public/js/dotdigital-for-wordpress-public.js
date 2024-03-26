@@ -9,7 +9,7 @@
 				function( event ) {
 					const form = $( this );
 					const is_ajax = form.find( "input[name='is_ajax']" );
-					if ( ! is_ajax[ 0 ].value ) {
+					if ( is_ajax[ 0 ].value !== '1' ) {
 						return;
 					}
 					const email = form.find( "input[name='email']" );

@@ -169,7 +169,7 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 	 */
 	private function has_missing_required_data_fields( $datafields ) {
 		foreach ( $datafields as $datafield ) {
-			if ( $datafield['required'] && empty( $datafield['value'] ) ) {
+			if ( isset( $datafield['required'] ) && '1' === $datafield['required'] && empty( $datafield['value'] ) ) {
 				return true;
 			}
 		}

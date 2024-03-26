@@ -71,7 +71,7 @@ add_filter(
 					<?php
 					if ( $is_required ) :
 						?>
-						data-required="<?php echo 'required'; ?>"
+						data-required="<?php echo '1'; ?>"
 						required<?php endif; ?>
 			/>
 		<?php endif; ?>
