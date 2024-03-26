@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Dotdigital for WordPress",
   "author": "Dotdigital",
-  "license": "GPL-2.0-or-later",
+  "license": "MIT",
   "homepage": "#",
   "main": "build/index.js",
   "scripts": {

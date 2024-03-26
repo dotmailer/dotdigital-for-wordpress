@@ -8,11 +8,11 @@
  * Plugin Name:       Dotdigital for WordPress
  * Plugin URI:        https://integrations.dotdigital.com/technology-partners/wordpress
  * Description:       Add a "Subscribe to Newsletter" widget to your website that will insert your contact in one of your Dotdigital lists.
- * Version:           7.1.2
+ * Version:           7.2.0
  * Author:            dotdigital
  * Author URI:        https://www.dotdigital.com/
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           MIT
+ * License URI:       https://opensource.org/licenses/MIT
  * Text Domain:       dotdigital-wordpress
  * Domain Path:       /languages
  */
@@ -24,7 +24,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-define( 'DOTDIGITAL_WORDPRESS_VERSION', '7.1.2' );
+define( 'DOTDIGITAL_WORDPRESS_VERSION', '7.2.0' );
 define( 'DOTDIGITAL_WORDPRESS_PLUGIN_NAME', 'dotdigital-for-wordpress' );
 define( 'DOTDIGITAL_WORDPRESS_PLUGIN_SLUG', 'dotdigital_for_wordpress' );
 define( 'DOTDIGITAL_WORDPRESS_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );

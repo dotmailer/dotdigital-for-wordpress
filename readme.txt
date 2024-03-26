@@ -4,7 +4,7 @@ Tags: email marketing, newsletter signup
 Requires at least: 5.3
 Tested up to: 6.4.3
 Requires PHP: 7.4
-Stable tag: 7.1.2
+Stable tag: 7.2.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -68,6 +68,15 @@ The form will behave as follows:
 6. Add a popover form from Dotdigital.
 
 == Changelog ==
+
+= 7.2.0 =
+
+**What’s new**
+- Merchants can now add a `with_ajax` argument to the `[dotdigital-signup]` shortcode.
+
+**Bug fixes**
+- We standardised submission payloads between AJAX and non-AJAX modes, resolving an ‘undefined index’ bug in the widget controller.
+
 
 = 7.1.2 =
 
