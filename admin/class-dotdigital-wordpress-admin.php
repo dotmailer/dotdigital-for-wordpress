@@ -121,18 +121,20 @@ class Dotdigital_WordPress_Admin {
 	 * @return void
 	 */
 	public function add_plugin_page_tabs() {
+		if ( ! $this->is_dd_wp_settings_page() ) {
+			return;
+		}
 		foreach ( $this->available_page_tabs as $page_tab ) {
-			if ( ! is_a( $page_tab, Dotdigital_WordPress_Page_Tab_Interface::class, true ) ) {
-				continue;
-			}
 			try {
 				$tab = new $page_tab();
-				$tab->initialise();
+				if ( $this->is_current_tab( $tab ) ) {
+					$tab->initialise();
+				}
+				$this->page_tabs[ $tab->get_slug() ] = $tab;
 			} catch ( \Exception $e ) {
 				error_log( $e );
 				continue;
 			}
-			$this->page_tabs[ $tab->get_slug() ] = $tab;
 		}
 	}
 
@@ -142,9 +144,8 @@ class Dotdigital_WordPress_Admin {
 	 * @return void
 	 */
 	public function render_active_tab() {
-		$active_tab = $this->get_active_tab_slug();
 		foreach ( $this->page_tabs as $page_tab ) {
-			if ( $page_tab->get_url_slug() === $active_tab ) {
+			if ( $this->is_current_tab( $page_tab ) ) {
 				$page_tab->render();
 			}
 		}
@@ -243,5 +244,25 @@ class Dotdigital_WordPress_Admin {
 		}
 
 		return $a_name > $b_name ? -1 : 1;
+	}
+
+	/**
+	 * Check if current page is ?page=dotdigital-for-wordpress-settings
+	 *
+	 * @return bool
+	 */
+	private function is_dd_wp_settings_page() {
+		return isset( $_GET['page'] ) &&
+			   strpos( sanitize_text_field( wp_unslash( $_GET['page'] ) ), Dotdigital_WordPress_Settings_Admin::URL_SLUG ) !== false;
+	}
+
+	/**
+	 * Check if current tab is in query string
+	 *
+	 * @param Dotdigital_WordPress_Page_Tab_Interface $tab
+	 * @return bool
+	 */
+	private function is_current_tab( $tab ) {
+		return $this->get_active_tab_slug() === $tab->get_url_slug();
 	}
 }

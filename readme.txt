@@ -2,9 +2,9 @@
 Contributors: dotMailer, bsstaveley, amucklow, fstrezos, pvpcookie
 Tags: email marketing, newsletter signup
 Requires at least: 5.3
-Tested up to: 6.4.3
+Tested up to: 6.5.3
 Requires PHP: 7.4
-Stable tag: 7.2.0
+Stable tag: 7.2.1
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -69,14 +69,18 @@ The form will behave as follows:
 
 == Changelog ==
 
+= 7.2.1 =
+
+**Bug fixes**
+- We've added restrictions around the loading of plugin menu tabs, to prevent clashes with other plugins.
+
 = 7.2.0 =
 
-**What’s new**
+**What's new**
 - Merchants can now add a `with_ajax` argument to the `[dotdigital-signup]` shortcode.
 
 **Bug fixes**
 - We standardised submission payloads between AJAX and non-AJAX modes, resolving an ‘undefined index’ bug in the widget controller.
-
 
 = 7.1.2 =
 
