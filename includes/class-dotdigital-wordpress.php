@@ -174,9 +174,10 @@ class Dotdigital_WordPress {
 		$plugin_admin = new Dotdigital_WordPress_Admin( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'add_plugin_page_submission_initialisation', 1 );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'add_plugin_admin_page_actions' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_page_tabs' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menus' );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_page_actions', 5 );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_page_tabs', 5 );
 	}
 
 	/**

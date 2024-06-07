@@ -121,15 +121,9 @@ class Dotdigital_WordPress_Admin {
 	 * @return void
 	 */
 	public function add_plugin_page_tabs() {
-		if ( ! $this->is_dd_wp_settings_page() ) {
-			return;
-		}
 		foreach ( $this->available_page_tabs as $page_tab ) {
 			try {
 				$tab = new $page_tab();
-				if ( $this->is_current_tab( $tab ) ) {
-					$tab->initialise();
-				}
 				$this->page_tabs[ $tab->get_slug() ] = $tab;
 			} catch ( \Exception $e ) {
 				error_log( $e );
@@ -139,13 +133,30 @@ class Dotdigital_WordPress_Admin {
 	}
 
 	/**
-	 * Render the active tab for the settings page.
+	 * Ensure the form has been properly registered on submission.
+	 *
+	 * @return void
+	 */
+	public function add_plugin_page_submission_initialisation() {
+		global $pagenow;
+
+		if ( 'options.php' === $pagenow && isset( $_POST['option_page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$option_page = sanitize_text_field( wp_unslash( $_POST['option_page'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			if ( isset( $this->page_tabs[ $option_page ] ) ) {
+				$this->page_tabs[ $option_page ]->initialise();
+			}
+		}
+	}
+
+	/**
+	 * Render and initialise the active tab for the settings page.
 	 *
 	 * @return void
 	 */
 	public function render_active_tab() {
 		foreach ( $this->page_tabs as $page_tab ) {
 			if ( $this->is_current_tab( $page_tab ) ) {
+				$page_tab->initialise();
 				$page_tab->render();
 			}
 		}
@@ -244,16 +255,6 @@ class Dotdigital_WordPress_Admin {
 		}
 
 		return $a_name > $b_name ? -1 : 1;
-	}
-
-	/**
-	 * Check if current page is ?page=dotdigital-for-wordpress-settings
-	 *
-	 * @return bool
-	 */
-	private function is_dd_wp_settings_page() {
-		return isset( $_GET['page'] ) &&
-			   strpos( sanitize_text_field( wp_unslash( $_GET['page'] ) ), Dotdigital_WordPress_Settings_Admin::URL_SLUG ) !== false;
 	}
 
 	/**
