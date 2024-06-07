@@ -4,7 +4,7 @@ Tags: email marketing, newsletter signup
 Requires at least: 5.3
 Tested up to: 6.5.3
 Requires PHP: 7.4
-Stable tag: 7.2.1
+Stable tag: 7.2.2
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -68,6 +68,11 @@ The form will behave as follows:
 6. Add a popover form from Dotdigital.
 
 == Changelog ==
+
+= 7.2.2 =
+
+**Bug fixes**
+- We fixed a regression in 7.2.1 that broke the save action for the plugin's admin tabs.
 
 = 7.2.1 =
 
