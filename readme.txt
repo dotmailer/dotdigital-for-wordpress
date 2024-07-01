@@ -2,9 +2,9 @@
 Contributors: dotMailer, bsstaveley, amucklow, fstrezos, pvpcookie
 Tags: email marketing, newsletter signup
 Requires at least: 5.3
-Tested up to: 6.5.3
+Tested up to: 6.5.5
 Requires PHP: 7.4
-Stable tag: 7.2.2
+Stable tag: 7.2.3
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -68,6 +68,11 @@ The form will behave as follows:
 6. Add a popover form from Dotdigital.
 
 == Changelog ==
+
+= 7.2.3 =
+
+**Bug fixes**
+- We fixed a bug with surveys, pages and forms not loading into the block select.
 
 = 7.2.2 =
 
