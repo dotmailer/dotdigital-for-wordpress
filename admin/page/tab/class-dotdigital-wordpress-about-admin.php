@@ -45,5 +45,5 @@ class Dotdigital_WordPress_About_Admin implements Dotdigital_WordPress_Page_Tab_
 	/**
 	 * @inheritDoc
 	 */
-	public function initialise(){}
+	public function initialise() {}
 }
