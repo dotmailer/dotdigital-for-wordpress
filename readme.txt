@@ -2,12 +2,12 @@
 Contributors: dotMailer, bsstaveley, amucklow, fstrezos, pvpcookie
 Tags: email marketing, newsletter signup
 Requires at least: 5.3
-Tested up to: 6.5.5
+Tested up to: 6.6.1
 Requires PHP: 7.4
-Stable tag: 7.2.3
+Stable tag: 7.2.4
 License: MIT
 License URI: https://opensource.org/licenses/MIT
-
+Add the Dotdigital for WordPress plugin to your site and allow your visitors to sign up to your newsletter and email marketing campaigns.
 
 == Description ==
 
@@ -68,6 +68,12 @@ The form will behave as follows:
 6. Add a popover form from Dotdigital.
 
 == Changelog ==
+
+= 7.2.4 =
+
+**Bug fixes**
+- We fixed a bug with lists being sent to the V3 API in the incorrect type.
+- We fixed submission failure with no data fields.
 
 = 7.2.3 =
 
