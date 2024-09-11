@@ -7,6 +7,7 @@
 
 namespace Dotdigital_WordPress\Includes\Rest;
 
+use Dotdigital\Exception\ResponseValidationException;
 use Dotdigital\V3\Models\Contact;
 use Dotdigital_WordPress\Includes\Client\Dotdigital_WordPress_Contact;
 use Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config;
@@ -123,9 +124,15 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 		try {
 			$contact = new Contact();
 			$contact->setIdentifiers( array( 'email' => $data['email'] ) );
-			$contact->setLists( array_values( $data['lists'] ?? array() ) );
-			$contact->setDataFields( $this->prepare_data_fields( $data['datafields'] ?? array(), $data['is_ajax'] ?? false ) );
+			$contact->setLists( $this->prepare_lists( $data['lists'] ?? array() ) );
+			if ( ! empty( $data['datafields'] ) ) {
+				$contact->setDataFields( $this->prepare_data_fields( $data['datafields'], $data['is_ajax'] ?? false ) );
+			}
 			$this->dotdigital_contact->create_or_update( $contact );
+		} catch ( ResponseValidationException $e ) {
+			error_log( $e->getMessage() );
+			error_log( json_encode( $e->getDetails() ) );
+			$this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_failure_message(), $data );
 		} catch ( \Exception $e ) {
 			error_log( $e->getMessage() );
 			$this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_failure_message(), $data );
@@ -215,6 +222,19 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 		}
 
 		return $processed_datafield;
+	}
+
+	/**
+	 * @param array $lists
+	 *
+	 * @return array
+	 */
+	private function prepare_lists( array $lists ): array {
+		$processed_lists = array();
+		foreach ( $lists as $list ) {
+			$processed_lists[] = (int) $list;
+		}
+		return $processed_lists;
 	}
 
 	/**
