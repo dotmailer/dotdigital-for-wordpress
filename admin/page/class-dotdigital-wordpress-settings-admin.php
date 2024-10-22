@@ -22,6 +22,7 @@ class Dotdigital_WordPress_Settings_Admin {
 	 * @return void
 	 */
 	public function render() {
+		$this->legacy_redirect();
 		require_once DOTDIGITAL_WORDPRESS_PLUGIN_PATH . 'admin/view/dotdigital-wordpress-admin-settings.php';
 	}
 
@@ -31,8 +32,21 @@ class Dotdigital_WordPress_Settings_Admin {
 	 * @return void
 	 */
 	public function legacy_redirect() {
+		$active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
 
-		switch ( $_GET['tab'] ?? '' ) {
+		if ( '' === $active_tab ) {
+			wp_redirect(
+				admin_url( 'admin.php?page=' . $this->get_slug() . '&tab=about' )
+			);
+			exit();
+		}
+
+		$valid_tab_names = array( 'about', 'lists', 'api_credentials', 'data_fields', 'messages', 'redirections' );
+		if ( in_array( $active_tab, $valid_tab_names ) ) {
+			return;
+		}
+
+		switch ( $active_tab ) {
 			case 'my_address_books':
 				$tab = 'lists';
 				break;

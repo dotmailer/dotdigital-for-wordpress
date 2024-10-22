@@ -91,15 +91,6 @@ class Dotdigital_WordPress_Admin {
 			array( $admin_settings_page, 'render' ),
 			'data:image/svg+xml;base64,' . DOTDIGITAL_WORDPRESS_PLUGIN_ICON
 		);
-
-		add_submenu_page(
-			null,
-			'',
-			'',
-			'manage_options',
-			'dm_form_settings',
-			array( $admin_settings_page, 'legacy_redirect' )
-		);
 	}
 
 	/**
