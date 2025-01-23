@@ -56,6 +56,7 @@ class Dotdigital_WordPress_Admin {
 	 */
 	public function __construct( $plugin_name, $version ) {
 		global $dotdigital;
+		ob_start();
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 		$this->page_tabs   = &$dotdigital['admin']['view'];
