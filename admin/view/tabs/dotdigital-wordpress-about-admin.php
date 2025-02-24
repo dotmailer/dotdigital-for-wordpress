@@ -4,7 +4,12 @@
  *
  * This file is used to display the about tab
  *
+ * @var string $plugin_version
+ * @var string[] $applied_patches
+ * @var string[] $not_applied_patches
+ *
  * @package    Dotdigital_WordPress
+ * @since      7.3.0
  */
 
 ?>
@@ -25,6 +30,22 @@
 					<h3>Setup advice</h3>
 					<p>To get you up and running, we have full setup instructions on the <a href="https://support.dotdigital.com/hc/en-gb/articles/212216058-Using-the-dotmailer-WordPress-sign-up-form-plugin-v2" target="_blank">Dotdigital knowledge base</a>.</p>
 				</div>
+
+				<div class="card w-100 widefat">
+					<h3>Current plugin version</h3>
+					<p><?php echo esc_html( $plugin_version ); ?></p>
+
+					<h3>Patches</h3>
+					<ul>
+						<?php foreach ( $applied_patches as $patch_class ) : ?>
+							<li><?php echo esc_html( $patch_class ); ?> - <strong>Applied</strong></li>
+						<?php endforeach; ?>
+						<?php foreach ( $not_applied_patches as $patch_class ) : ?>
+							<li><?php echo esc_html( $patch_class ); ?> - <strong>Not applied</strong></li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+
 			</td>
 			<td width="10"></td>
 			<td width="350">

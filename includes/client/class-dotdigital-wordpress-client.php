@@ -10,6 +10,7 @@ namespace Dotdigital_WordPress\Includes\Client;
 use Dotdigital\AbstractClient;
 use Dotdigital\V2\Client;
 use Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config;
+use Exception;
 
 /**
  * Class Dotdigital_WordPress_Lists

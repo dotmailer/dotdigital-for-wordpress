@@ -8,17 +8,10 @@ input[disabled], select[disabled]{
     background: #eee; color: #aaa; text-shadow: 1px 1px rgba(255,255,255,0.8);
 }
 
-.dragger th {
-    padding-left: 10px;
-}
-
 span.handle {
     cursor: grab;
 }
 
-tr.dragger:hover {
-    background: #fceaf4;
-}
 
 #icon-dotdigital {
     display: block;
@@ -51,3 +44,85 @@ label.radio-inputs > th > label {
 .form-group-radio-label {
     vertical-align: super; !important;
 }
+
+.hidden {
+	display: none;
+}
+
+.flex-column {
+	align-items: center;
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.flex-left {
+	justify-content: flex-start !important;
+}
+
+.flex-right {
+	justify-content: flex-end !important;
+}
+
+.flex-center{
+	justify-content: center !important;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.is-loading > table {
+	pointer-events: none;
+	display: none;
+}
+
+.is-loading > .loading-spinner {
+	display: block !important;
+}
+
+.loading-spinner {
+	display: none;
+}
+
+.loader {
+	display: block;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	margin:15px auto;
+	position: relative;
+	background: #FFF;
+	box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+	box-sizing: border-box;
+	animation: shadowPulse 2s linear infinite;
+}
+
+@keyframes shadowPulse {
+	33% {
+		background: #FFF;
+		box-shadow: -24px 0 #FF3D00, 24px 0 #FFF;
+	}
+	66% {
+		background: #FF3D00;
+		box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+	}
+	100% {
+		background: #FFF;
+		box-shadow: -24px 0 #FFF, 24px 0 #FF3D00;
+	}
+}
+
+td .order-input {
+	max-width: 3.5rem;
+	padding: 0 0 0 0.5rem;
+	text-align: center;
+}
+
+td .order-input:focus {
+	border-color: #5b9dd9;
+	box-shadow: 0 0 3px rgba(30, 140, 190, .8);
+	outline: none;
+}
+
+

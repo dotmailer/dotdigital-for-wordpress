@@ -12,13 +12,17 @@ namespace Dotdigital_WordPress\Admin\Page\Tab;
 use Dotdigital_WordPress\Admin\Dotdigital_WordPress_Admin;
 use Dotdigital_WordPress\Admin\Page\Dotdigital_WordPress_Page_Tab_Interface;
 use Dotdigital_WordPress\Admin\Page\Dotdigital_WordPress_Settings_Admin;
+use Dotdigital_WordPress\Admin\Page\Traits\Sortable;
 use Dotdigital_WordPress\Includes\Client\Dotdigital_WordPress_Datafields;
 use Dotdigital_WordPress\Includes\Setting\Form\Dotdigital_WordPress_Setting_Form;
 use Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config;
 use Dotdigital_WordPress\Includes\Setting\Form\Fields\Dotdigital_WordPress_Setting_Form_Checkbox_Input;
+use Dotdigital_WordPress\Includes\Setting\Form\Fields\Dotdigital_WordPress_Setting_Form_Number_Input;
 use Dotdigital_WordPress\Includes\Setting\Form\Fields\Dotdigital_WordPress_Setting_Form_Text_Input;
 
 class Dotdigital_WordPress_Datafields_Admin implements Dotdigital_WordPress_Page_Tab_Interface {
+
+	use Sortable;
 
 	private const URL_SLUG = 'data_fields';
 
@@ -104,6 +108,42 @@ class Dotdigital_WordPress_Datafields_Admin implements Dotdigital_WordPress_Page
 				)
 			);
 
+			$this->form->add_input(
+				new Dotdigital_WordPress_Setting_Form_Number_Input(
+					"{$configuration_path}[order]",
+					$data_field_name,
+					"{$this->get_slug()}",
+					$data_field_name
+				)
+			);
+
+			/**
+			 * Apply filters to the css classes of the order input.
+			 *
+			 * @param string $value The value.
+			 */
+			add_filter(
+				"{$this->get_slug()}/{$configuration_path}[order]/css_classes",
+				function () use ( $data_field_name ) {
+					return "order-$data_field_name order-input";
+				}
+			);
+
+			/**
+			 * Apply filters to the css classes of the order input.
+			 *
+			 * @param string $value The value.
+			 */
+			add_filter(
+				"{$this->get_slug()}/{$configuration_path}[order]/value",
+				function () use ( $data_fields, $data_field_name ) {
+					if ( isset( $data_fields[ $data_field_name ]['order'] ) ) {
+						return $data_fields[ $data_field_name ]['order'];
+					}
+					return '';
+				}
+			);
+
 			/**
 			 * Filters the value of the checkbox input.
 			 *
@@ -124,7 +164,8 @@ class Dotdigital_WordPress_Datafields_Admin implements Dotdigital_WordPress_Page
 			add_filter(
 				"{$this->get_slug()}/{$configuration_path}[name]/checked",
 				function ( $value ) use ( $data_field_name, $data_fields ) {
-					if ( isset( $data_fields[ $data_field_name ] ) && array_key_exists( 'name', $data_fields[ $data_field_name ] ) ) {
+					$enabled_fields = array_keys( $data_fields ? $data_fields : array() );
+					if ( in_array( $data_field_name, $enabled_fields ) ) {
 						return true;
 					}
 					return false;
@@ -139,7 +180,7 @@ class Dotdigital_WordPress_Datafields_Admin implements Dotdigital_WordPress_Page
 			add_filter(
 				"{$this->get_slug()}/{$configuration_path}[name]/attributes",
 				function ( string $value ) {
-					return $value . ' toggle-row-inputs=true';
+					return $value . ' toggle-row-inputs=true data-ignore-toggle';
 				}
 			);
 
@@ -281,13 +322,22 @@ class Dotdigital_WordPress_Datafields_Admin implements Dotdigital_WordPress_Page
 			'name'       => '',
 			'type'       => '',
 			'isRequired' => false,
+			'order'      => false,
 		);
 
 		$options = $options ?? array();
+		$options = array_filter(
+			$options,
+			function ( $option ) {
+				return ! empty( $option['name'] );
+			}
+		);
+
 		$options = array_map(
 			function ( $list_option ) use ( $array_structure ) {
 				$current_option               = array_merge( $array_structure, $list_option );
 				$current_option['isRequired'] = filter_var( $current_option['isRequired'], FILTER_VALIDATE_BOOLEAN );
+				$current_option['order'] = filter_var( $current_option['order'], FILTER_VALIDATE_INT );
 				return $current_option;
 			},
 			$options
@@ -322,34 +372,5 @@ class Dotdigital_WordPress_Datafields_Admin implements Dotdigital_WordPress_Page
 	 */
 	public function get_title() {
 		return __( 'My contact data fields' );
-	}
-
-	/**
-	 * Get the sort order.
-	 *
-	 * @return string
-	 */
-	public function get_sort_order() {
-		return $this->sort_order;
-	}
-
-	/**
-	 * Set the sort order.
-	 *
-	 * @return void
-	 */
-	private function set_sort_order() {
-		$this->sort_order = isset( $_GET['order'] ) ? esc_url_raw( wp_unslash( $_GET['order'] ) ) : 'asc';
-	}
-
-	/**
-	 * Sorts the data fields by the supplied order.
-	 *
-	 * @param array $data_fields
-	 * @return mixed|null
-	 */
-	private function sort( $data_fields ) {
-		Dotdigital_WordPress_Admin::sort( $data_fields, $this->sort_order );
-		return apply_filters( "{$this->get_slug()}/data-fields/sort", $data_fields );
 	}
 }

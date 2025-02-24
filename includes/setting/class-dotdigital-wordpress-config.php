@@ -11,16 +11,19 @@ namespace Dotdigital_WordPress\Includes\Setting;
 
 class Dotdigital_WordPress_Config {
 
-	public const DEFAULT_TAB                       = 'about';
-	public const API_ENDPOINT                      = 'https://r1-api.dotdigital.com';
-	public const SETTING_CREDENTIALS_PATH_USERNAME = 'dm_API_username';
-	public const SETTING_CREDENTIALS_PATH_PASSWORD = 'dm_API_password';
-	public const SETTING_CREDENTIALS_PATH          = 'dm_API_credentials';
-	public const SETTING_LISTS_PATH                = 'dm_API_address_books';
-	public const SETTING_DATAFIELDS_PATH           = 'dm_API_data_fields';
-	public const SETTING_MESSAGES_PATH             = 'dm_API_messages';
-	public const SETTING_REDIRECTS_PATH            = 'dm_redirections';
-	public const SETTING_INTEGRATION_INSIGHTS      = 'dotdigital_for_wordpress_integration_insights';
+	public const CACHE_LIFE                             = 600;
+	public const DEFAULT_TAB                            = 'about';
+	public const API_ENDPOINT                           = 'https://r1-api.dotdigital.com';
+	public const SETTING_CREDENTIALS_PATH_USERNAME      = 'dm_API_username';
+	public const SETTING_CREDENTIALS_PATH_PASSWORD      = 'dm_API_password';
+	public const SETTING_CREDENTIALS_PATH               = 'dm_API_credentials';
+	public const SETTING_LISTS_PATH                     = 'dm_API_address_books';
+	public const SETTING_DATAFIELDS_PATH                = 'dm_API_data_fields';
+	public const SETTING_MESSAGES_PATH                  = 'dm_API_messages';
+	public const SETTING_REDIRECTS_PATH                 = 'dm_redirections';
+	public const SETTING_INTEGRATION_INSIGHTS           = DOTDIGITAL_WORDPRESS_PLUGIN_SLUG . '_integration_insights';
+	public const SETTING_DOTDIGITAL_WORDPRESS_VERSION   = DOTDIGITAL_WORDPRESS_PLUGIN_SLUG . '_version';
+	public const SETTING_DOTDIGITAL_WORDPRESS_PATCHES   = DOTDIGITAL_WORDPRESS_PLUGIN_SLUG . '_patches';
 
 	/**
 	 * Get the settings value.
@@ -55,5 +58,23 @@ class Dotdigital_WordPress_Config {
 			return false;
 		}
 		return get_option( $path );
+	}
+
+	/**
+	 * Set the settings value.
+	 *
+	 * @return false|mixed|null
+	 */
+	public static function get_version() {
+		return get_option( self::SETTING_DOTDIGITAL_WORDPRESS_VERSION, '0.0.0' );
+	}
+
+	/**
+	 * Get the patches directory.
+	 *
+	 * @return string
+	 */
+	public static function get_patches_directory() {
+		return DOTDIGITAL_WORDPRESS_PLUGIN_PATH . '/includes/patches';
 	}
 }

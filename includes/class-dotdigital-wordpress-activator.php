@@ -7,6 +7,8 @@
 
 namespace Dotdigital_WordPress\Includes;
 
+use Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config;
+
 class Dotdigital_WordPress_Activator {
 
 	/**
@@ -21,6 +23,12 @@ class Dotdigital_WordPress_Activator {
 			'dm_API_success_message' => 'You have now subscribed to our newsletter',
 			'dm_API_failure_message' => 'There was a problem signing you up.',
 			'dm_API_subs_button' => 'Subscribe',
+		);
+
+		update_option(
+			Dotdigital_WordPress_Config::SETTING_DOTDIGITAL_WORDPRESS_VERSION,
+			DOTDIGITAL_WORDPRESS_VERSION,
+			DOTDIGITAL_WORDPRESS_VERSION
 		);
 
 		if ( ! get_option( 'dm_API_messages' ) ) {

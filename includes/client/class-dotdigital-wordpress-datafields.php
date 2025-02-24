@@ -8,6 +8,7 @@
 namespace Dotdigital_WordPress\Includes\Client;
 
 use Dotdigital\V2\Resources\AddressBooks;
+use Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config;
 
 class Dotdigital_WordPress_Datafields {
 
@@ -43,7 +44,11 @@ class Dotdigital_WordPress_Datafields {
 			} catch ( \Exception $exception ) {
 				throw $exception;
 			}
-			set_transient( 'dotdigital_wordpress_api_data_fields', $data_fields, 15 );
+			set_transient(
+				'dotdigital_wordpress_api_data_fields',
+				$data_fields,
+				Dotdigital_WordPress_Config::CACHE_LIFE
+			);
 		}
 		return $data_fields;
 	}
