@@ -199,9 +199,9 @@ class Dotdigital_WordPress_Admin {
 	 */
 	public static function sort( array &$data, string $sort_order = 'asc' ) {
 		if ( 'asc' == $sort_order ) {
-			uasort( $data, array( 'self', 'dotdigital_item_sort_asc' ) );
+			\uasort( $data, self::class . '::dotdigital_item_sort_asc' );
 		} elseif ( 'desc' == $sort_order ) {
-			uasort( $data, array( 'self', 'dotdigital_item_sort_desc' ) );
+			\uasort( $data, self::class . '::dotdigital_item_sort_desc' );
 		}
 	}
 
