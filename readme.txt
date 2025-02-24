@@ -1,9 +1,7 @@
 === Dotdigital for WordPress ===
 Contributors: dotMailer, bsstaveley, amucklow, fstrezos, pvpcookie
 Tags: email marketing, newsletter signup
-Requires at least: 5.3
-Tested up to: 6.6.1
-Requires PHP: 7.4
+Tested up to: 6.7.1
 Stable tag: 7.2.4
 License: MIT
 License URI: https://opensource.org/licenses/MIT
