@@ -1,36 +1,14 @@
 ( function( $ ) {
 	'use strict';
 
-	$( '.multiselector' ).change( function() {
-		const element = $( this );
-		const table_body = element.closest( 'table' ).find( 'tbody' );
-
-		$( table_body ).find( '.toggle-inputs' ).each( function() {
-			const row = $( this );
-			const row_inputs = $( row ).find( 'input' );
-			const row_checkbox = $( row ).find( 'input[type="checkbox"]' );
-			if ( element.is( ':checked' ) ) {
-				row_checkbox.prop( 'checked', true );
-				row_inputs
-					.filter( () => ! $( element ).is( row_checkbox ) )
-					.each( () => $( element ).removeAttr( 'disabled' ) );
-			} else {
-				row_checkbox.prop( 'checked', false );
-				row_inputs
-					.filter( () => ! $( element ).is( row_checkbox ) )
-					.each( () => $( element ).attr( 'disabled', 'disabled' ) );
-			}
-		} );
-	} );
-
-	$( `input[toggle-row-inputs]` ).on( 'change', function() {
-		const element = $( this );
-		const row = element.closest( 'tr' );
-		const checked = element.is( ':checked' );
+	const toggle_inputs = ( row ) => {
+		const element = $( row );
+		const checkbox = element.find( 'input[toggle-row-inputs]' );
+		const checked = checkbox.is( ':checked' );
 
 		$( row ).find( 'input' ).each( function() {
 			const input = $( this );
-			if ( input.is( element.first() ) ) {
+			if ( input.is( checkbox ) ) {
 				return;
 			}
 			if ( checked ) {
@@ -40,27 +18,30 @@
 				input.attr( 'disabled', 'disabled' );
 			}
 		} );
+	};
+
+	$( '.multiselector' ).change( function() {
+		const element = $( this );
+		const table_body = element.closest( 'table' ).find( 'tbody' );
+
+		$( table_body ).find( '.toggle-inputs' ).each( function() {
+			const row = $( this );
+			const row_checkbox = $( row ).find( 'input[toggle-row-inputs]' );
+
+			if ( element.is( ':checked' ) ) {
+				row_checkbox.prop( 'checked', true );
+			} else {
+				row_checkbox.prop( 'checked', false );
+			}
+
+			toggle_inputs( row );
+		} );
 	} );
 
-	$( 'tbody.sortable' ).sortable( {
-		axis: 'y',
-		cursor: 'move',
-		handle: '.handle',
-		helper( e, ui ) {
-			ui.children().each( function() {
-				$( this ).width( $( this ).width() );
-			} );
-			return ui;
-		},
-		start( event, ui ) {
-			ui.placeholder.html( '<td colspan="3"></td>' );
-
-			ui.item.css( {
-				'background-color': '#f6f6f6',
-				border: '1px solid #ddd',
-			} );
-		},
-	} );
+	$( `input[toggle-row-inputs]` ).on(
+		'change',
+		( event ) => toggle_inputs( event.target.closest( 'tr' ) )
+	);
 
 	$( '.form-group-radio' ).change( function() {
 		const element = $( this );
@@ -86,6 +67,19 @@
 				const input = $( this );
 				input.attr( 'disabled', 'disabled' );
 			} );
+		} );
+	} );
+
+	document.getElementById( 'filterInput' )?.addEventListener( 'input', function() {
+		const filter = this.value.toLowerCase();
+		const records = document.querySelectorAll( '.filter-list > tr > .list-column ' );
+
+		records.forEach( function( cell ) {
+			if ( cell.textContent.toLowerCase().includes( filter ) ) {
+				cell.closest( 'tr' ).classList.remove( 'hidden' );
+			} else {
+				cell.closest( 'tr' ).classList.add( 'hidden' );
+			}
 		} );
 	} );
 }( jQuery ) );

@@ -16,6 +16,7 @@ use Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config;
 use Dotdigital_WordPress\Pub\Dotdigital_WordPress_Public;
 use Dotdigital_WordPress\Includes\Rest\Dotdigital_WordPress_Signup_Widget_Controller;
 use Dotdigital_WordPress\Includes\Rest\Dotdigital_WordPress_Surveys_Controller;
+use Dotdigital_WordPress\Includes\Dotdigital_WordPress_Patch_Manager;
 
 class Dotdigital_WordPress {
 
@@ -170,6 +171,9 @@ class Dotdigital_WordPress {
 		if ( ! is_admin() ) {
 			return;
 		}
+
+		$patch_manager = new Dotdigital_WordPress_Patch_Manager( $this->get_plugin_name() );
+		$this->loader->add_action( 'admin_init', $patch_manager, 'check_patches' );
 
 		$plugin_admin = new Dotdigital_WordPress_Admin( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );

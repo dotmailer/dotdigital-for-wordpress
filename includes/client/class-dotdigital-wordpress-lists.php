@@ -8,10 +8,14 @@
 namespace Dotdigital_WordPress\Includes\Client;
 
 use Dotdigital\V2\Resources\AddressBooks;
+use Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config;
+use Exception;
 
 class Dotdigital_WordPress_Lists {
 
 	private const SELECT_LIMIT = 1000;
+
+	private const LIST_LIMIT = 5000;
 
 	/**
 	 * Dotdigital client.
@@ -36,17 +40,31 @@ class Dotdigital_WordPress_Lists {
 	public function get() {
 		$formatted_lists = get_transient( 'dotdigital_wordpress_api_lists' );
 		if ( ! $formatted_lists ) {
-			$formatted_lists = array();
 			try {
-				$lists = $this->dotdigital_client->get_client()->addressBooks->show( 0, self::SELECT_LIMIT );
-				foreach ( $lists->getList() as $list ) {
-					$formatted_lists[ $list->getId() ] = $list;
-				}
-			} catch ( \Exception $exception ) {
+				$iteration = 0;
+				$limit = self::LIST_LIMIT;
+				$formatted_lists = array();
+
+				do {
+					$lists = $this->dotdigital_client->get_client()
+						->addressBooks
+						->show( $iteration, self::SELECT_LIMIT );
+					foreach ( $lists->getList() as $list ) {
+						$formatted_lists[ $list->getId() ] = $list;
+					}
+					$iteration += self::SELECT_LIMIT;
+					$list_count = count( $lists->getList() );
+				} while ( $iteration < $limit && self::SELECT_LIMIT == $list_count );
+
+			} catch ( Exception $exception ) {
 				throw $exception;
 			}
 
-			set_transient( 'dotdigital_wordpress_api_lists', $formatted_lists, 15 );
+			set_transient(
+				'dotdigital_wordpress_api_lists',
+				$formatted_lists,
+				Dotdigital_WordPress_Config::CACHE_LIFE
+			);
 		}
 		return $formatted_lists;
 	}

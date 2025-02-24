@@ -73,7 +73,6 @@ class Dotdigital_WordPress_Admin {
 	 * Register the JavaScript for the admin area.
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dotdigital-wordpress-admin.js', array( 'jquery', 'jquery-ui-core' ), $this->version, true );
 	}
 
@@ -189,64 +188,6 @@ class Dotdigital_WordPress_Admin {
 	 */
 	private function get_active_tab_slug(): string {
 		return isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : Dotdigital_WordPress_Config::DEFAULT_TAB;
-	}
-
-	/**
-	 * @param array  $data
-	 * @param string $sort_order
-	 *
-	 * @return void
-	 */
-	public static function sort( array &$data, string $sort_order = 'asc' ) {
-		if ( 'asc' == $sort_order ) {
-			\uasort( $data, self::class . '::dotdigital_item_sort_asc' );
-		} elseif ( 'desc' == $sort_order ) {
-			\uasort( $data, self::class . '::dotdigital_item_sort_desc' );
-		}
-	}
-
-	/**
-	 * Sort ascending.
-	 *
-	 * @param object $a Object A.
-	 * @param object $b Object B.
-	 * @return int
-	 */
-	private static function dotdigital_item_sort_asc( object $a, object $b ) {
-		if ( ! method_exists( $a, 'getName' ) || ! method_exists( $b, 'getName' ) ) {
-			return 0;
-		}
-
-		$a_name = strtolower( $a->getName() );
-		$b_name = strtolower( $b->getName() );
-
-		if ( $a_name === $b_name ) {
-			return 0;
-		}
-
-		return $a_name > $b_name ? 1 : -1;
-	}
-
-	/**
-	 * Sort descending.
-	 *
-	 * @param object $a Object A.
-	 * @param object $b Object B.
-	 * @return int
-	 */
-	private static function dotdigital_item_sort_desc( object $a, object $b ) {
-		if ( ! method_exists( $a, 'getName' ) || ! method_exists( $b, 'getName' ) ) {
-			return 0;
-		}
-
-		$a_name = strtolower( $a->getName() );
-		$b_name = strtolower( $b->getName() );
-
-		if ( $a_name === $b_name ) {
-			return 0;
-		}
-
-		return $a_name > $b_name ? -1 : 1;
 	}
 
 	/**

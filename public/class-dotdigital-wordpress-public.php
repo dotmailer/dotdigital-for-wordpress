@@ -93,6 +93,7 @@ class Dotdigital_WordPress_Public {
 	public function render_public_lists() {
 		$identifier = apply_filters( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-lists-identifier', 'lists' );
 		$lists      = get_option( Dotdigital_WordPress_Config::SETTING_LISTS_PATH, array() );
+
 		$has_visible_lists = count(
 			array_filter(
 				$lists,
@@ -101,6 +102,20 @@ class Dotdigital_WordPress_Public {
 				}
 			)
 		) > 0;
+
+		usort(
+			$lists,
+			function ( $a, $b ) {
+				if ( ! isset( $a['order'] ) || false === $a['order'] ) {
+					return 1;
+				}
+				if ( ! isset( $b['order'] ) || false === $b['order'] ) {
+					return -1;
+				}
+				return $a['order'] <=> $b['order'];
+			}
+		);
+
 		require DOTDIGITAL_WORDPRESS_PLUGIN_PATH . 'public/view/partial/dotdigital-wordpress-public-lists.php';
 	}
 
@@ -110,6 +125,20 @@ class Dotdigital_WordPress_Public {
 	public function render_public_datafields() {
 		$identifier = apply_filters( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-lists-identifier', 'datafields' );
 		$datafields = get_option( Dotdigital_WordPress_Config::SETTING_DATAFIELDS_PATH, array() );
+
+		usort(
+			$datafields,
+			function ( $a, $b ) {
+				if ( ! isset( $a['order'] ) || false === $a['order'] ) {
+					return 1;
+				}
+				if ( ! isset( $b['order'] ) || false === $b['order'] ) {
+					return -1;
+				}
+				return $a['order'] <=> $b['order'];
+			}
+		);
+
 		require DOTDIGITAL_WORDPRESS_PLUGIN_PATH . 'public/view/partial/dotdigital-wordpress-public-datafields.php';
 	}
 

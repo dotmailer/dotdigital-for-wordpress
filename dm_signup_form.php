@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-define( 'DOTDIGITAL_WORDPRESS_VERSION', '7.2.4' );
+define( 'DOTDIGITAL_WORDPRESS_VERSION', '7.3.0' );
 define( 'DOTDIGITAL_WORDPRESS_PLUGIN_NAME', 'dotdigital-for-wordpress' );
 define( 'DOTDIGITAL_WORDPRESS_PLUGIN_SLUG', 'dotdigital_for_wordpress' );
 define( 'DOTDIGITAL_WORDPRESS_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );

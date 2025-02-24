@@ -16,7 +16,10 @@ use Dotdigital_WordPress\Includes\Setting\Form\Dotdigital_WordPress_Setting_Form
 <div class="wrap">
 
 	<div class="card w-100 widefat">
-		<h2><?php echo esc_html( $form->get_title() ); ?></h2>
+		<div class="flex-column">
+			<span><h2><?php echo esc_html( $form->get_title() ); ?></h2></span>
+			<span><input type="text" id="filterInput" placeholder="Type to filter..."></span>
+		</div>
 		<form method="<?php echo esc_attr( $form->get_method() ); ?>"
 			  action="<?php echo esc_attr( $form->get_action() ); ?>">
 			<table class="wp-list-table widefat fixed form-table">
@@ -35,7 +38,7 @@ use Dotdigital_WordPress\Includes\Setting\Form\Dotdigital_WordPress_Setting_Form
 						Change label
 					</th>
 					<th scope="col" id="visible" class="manage-column column-visible" style="text-align: center;">
-						Required?
+						Required? | Order
 					</th>
 				</tr>
 				</thead>
@@ -59,14 +62,11 @@ use Dotdigital_WordPress\Includes\Setting\Form\Dotdigital_WordPress_Setting_Form
 				</tr>
 				</tfoot>
 
-				<tbody class="sortable ui-sortable">
+				<tbody class="filter-list">
 				<?php foreach ( $form->get_grouped_inputs() as $group_id => $inputs ) : ?>
-					<tr id="<?php echo esc_attr( $group_id ); ?>" class="dragger toggle-inputs" toggle-row-inputs="true">
-						<?php list($name_input, $label_input, $type_input, $required_input) = $inputs; ?>
+					<tr id="<?php echo esc_attr( $group_id ); ?>" class="toggle-inputs" toggle-row-inputs="true">
+						<?php list($name_input, $label_input, $type_input, $required_input, $number_input) = $inputs; ?>
 						<th scope="row">
-							<span class="handle ui-sortable-handle"><img
-									src="<?php echo esc_url( plugins_url( '../../../assets/large.png', __FILE__ ) ); ?>"
-									class="drag_image"/></span>
 							<?php $name_input->render(); ?>
 						</th>
 						<td class="list-column"><?php echo esc_html( $label_input->get_label() ); ?></td>
@@ -74,7 +74,10 @@ use Dotdigital_WordPress\Includes\Setting\Form\Dotdigital_WordPress_Setting_Form
 							<?php $type_input->render(); ?>
 							<?php $label_input->render(); ?>
 						</td>
-						<td><?php $required_input->render(); ?></td>
+						<td class="flex-column flex-left">
+							<?php $required_input->render(); ?>
+							<?php $number_input->render(); ?>
+						</td>
 					</tr>
 				<?php endforeach; ?>
 				</tbody>

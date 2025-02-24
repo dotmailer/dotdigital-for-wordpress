@@ -9,16 +9,20 @@
 
 namespace Dotdigital_WordPress\Admin\Page\Tab;
 
-use Dotdigital_WordPress\Admin\Dotdigital_WordPress_Admin;
+use Dotdigital\Exception\ResponseValidationException;
 use Dotdigital_WordPress\Admin\Page\Dotdigital_WordPress_Page_Tab_Interface;
 use Dotdigital_WordPress\Admin\Page\Dotdigital_WordPress_Settings_Admin;
+use Dotdigital_WordPress\Admin\Page\Traits\Sortable;
 use Dotdigital_WordPress\Includes\Client\Dotdigital_WordPress_Lists;
 use Dotdigital_WordPress\Includes\Setting\Form\Dotdigital_WordPress_Setting_Form;
 use Dotdigital_WordPress\Includes\Setting\Form\Fields\Dotdigital_WordPress_Setting_Form_Checkbox_Input;
+use Dotdigital_WordPress\Includes\Setting\Form\Fields\Dotdigital_WordPress_Setting_Form_Number_Input;
 use Dotdigital_WordPress\Includes\Setting\Form\Fields\Dotdigital_WordPress_Setting_Form_Text_Input;
 use Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config;
 
 class Dotdigital_WordPress_Lists_Admin implements Dotdigital_WordPress_Page_Tab_Interface {
+
+	use Sortable;
 
 	private const URL_SLUG = 'lists';
 
@@ -48,11 +52,11 @@ class Dotdigital_WordPress_Lists_Admin implements Dotdigital_WordPress_Page_Tab_
 	 * @inheritDoc
 	 */
 	public function initialise() {
-		$lists = get_option( $this->get_slug() );
+		$option_lists = get_option( $this->get_slug() );
 
 		try {
 			$available_lists = $this->dotdigital_lists->get();
-		} catch ( \Dotdigital\Exception\ResponseValidationException $exception ) {
+		} catch ( ResponseValidationException $exception ) {
 			$available_lists = array();
 		}
 
@@ -66,9 +70,10 @@ class Dotdigital_WordPress_Lists_Admin implements Dotdigital_WordPress_Page_Tab_
 
 		foreach ( $this->sort( $available_lists ) as $list ) {
 
-			$list_name          = $list->getName();
-			$list_id            = $list->getId();
+			$list_name = $list->getName();
+			$list_id = $list->getId();
 			$configuration_path = Dotdigital_WordPress_Config::SETTING_LISTS_PATH . "[$list_name]";
+
 			$this->form->add_input(
 				new Dotdigital_WordPress_Setting_Form_Checkbox_Input(
 					"{$configuration_path}[id]",
@@ -96,15 +101,54 @@ class Dotdigital_WordPress_Lists_Admin implements Dotdigital_WordPress_Page_Tab_
 				)
 			);
 
+			$this->form->add_input(
+				new Dotdigital_WordPress_Setting_Form_Number_Input(
+					"{$configuration_path}[order]",
+					$list_name,
+					"{$this->get_slug()}",
+					$list_id
+				)
+			);
+
 			/**
-			 * Filters the value of the checkbox input.
+			 * Apply filters to the css classes of the order input.
 			 *
 			 * @param string $value The value.
 			 */
 			add_filter(
-				"{$this->get_slug()}/{$configuration_path}[id]/value",
+				"{$this->get_slug()}/{$configuration_path}[order]/css_classes",
 				function () use ( $list_id ) {
-					return $list_id;
+					return "order-$list_id order-input";
+				}
+			);
+
+			/**
+			 * Apply filters to the css classes of the order input.
+			 *
+			 * @param string $value The value.
+			 */
+			add_filter(
+				"{$this->get_slug()}/{$configuration_path}[order]/value",
+				function () use ( $option_lists, $list_name ) {
+					if ( isset( $option_lists[ $list_name ]['order'] ) ) {
+						return $option_lists[ $list_name ]['order'];
+					}
+					return '';
+				}
+			);
+
+			/**
+			 * Apply filters attributes of the order input.
+			 *
+			 * @param string $value The value.
+			 */
+			add_filter(
+				"{$this->get_slug()}/{$configuration_path}[order]/attributes",
+				function ( $value ) use ( $option_lists, $list_name ) {
+					if ( ! isset( $option_lists[ $list_name ] ) ) {
+						return $value . ' disabled';
+					}
+					return $value;
 				}
 			);
 
@@ -121,17 +165,29 @@ class Dotdigital_WordPress_Lists_Admin implements Dotdigital_WordPress_Page_Tab_
 			);
 
 			/**
-			 * Filters the value of the checkbox input.
+			 * Filters the state of the checkbox input.
 			 *
 			 * @param string $value The value.
 			 */
 			add_filter(
 				"{$this->get_slug()}/{$configuration_path}[id]/checked",
-				function () use ( $lists, $list_name ) {
-					if ( isset( $lists[ $list_name ] ) && array_key_exists( 'id', $lists[ $list_name ] ) ) {
+				function () use ( $option_lists, $list_name ) {
+					if ( isset( $option_lists[ $list_name ] ) && array_key_exists( 'id', $option_lists[ $list_name ] ) ) {
 						return true;
 					}
 					return false;
+				}
+			);
+
+			/**
+			 * Filters the value of the checkbox input.
+			 *
+			 * @param string $value The value.
+			 */
+			add_filter(
+				"{$this->get_slug()}/{$configuration_path}[id]/value",
+				function () use ( $list_id ) {
+					return $list_id;
 				}
 			);
 
@@ -142,9 +198,9 @@ class Dotdigital_WordPress_Lists_Admin implements Dotdigital_WordPress_Page_Tab_
 			 */
 			add_filter(
 				"{$this->get_slug()}/{$configuration_path}[label]/value",
-				function () use ( $lists, $list_name ) {
-					if ( isset( $lists[ $list_name ] ) && array_key_exists( 'label', $lists[ $list_name ] ) ) {
-						return $lists[ $list_name ]['label'];
+				function () use ( $option_lists, $list_name ) {
+					if ( isset( $option_lists[ $list_name ] ) && array_key_exists( 'label', $option_lists[ $list_name ] ) ) {
+						return $option_lists[ $list_name ]['label'];
 					}
 					return $list_name;
 				}
@@ -169,8 +225,8 @@ class Dotdigital_WordPress_Lists_Admin implements Dotdigital_WordPress_Page_Tab_
 			 */
 			add_filter(
 				"{$this->get_slug()}/{$configuration_path}[isVisible]/checked",
-				function () use ( $lists, $list_name ) {
-					return filter_var( $lists[ $list_name ]['isVisible'] ?? false, FILTER_VALIDATE_BOOLEAN );
+				function () use ( $option_lists, $list_name ) {
+					return filter_var( $option_lists[ $list_name ]['isVisible'] ?? false, FILTER_VALIDATE_BOOLEAN );
 				}
 			);
 
@@ -181,8 +237,8 @@ class Dotdigital_WordPress_Lists_Admin implements Dotdigital_WordPress_Page_Tab_
 			 */
 			add_filter(
 				"{$this->get_slug()}/{$configuration_path}[label]/attributes",
-				function ( $value ) use ( $lists, $list_name ) {
-					if ( ! isset( $lists[ $list_name ] ) ) {
+				function ( $value ) use ( $option_lists, $list_name ) {
+					if ( ! isset( $option_lists[ $list_name ] ) ) {
 						return $value . ' disabled';
 					}
 					return $value;
@@ -196,8 +252,8 @@ class Dotdigital_WordPress_Lists_Admin implements Dotdigital_WordPress_Page_Tab_
 			 */
 			add_filter(
 				"{$this->get_slug()}/{$configuration_path}[isVisible]/attributes",
-				function ( $value ) use ( $lists, $list_name ) {
-					if ( ! isset( $lists[ $list_name ] ) ) {
+				function ( $value ) use ( $option_lists, $list_name ) {
+					if ( ! isset( $option_lists[ $list_name ] ) ) {
 						return $value . ' disabled';
 					}
 					return $value;
@@ -227,16 +283,18 @@ class Dotdigital_WordPress_Lists_Admin implements Dotdigital_WordPress_Page_Tab_
 	 */
 	public function save( $options ) {
 		$array_structure = array(
-			'id'        => '',
-			'label'     => '',
+			'id' => '',
+			'label' => '',
 			'isVisible' => false,
+			'order' => false,
 		);
 
 		$options = $options ?? array();
 		$options = array_map(
 			function ( $list_option ) use ( $array_structure ) {
-				$current_option              = array_merge( $array_structure, $list_option );
+				$current_option = array_merge( $array_structure, $list_option );
 				$current_option['isVisible'] = filter_var( $current_option['isVisible'], FILTER_VALIDATE_BOOLEAN );
+				$current_option['order'] = filter_var( $current_option['order'], FILTER_VALIDATE_INT );
 				return $current_option;
 			},
 			$options
@@ -272,34 +330,5 @@ class Dotdigital_WordPress_Lists_Admin implements Dotdigital_WordPress_Page_Tab_
 	 */
 	public function get_title(): string {
 		return __( 'My lists' );
-	}
-
-	/**
-	 * Get the sort order.
-	 *
-	 * @return string
-	 */
-	public function get_sort_order() {
-		return $this->sort_order;
-	}
-
-	/**
-	 * Set the sort order.
-	 *
-	 * @return void
-	 */
-	private function set_sort_order() {
-		$this->sort_order = isset( $_GET['order'] ) ? sanitize_text_field( wp_unslash( $_GET['order'] ) ) : 'asc';
-	}
-
-	/**
-	 * Sorts the lists by the supplied order.
-	 *
-	 * @param array $lists
-	 * @return mixed|null
-	 */
-	private function sort( $lists ) {
-		Dotdigital_WordPress_Admin::sort( $lists, $this->sort_order );
-		return apply_filters( "{$this->get_slug()}/lists/sort", $lists );
 	}
 }
