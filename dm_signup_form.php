@@ -9,6 +9,8 @@
  * Plugin URI:        https://integrations.dotdigital.com/technology-partners/wordpress
  * Description:       Add a "Subscribe to Newsletter" widget to your website that will insert your contact in one of your Dotdigital lists.
  * Version:           7.2.4
+ * Requires PHP:      7.4
+ * Requires at least: 5.8
  * Author:            dotdigital
  * Author URI:        https://www.dotdigital.com/
  * License:           MIT
