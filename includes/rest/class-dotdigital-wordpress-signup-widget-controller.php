@@ -15,6 +15,8 @@ use Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget;
 
 class Dotdigital_WordPress_Signup_Widget_Controller {
 
+	private const STATUS_SUBSCRIBED = 'subscribed';
+
 	/**
 	 * @var Dotdigital_WordPress_Contact
 	 */
@@ -128,6 +130,13 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 			if ( ! empty( $data['datafields'] ) ) {
 				$contact->setDataFields( $this->prepare_data_fields( $data['datafields'], $data['is_ajax'] ?? false ) );
 			}
+			$contact->setChannelProperties(
+				array(
+					'email' => array(
+						'status' => self::STATUS_SUBSCRIBED,
+					),
+				)
+			);
 			$this->dotdigital_contact->create_or_update( $contact );
 		} catch ( ResponseValidationException $e ) {
 			error_log( $e->getMessage() );
