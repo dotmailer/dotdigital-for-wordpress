@@ -115,7 +115,9 @@ class Dotdigital_WordPress_Patch_Manager {
 		}
 		if ( preg_match( '/class\s+(\w+)/', $contents, $matches ) ) {
 			$class_name = $namespace . $matches[1];
-			error_log( 'Extracted class name: ' . $class_name ); // Add this line for logging.
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+				error_log( 'Extracted class name: ' . $class_name ); // Add this line for logging.
+			}
 			return $class_name;
 		}
 		return null;
