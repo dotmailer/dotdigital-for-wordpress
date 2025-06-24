@@ -34,7 +34,7 @@ class Dotdigital_WordPress_Config {
 	 *
 	 * @return mixed
 	 */
-	public static function get_option( string $path, array &$path_array = array(), array $current_option_dimension = null ) {
+	public static function get_option( string $path, array &$path_array = array(), ?array $current_option_dimension = null ) {
 		$form_path_array = preg_split( '/[\[\]]/', $path, -1, PREG_SPLIT_NO_EMPTY );
 		if ( count( $form_path_array ) > 1 ) {
 			if ( is_null( $current_option_dimension ) ) {
