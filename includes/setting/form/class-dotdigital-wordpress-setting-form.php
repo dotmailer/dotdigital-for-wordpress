@@ -74,7 +74,7 @@ class Dotdigital_WordPress_Setting_Form {
 	 * @param Dotdigital_WordPress_Setting_Form_Input_Interface $input
 	 * @param string|null                                       $key
 	 */
-	public function add_input( Dotdigital_WordPress_Setting_Form_Input_Interface $input, string $key = null ) {
+	public function add_input( Dotdigital_WordPress_Setting_Form_Input_Interface $input, ?string $key = null ) {
 
 		if ( ! empty( $input->get_group() ) ) {
 			$this->inputs[] = $input;
