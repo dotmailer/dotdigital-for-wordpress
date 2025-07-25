@@ -6,6 +6,7 @@
  *
  * @var array $datafields
  * @var string $identifier
+ * @var string $dd_widget_id
  */
 
 ?>
@@ -37,7 +38,7 @@ add_filter(
 		?>
 		<?php $item_identifier = $identifier . '[' . $name . ']'; ?>
 
-		<label for="<?php echo esc_attr( $item_identifier ); ?>[value]">
+		<label for="<?php echo esc_attr( apply_filters( 'dotdigital_datafield_input_id', $item_identifier, $dd_widget_id ) ); ?>[value]">
 			<?php echo esc_html( $label ); ?>
 			<?php
 			if ( $is_required ) :
@@ -65,7 +66,7 @@ add_filter(
 					class="<?php echo esc_attr( apply_filters( 'public/datafield/' . $name . '/input/class', 'form-control datafield' ) ); ?>"
 					type="<?php echo esc_attr( apply_filters( 'public/datafield/input/data_type', $data_type ) ); ?>"
 					data-datafield-name="<?php echo esc_attr( $name ); ?>"
-					id="<?php echo esc_attr( $item_identifier ); ?>[value]"
+					id="<?php echo esc_attr( apply_filters( 'dotdigital_datafield_input_id', $item_identifier, $dd_widget_id ) ); ?>[value]"
 					name="<?php echo esc_attr( $item_identifier ); ?>[value]"
 					<?php echo esc_attr( apply_filters( 'public/datafield/' . $name . '/input/attributes', '' ) ); ?>
 					<?php

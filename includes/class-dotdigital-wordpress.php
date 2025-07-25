@@ -61,6 +61,7 @@ class Dotdigital_WordPress {
 		$this->define_blocks_hooks();
 		$this->define_rest_hooks();
 		$this->define_cron_schedules();
+		$this->define_form_input_filters();
 	}
 
 	/**
@@ -231,5 +232,38 @@ class Dotdigital_WordPress {
 		if ( ! wp_next_scheduled( 'integration_insights' ) && get_option( Dotdigital_WordPress_Config::SETTING_INTEGRATION_INSIGHTS, true ) ) {
 			wp_schedule_event( time(), 'daily', 'integration_insights' );
 		}
+	}
+
+
+	/**
+	 * Define form input filters.
+	 *
+	 * @return void
+	 */
+	private function define_form_input_filters() {
+		add_filter(
+			'dotdigital_email_input_id',
+			function ( $field_id, $dd_widget_id ) {
+				return $dd_widget_id . $field_id;
+			},
+			10,
+			2
+		);
+		add_filter(
+			'dotdigital_list_input_id',
+			function ( $field_id, $dd_widget_id ) {
+				return $dd_widget_id . $field_id;
+			},
+			10,
+			2
+		);
+		add_filter(
+			'dotdigital_datafield_input_id',
+			function ( $field_id, $dd_widget_id ) {
+				return $dd_widget_id . $field_id;
+			},
+			10,
+			2
+		);
 	}
 }

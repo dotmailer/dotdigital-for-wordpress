@@ -7,6 +7,7 @@
  * @var array $lists
  * @var string $identifier
  * @var bool $has_visible_lists
+ * @var string $dd_widget_id
  */
 
 if ( empty( $lists ) ) {
@@ -29,11 +30,11 @@ if ( empty( $lists ) ) {
 			<input type="hidden" name="<?php echo esc_attr( $identifier ); ?>[]" value="<?php echo esc_attr( apply_filters( 'public/lists/' . $list_id . '/input/value', $list_id ) ); ?>" readonly/>
 		<?php else : ?>
 			<div class="ddg-checkbox-group">
-				<label for="<?php echo esc_attr( $identifier ); ?>_<?php echo esc_attr( $list_id ); ?>">
+				<label for="<?php echo esc_attr( apply_filters( 'dotdigital_list_input_id', $identifier, $dd_widget_id ) ); ?>_<?php echo esc_attr( $list_id ); ?>">
 					<input
 						type="checkbox"
 						class="<?php echo esc_attr( apply_filters( 'public/lists/' . $list_id . '/input/class', 'form-control list' ) ); ?>"
-						id="<?php echo esc_attr( $identifier ); ?>_<?php echo esc_attr( $list_id ); ?>"
+						id="<?php echo esc_attr( apply_filters( 'dotdigital_list_input_id', $identifier, $dd_widget_id ) ); ?>_<?php echo esc_attr( $list_id ); ?>"
 						name="<?php echo esc_attr( $identifier ); ?>[]"
 						value="<?php echo esc_attr( apply_filters( 'public/lists/' . $list_id . '/input/value', $list_id ) ); ?>"
 						<?php echo esc_attr( apply_filters( 'public/lists/' . $list_id . '/input/attributes', '' ) ); ?>

@@ -35,14 +35,14 @@ use Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget;
 	</div>
 
 	<div class="ddg-form-group">
-		<label for="email">
-			<?php echo esc_html( __( 'Your email address*:', 'dotdigital-for-wordpress' ) ); ?>
+		<label for="<?php echo esc_attr( apply_filters( 'dotdigital_email_input_id', 'email', $dd_widget_id ) ); ?>">
+			<?php echo esc_html( __( 'Your email address*:', 'dotdigital-for-wordpress' ) ); ?>111
 		</label>
-		<input class="email" type="email" id="email" name="email" required/>
+		<input class="email" type="email" id="<?php echo esc_attr( apply_filters( 'dotdigital_email_input_id', 'email', $dd_widget_id ) ); ?>" name="email" required/>
 	</div>
 
-	<?php do_action( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-datafields' ); ?>
-	<?php do_action( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-lists' ); ?>
+	<?php do_action( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-datafields', $dd_widget_id ); ?>
+	<?php do_action( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-lists', $dd_widget_id ); ?>
 	<input type="hidden" name="redirection" value="<?php echo esc_attr( $redirection ); ?>" />
 	<input type="hidden" name="widget_id" value="<?php echo esc_attr( $dd_widget_id ); ?>" />
 	<input type="hidden" name="origin" value="<?php echo esc_attr( $widget->get_origin_url() ); ?>" />

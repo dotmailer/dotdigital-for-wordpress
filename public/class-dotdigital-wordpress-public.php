@@ -83,14 +83,16 @@ class Dotdigital_WordPress_Public {
 	 * Register the public actions .
 	 */
 	public function add_plugin_public_actions() {
-		add_action( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-lists', array( $this, 'render_public_lists' ) );
-		add_action( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-datafields', array( $this, 'render_public_datafields' ) );
+		add_action( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-lists', array( $this, 'render_public_lists' ), 10, 1 );
+		add_action( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-datafields', array( $this, 'render_public_datafields' ), 10, 1 );
 	}
 
 	/**
 	 * Render lists.
+	 *
+	 * @param string $dd_widget_id
 	 */
-	public function render_public_lists() {
+	public function render_public_lists( $dd_widget_id ) {
 		$identifier = apply_filters( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-lists-identifier', 'lists' );
 		$lists      = get_option( Dotdigital_WordPress_Config::SETTING_LISTS_PATH, array() );
 
@@ -121,8 +123,10 @@ class Dotdigital_WordPress_Public {
 
 	/**
 	 * Render datafields.
+	 *
+	 * @param string $dd_widget_id
 	 */
-	public function render_public_datafields() {
+	public function render_public_datafields( $dd_widget_id ) {
 		$identifier = apply_filters( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '-public-lists-identifier', 'datafields' );
 		$datafields = get_option( Dotdigital_WordPress_Config::SETTING_DATAFIELDS_PATH, array() );
 
