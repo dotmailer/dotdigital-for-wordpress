@@ -1,27 +1,34 @@
 {
-  "name": "dotdigital-for-wordpress",
-  "version": "1.0.0",
-  "description": "Dotdigital for WordPress",
-  "author": "Dotdigital",
-  "license": "MIT",
-  "homepage": "#",
-  "main": "build/index.js",
-  "scripts": {
-	"build": "wp-scripts build --webpack-src-dir=blocks --output-path=build --webpack-copy-php",
-	"format": "wp-scripts format --webpack-src-dir=blocks",
-	"lint:css": "wp-scripts lint-style",
-	"lint:js": "wp-scripts lint-js",
-	"lint:js:fix": "wp-scripts lint-js --fix",
-	"packages-update": "wp-scripts packages-update",
-	"plugin-zip": "wp-scripts build --webpack-src-dir=blocks --output-path=build --webpack-copy-php && wp-scripts plugin-zip",
-	"start": "wp-scripts start --webpack-src-dir=blocks --output-path=build --webpack-copy-php"
-  },
-  "dependencies": {
-	"@wordpress/api-fetch": "^6.40.0",
-	"classnames": "^2.3.2"
-  },
-  "devDependencies": {
-	"@wordpress/scripts": "^24.1.0",
-	"eslint": "^8.10.0"
-  }
+	"name": "dotdigital-for-wordpress",
+	"version": "1.0.0",
+	"description": "Dotdigital for WordPress",
+	"author": "Dotdigital",
+	"license": "MIT",
+	"homepage": "#",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build --webpack-src-dir=blocks --output-path=build --webpack-copy-php",
+		"format": "wp-scripts format --webpack-src-dir=blocks",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"lint:js:fix": "wp-scripts lint-js --fix",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts build --webpack-src-dir=blocks --output-path=build --webpack-copy-php && wp-scripts plugin-zip",
+		"start": "wp-scripts start --webpack-src-dir=blocks --output-path=build --webpack-copy-php"
+	},
+	"dependencies": {
+		"@wordpress/api-fetch": "^6.45.0",
+		"classnames": "^2.5.1"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^30.20.0",
+		"eslint": "^8.56.0"
+	},
+	"overrides": {
+		"@babel/runtime": "^7.26.10",
+		"webpack-dev-server": "^5.2.1",
+		"@wordpress/babel-preset-default": "latest",
+		"@wordpress/jest-console": "latest",
+		"@wordpress/jest-preset-default": "latest"
+	}
 }

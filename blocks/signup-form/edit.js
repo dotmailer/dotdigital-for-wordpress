@@ -4,8 +4,7 @@ import {
 	URLInputButton,
 } from '@wordpress/block-editor';
 import { CheckboxControl, Panel, PanelBody, PanelRow, Spinner } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
-
+import { useState, useEffect, Element as WPElement } from '@wordpress/element';
 /**
  * Editor styles.
  *
@@ -79,7 +78,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				setWidgetContent( data );
 			} )
 			.finally( () => setWidgetLoading( false ) );
-	}, [ attributes ] );
+	}, [ attributes, is_ajax, redirecturl, showdesc, showtitle ] );
 
 	return (
 		<>

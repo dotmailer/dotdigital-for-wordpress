@@ -5,7 +5,7 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, Element as WPElement } from '@wordpress/element';
 import { ToggleControl, RangeControl, SelectControl, Panel, PanelBody, PanelRow } from '@wordpress/components';
 
 /**
