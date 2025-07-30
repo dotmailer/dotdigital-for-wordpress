@@ -36,7 +36,7 @@ use Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget;
 
 	<div class="ddg-form-group">
 		<label for="<?php echo esc_attr( apply_filters( 'dotdigital_email_input_id', 'email', $dd_widget_id ) ); ?>">
-			<?php echo esc_html( __( 'Your email address*:', 'dotdigital-for-wordpress' ) ); ?>111
+			<?php echo esc_html( __( 'Your email address*:', 'dotdigital-for-wordpress' ) ); ?>
 		</label>
 		<input class="email" type="email" id="<?php echo esc_attr( apply_filters( 'dotdigital_email_input_id', 'email', $dd_widget_id ) ); ?>" name="email" required/>
 	</div>
