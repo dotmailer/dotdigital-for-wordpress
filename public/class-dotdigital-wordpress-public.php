@@ -61,8 +61,8 @@ class Dotdigital_WordPress_Public {
 			'dotdigital_for_wordpress_public_js',
 			'dotdigital_form_data',
 			array(
-				'ajax_url' => get_rest_url(),
-				'nonce'    => wp_create_nonce( 'wp_rest' ),
+				'ajax_url'                => get_rest_url(),
+				'nonce'                   => wp_create_nonce( 'wp_rest' ),
 				'generic_failure_message' => Dotdigital_WordPress_Sign_Up_Widget::get_failure_message(),
 			)
 		);
@@ -173,7 +173,7 @@ class Dotdigital_WordPress_Public {
 				'showtitle'   => $attributes['showtitle'],
 				'showdesc'    => $attributes['showdesc'],
 				'redirection' => $attributes['redirecturl'],
-				'is_ajax'   => $attributes['is_ajax'],
+				'is_ajax'     => $attributes['is_ajax'],
 			)
 		);
 

@@ -15,14 +15,14 @@ class Dotdigital_Wordpress_Integration_Insights {
 	private const PAGES_AND_FORMS_WIDGET = 'dotdigital-for-wordpress/pages-and-forms';
 
 	private const SIGNUP_FORM_DEFAULT_OPTIONS = array(
-		'showtitle' => true,
-		'showdesc' => true,
+		'showtitle'   => true,
+		'showdesc'    => true,
 		'redirecturl' => '',
 	);
 
 
 	private const PAGES_AND_FORMS_DEFAULT_OPTIONS = array(
-		'formStyle' => 'embedded',
+		'formStyle'      => 'embedded',
 		'selectedOption' => '',
 	);
 
@@ -45,15 +45,15 @@ class Dotdigital_Wordpress_Integration_Insights {
 	 */
 	public function send_integration_insights() {
 		global $wp_version;
-		$schema = array();
-		$schema['recordId'] = site_url() . '?plugin_name=dotdigital-for-wordpress';
-		$schema['platform'] = 'WordPress';
-		$schema['version'] = $wp_version;
+		$schema                     = array();
+		$schema['recordId']         = site_url() . '?plugin_name=dotdigital-for-wordpress';
+		$schema['platform']         = 'WordPress';
+		$schema['version']          = $wp_version;
 		$schema['connectorVersion'] = DOTDIGITAL_WORDPRESS_VERSION;
-		$schema['phpVersion'] = phpversion();
-		$schema['lastUpdated'] = current_datetime()->format( 'Y-m-d H:i:s' );
-		$schema['configuration'] = $this->get_configuration();
-		$schema['widgets'] = $this->get_dotdigital_widgets();
+		$schema['phpVersion']       = phpversion();
+		$schema['lastUpdated']      = current_datetime()->format( 'Y-m-d H:i:s' );
+		$schema['configuration']    = $this->get_configuration();
+		$schema['widgets']          = $this->get_dotdigital_widgets();
 
 		$this->insight_data->post( $schema );
 	}
@@ -64,22 +64,22 @@ class Dotdigital_Wordpress_Integration_Insights {
 	 * @return array
 	 */
 	private function get_dotdigital_widgets() {
-		$widget_options = array();
+		$widget_options    = array();
 		$available_widgets = $this->get_available_widgets();
-		$widget_instances = array();
+		$widget_instances  = array();
 		foreach ( $available_widgets as $widget_data ) {
 			$instances = get_option( 'widget_' . $widget_data['id_base'] );
 			if ( ! empty( $instances ) ) {
 				foreach ( $instances as $instance_id => $instance_data ) {
 					if ( is_numeric( $instance_id ) ) {
-						$unique_instance_id = $widget_data['id_base'] . '-' . $instance_id;
+						$unique_instance_id                      = $widget_data['id_base'] . '-' . $instance_id;
 						$widget_instances[ $unique_instance_id ] = $instance_data;
 					}
 				}
 			}
 		}
 
-		$sidebars_widgets = get_option( 'sidebars_widgets' );
+		$sidebars_widgets          = get_option( 'sidebars_widgets' );
 		$sidebars_widget_instances = array();
 		foreach ( $sidebars_widgets as $sidebar_id => $widget_ids ) {
 			if ( 'wp_inactive_widgets' === $sidebar_id ) {
@@ -112,12 +112,12 @@ class Dotdigital_Wordpress_Integration_Insights {
 	 */
 	private function get_available_widgets() {
 		global $wp_registered_widget_controls;
-		$widget_controls = $wp_registered_widget_controls;
+		$widget_controls   = $wp_registered_widget_controls;
 		$available_widgets = array();
 		foreach ( $widget_controls as $widget ) {
 			if ( ! empty( $widget['id_base'] ) && ! isset( $available_widgets[ $widget['id_base'] ] ) ) {
 				$available_widgets[ $widget['id_base'] ]['id_base'] = $widget['id_base'];
-				$available_widgets[ $widget['id_base'] ]['name'] = $widget['name'];
+				$available_widgets[ $widget['id_base'] ]['name']    = $widget['name'];
 			}
 		}
 		return $available_widgets;
@@ -131,11 +131,11 @@ class Dotdigital_Wordpress_Integration_Insights {
 	 * @return array
 	 */
 	private function get_dotdigital_widget_options( $widget_content, $widget_area ) {
-		$widget_data = array();
+		$widget_data    = array();
 		$widget_options = parse_blocks( $widget_content );
 		foreach ( $widget_options as $widget_option ) {
-			$widget_data['widget_name'] = $widget_option['blockName'];
-			$widget_data['widget_area'] = $widget_area;
+			$widget_data['widget_name']    = $widget_option['blockName'];
+			$widget_data['widget_area']    = $widget_area;
 			$widget_data['widget_options'] = $this->process_widget_options( $widget_option );
 		}
 		return $widget_data;
@@ -163,7 +163,7 @@ class Dotdigital_Wordpress_Integration_Insights {
 	 * @return array|string[]
 	 */
 	private function get_pages_and_forms_options( $attributes ) {
-		$diff = array_diff( $attributes, self::PAGES_AND_FORMS_DEFAULT_OPTIONS );
+		$diff    = array_diff( $attributes, self::PAGES_AND_FORMS_DEFAULT_OPTIONS );
 		$options = array_merge( self::PAGES_AND_FORMS_DEFAULT_OPTIONS, $diff );
 		if ( 'embedded' === $options['formStyle'] ) {
 			unset( $options['showAfter'] );
@@ -172,10 +172,10 @@ class Dotdigital_Wordpress_Integration_Insights {
 			unset( $options['dialogWidth'] );
 			unset( $options['stopDisplaying'] );
 		} else {
-			$options['showAfter'] = $options['showAfter'] ?? 0;
-			$options['showMobile'] = $options['showAfter'] ?? false;
-			$options['useEsc'] = $options['useEsc'] ?? false;
-			$options['dialogWidth'] = $options['dialogWidth'] ?? 600;
+			$options['showAfter']      = $options['showAfter'] ?? 0;
+			$options['showMobile']     = $options['showAfter'] ?? false;
+			$options['useEsc']         = $options['useEsc'] ?? false;
+			$options['dialogWidth']    = $options['dialogWidth'] ?? 600;
 			$options['stopDisplaying'] = $options['stopDisplaying'] ?? 'fc';
 		}
 
@@ -203,12 +203,13 @@ class Dotdigital_Wordpress_Integration_Insights {
 	 */
 	private function get_configuration() {
 		$credentials = get_option( Dotdigital_WordPress_Config::SETTING_CREDENTIALS_PATH );
-		$api_user = $credentials[ Dotdigital_WordPress_Config::SETTING_CREDENTIALS_PATH_USERNAME ];
-		$lists = get_option( Dotdigital_WordPress_Config::SETTING_LISTS_PATH );
-		$datafields = get_option( Dotdigital_WordPress_Config::SETTING_DATAFIELDS_PATH );
+		$api_user    = $credentials[ Dotdigital_WordPress_Config::SETTING_CREDENTIALS_PATH_USERNAME ];
+		$lists       = get_option( Dotdigital_WordPress_Config::SETTING_LISTS_PATH );
+		$datafields  = get_option( Dotdigital_WordPress_Config::SETTING_DATAFIELDS_PATH );
 		$redirection = get_option( Dotdigital_WordPress_Config::SETTING_REDIRECTS_PATH );
+		$recaptcha   = get_option( Dotdigital_WordPress_Config::SETTING_RECAPTCHA_PATH );
 
-		$configuration['api_user'] = $api_user ?? array();
+		$configuration['api_user']   = $api_user ?? array();
 		$configuration['datafields'] = false !== $datafields ? $this->trim_array_keys(
 			array_map(
 				function ( $datafield ) {
@@ -223,6 +224,7 @@ class Dotdigital_Wordpress_Integration_Insights {
 		) : array();
 
 		$configuration['redirection'] = false !== $redirection ? $this->process_redirection( $redirection ) : '';
+		$configuration['recaptcha']   = isset( $recaptcha['dm_recaptcha_site_key'] ) && isset( $recaptcha['dm_recaptcha_secret_key'] );
 
 		return array( $configuration );
 	}
@@ -237,7 +239,7 @@ class Dotdigital_Wordpress_Integration_Insights {
 		$result = array();
 
 		foreach ( $array as $key => $value ) {
-			$trimmed_key = str_replace( ' ', '', $key );
+			$trimmed_key            = str_replace( ' ', '', $key );
 			$result[ $trimmed_key ] = $value;
 		}
 

@@ -19,6 +19,7 @@ function dotdigital_wordpress_uninstall() {
 	delete_option( 'dm_API_address_books' );
 	delete_option( 'dm_API_data_fields' );
 	delete_option( 'dm_redirections' );
+	delete_option( 'dm_recaptcha' );
 	delete_option( 'dm_api_endpoint' );
 	delete_option( 'widget_dm_widget' );
 }

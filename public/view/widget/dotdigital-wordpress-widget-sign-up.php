@@ -18,9 +18,14 @@ use Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget;
  * @var mixed $redirection
  * @var bool $is_ajax
  * @var string $dd_widget_id
+ * @var string $recaptcha_site_key
+ * @var string $recaptcha_secret_key
+ * @var bool $recaptcha_hide_badge
  */
-
 ?>
+<?php if ( $recaptcha_hide_badge ) : ?>
+<style>.grecaptcha-badge { visibility: hidden; }</style>
+<?php endif; ?>
 <form id="<?php echo esc_attr( $dd_widget_id ); ?>" class="dotdigital-signup-form widget" method="post" action="<?php echo esc_attr( rest_url( 'dotdigital/v1/signup-widget' ) ); ?>">
 	<div class="<?php echo esc_attr( DOTDIGITAL_WORDPRESS_PLUGIN_NAME ); ?>-widget-title">
 		<?php if ( $showtitle ) : ?>
@@ -47,6 +52,10 @@ use Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget;
 	<input type="hidden" name="widget_id" value="<?php echo esc_attr( $dd_widget_id ); ?>" />
 	<input type="hidden" name="origin" value="<?php echo esc_attr( $widget->get_origin_url() ); ?>" />
 	<input type="hidden" name="is_ajax" value="<?php echo $is_ajax ? '1' : '0'; ?>" />
+	<?php if ( $recaptcha_site_key && $recaptcha_secret_key ) : ?>
+	<input type="hidden" name="recaptcha_response_<?php echo esc_attr( $dd_widget_id ); ?>" id="recaptcha_response_<?php echo esc_attr( $dd_widget_id ); ?>" value="">
+	<?php endif; ?>
+	<input type="text" name="dm_name" style="display:none !important" tabindex="-1" autocomplete="new-password" />
 	<div class="dotdigital-form-submit">
 		<button type="submit"  name="dm_submit_btn"><?php echo esc_attr( $widget->get_subscribe_button_title() ); ?></button>
 	</div>

@@ -39,6 +39,7 @@ class Dotdigital_WordPress_Admin {
 		\Dotdigital_WordPress\Admin\Page\Tab\Dotdigital_WordPress_Datafields_Admin::class,
 		\Dotdigital_WordPress\Admin\Page\Tab\Dotdigital_WordPress_Messages_Admin::class,
 		\Dotdigital_WordPress\Admin\Page\Tab\Dotdigital_WordPress_Redirects_Admin::class,
+		\Dotdigital_WordPress\Admin\Page\Tab\Dotdigital_WordPress_Recaptcha_Admin::class,
 	);
 
 	/**

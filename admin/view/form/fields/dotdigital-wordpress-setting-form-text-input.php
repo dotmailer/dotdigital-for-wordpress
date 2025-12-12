@@ -17,3 +17,6 @@ use Dotdigital_WordPress\Includes\Setting\Form\Fields\Dotdigital_WordPress_Setti
 	<?php echo esc_html( apply_filters( "{$form_field->get_page()}/{$form_field->get_name()}/attributes", '' ) ); ?>
 	<?php echo ( $form_field->is_disabled() ) ? 'disabled' : ''; ?>
 />
+<?php if ( ! empty( $form_field->get_help_text() ) ) : ?>
+	<p class="description"><?php echo wp_kses_post( $form_field->get_help_text() ); ?></p>
+<?php endif; ?>

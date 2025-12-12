@@ -125,4 +125,7 @@ td .order-input:focus {
 	outline: none;
 }
 
+.form-table th {
+	vertical-align: top;
+}
 

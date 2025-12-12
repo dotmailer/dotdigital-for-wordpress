@@ -41,7 +41,7 @@ class Dotdigital_WordPress_Settings_Admin {
 			exit();
 		}
 
-		$valid_tab_names = array( 'about', 'lists', 'api_credentials', 'data_fields', 'messages', 'redirections' );
+		$valid_tab_names = array( 'about', 'lists', 'api_credentials', 'data_fields', 'messages', 'redirections', 'recaptcha' );
 		if ( in_array( $active_tab, $valid_tab_names ) ) {
 			return;
 		}
