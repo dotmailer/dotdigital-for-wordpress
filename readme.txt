@@ -63,7 +63,7 @@ The form will behave as follows:
 3. Capture additional contact data.
 4. Add a simple newsletter signup form in the WordPress editor.
 5. Add an embedded survey from Dotdigital.
-6. Add a popover form from Dotdigital.
+6. Add a popup form from Dotdigital.
 
 == Changelog ==
 
