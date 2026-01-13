@@ -1,8 +1,8 @@
 === Dotdigital for WordPress ===
 Contributors: dotMailer, bsstaveley, amucklow, fstrezos, pvpcookie
 Tags: email marketing, newsletter signup
-Tested up to: 6.8.2
-Stable tag: 7.3.4
+Tested up to: 6.9
+Stable tag: 7.4.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Add the Dotdigital for WordPress plugin to your site and allow your visitors to sign up to your newsletter and email marketing campaigns.
@@ -63,9 +63,17 @@ The form will behave as follows:
 3. Capture additional contact data.
 4. Add a simple newsletter signup form in the WordPress editor.
 5. Add an embedded survey from Dotdigital.
-6. Add a popover form from Dotdigital.
+6. Add a popup form from Dotdigital.
 
 == Changelog ==
+
+= 7.4.0 =
+
+**What's new**
+- We added an integration with reCAPTCHA v3 for spam protection.
+
+**Improvements**
+- We changed references to 'popover' mode to 'popup' in the Surveys, Pages, and Forms block.
 
 = 7.3.4 =
 

@@ -68,6 +68,13 @@ interface Dotdigital_WordPress_Setting_Form_Input_Interface {
 	public function get_group(): string;
 
 	/**
+	 * Get the help text of the input.
+	 *
+	 * @return string
+	 */
+	public function get_help_text(): string;
+
+	/**
 	 * Is disabled input.
 	 *
 	 * @return bool

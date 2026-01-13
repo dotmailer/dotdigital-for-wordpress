@@ -76,7 +76,7 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 				'showtitle'   => $request['showtitle'] ?? false,
 				'showdesc'    => $request['showdesc'] ?? false,
 				'redirection' => $request['redirecturl'] ?? '',
-				'is_ajax' => $request['is_ajax'] ?? false,
+				'is_ajax'     => $request['is_ajax'] ?? false,
 			)
 		);
 		return ob_get_clean();
@@ -96,9 +96,60 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 			$this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_fill_required_message(), $data );
 		}
 
-		$email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+		$recaptcha            = get_option( 'dm_recaptcha' );
+		$recaptcha_site_key   = $recaptcha['dm_recaptcha_site_key'] ?? '';
+		$recaptcha_secret_key = $recaptcha['dm_recaptcha_secret_key'] ?? '';
+		$recaptcha_threshold  = $recaptcha['dm_recaptcha_threshold'] ?? '';
+		$recaptcha_validation_message  = $recaptcha['dm_recaptcha_validation_message'] ?? '';
+		$recaptcha_response_key = '';
+		$recaptcha_response   = '';
+
+		$honeypot = '';
+		if ( isset( $_POST['dm_name'] ) ) {
+			$honeypot = sanitize_text_field( wp_unslash( $_POST['dm_name'] ) );
+		}
+		if ( ! empty( $honeypot ) ) {
+			$this->process_response( false, $recaptcha_validation_message, $data );
+		}
+		unset( $data['dm_name'] );
+
+		if ( isset( $data['widget_id'] ) ) {
+			$widget_id              = sanitize_text_field( wp_unslash( $data['widget_id'] ) );
+			$recaptcha_response_key = 'recaptcha_response_' . $widget_id;
+			if ( isset( $_POST[ $recaptcha_response_key ] ) ) {
+				$recaptcha_response = sanitize_text_field( wp_unslash( $_POST[ $recaptcha_response_key ] ) );
+			}
+		}
+
+		if ( $recaptcha_site_key && $recaptcha_secret_key && $recaptcha_response ) {
+			$remote_addr = '';
+			if ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
+				$remote_addr = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
+			}
+			$verify        = wp_remote_post(
+				'https://www.google.com/recaptcha/api/siteverify',
+				array(
+					'body' => array(
+						'secret'   => $recaptcha_secret_key,
+						'response' => $recaptcha_response,
+						'remoteip' => $remote_addr,
+					),
+				)
+			);
+			$response_body = wp_remote_retrieve_body( $verify );
+			$result        = json_decode( $response_body, true );
+
+			if ( empty( $result['success'] ) || $result['score'] < $recaptcha_threshold ) {
+				$this->process_response( false, $recaptcha_validation_message, $data );
+			}
+			if ( $recaptcha_response_key ) {
+				unset( $_POST[ $recaptcha_response_key ] );
+			}
+		}
+
+		$email      = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
 		$datafields = isset( $_POST['datafields'] ) ? wp_unslash( $_POST['datafields'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$lists = isset( $_POST['lists'] ) ? wp_unslash( $_POST['lists'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$lists      = isset( $_POST['lists'] ) ? wp_unslash( $_POST['lists'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		if ( $this->has_invalid_email( $email ) ) {
 			$this->process_response( false, Dotdigital_WordPress_Sign_Up_Widget::get_invalid_email_message(), $data );
@@ -275,8 +326,8 @@ class Dotdigital_WordPress_Signup_Widget_Controller {
 		wp_redirect(
 			add_query_arg(
 				array(
-					'success' => (int) $success,
-					'message' => $message,
+					'success'   => (int) $success,
+					'message'   => $message,
 					'widget_id' => $data['widget_id'],
 				),
 				$data['origin']

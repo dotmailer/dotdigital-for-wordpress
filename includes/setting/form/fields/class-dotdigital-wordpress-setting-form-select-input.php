@@ -44,6 +44,11 @@ class Dotdigital_WordPress_Setting_Form_Select_Input implements Dotdigital_WordP
 	/**
 	 * @var string
 	 */
+	private $help_text;
+
+	/**
+	 * @var string
+	 */
 	private $template_path = DOTDIGITAL_WORDPRESS_PLUGIN_PATH . 'admin/view/form/fields/dotdigital-wordpress-setting-form-select-input.php';
 
 	/**
@@ -57,19 +62,22 @@ class Dotdigital_WordPress_Setting_Form_Select_Input implements Dotdigital_WordP
 	 * @param string $page
 	 * @param array $options
 	 * @param string $group
+	 * @param string $help_text
 	 */
 	public function __construct(
 		string $name,
 		string $title,
 		string $page,
 		array $options,
-		string $group = ''
+		string $group = '',
+		string $help_text = ''
 	) {
 		$this->name    = $name;
 		$this->title   = $title;
 		$this->page    = $page;
 		$this->group   = $group;
 		$this->options = $options;
+		$this->help_text = $help_text;
 	}
 
 	/**
@@ -145,6 +153,13 @@ class Dotdigital_WordPress_Setting_Form_Select_Input implements Dotdigital_WordP
 	 */
 	public function get_group(): string {
 		return $this->group;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function get_help_text(): string {
+		return $this->help_text;
 	}
 
 	/**

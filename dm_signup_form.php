@@ -8,7 +8,7 @@
  * Plugin Name:       Dotdigital for WordPress
  * Plugin URI:        https://integrations.dotdigital.com/technology-partners/wordpress
  * Description:       Add a "Subscribe to Newsletter" widget to your website that will insert your contact in one of your Dotdigital lists.
- * Version:           7.3.4
+ * Version:           7.4.0
  * Requires PHP:      7.4
  * Requires at least: 5.8
  * Author:            dotdigital
@@ -26,10 +26,11 @@ if ( ! defined( 'WPINC' ) ) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-define( 'DOTDIGITAL_WORDPRESS_VERSION', '7.3.4' );
+define( 'DOTDIGITAL_WORDPRESS_VERSION', '7.4.0' );
 define( 'DOTDIGITAL_WORDPRESS_PLUGIN_NAME', 'dotdigital-for-wordpress' );
 define( 'DOTDIGITAL_WORDPRESS_PLUGIN_SLUG', 'dotdigital_for_wordpress' );
 define( 'DOTDIGITAL_WORDPRESS_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'DOTDIGITAL_WORDPRESS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'DOTDIGITAL_WORDPRESS_PLUGIN_ICON', 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZD0iTTE2LDIuNzhBMTMuMjIsMTMuMjIsMCwxLDEsMi43OCwxNiwxMy4yMywxMy4yMywwLDAsMSwxNiwyLjc4TTE2LDBBMTYsMTYsMCwxLDAsMzIsMTYsMTYsMTYsMCwwLDAsMTYsMFoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTYsOC4yOUE3Ljc0LDcuNzQsMCwxLDEsOC4yNiwxNiw3Ljc1LDcuNzUsMCwwLDEsMTYsOC4yOW0wLTIuNzhBMTAuNTIsMTAuNTIsMCwxLDAsMjYuNTIsMTYsMTAuNTIsMTAuNTIsMCwwLDAsMTYsNS41MVoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTYsMTMuNzdBMi4yNiwyLjI2LDAsMSwxLDEzLjc1LDE2LDIuMjYsMi4yNiwwLDAsMSwxNiwxMy43N00xNiwxMWE1LDUsMCwxLDAsNSw1LDUsNSwwLDAsMC01LTVaIiBmaWxsPSIjZmZmIi8+PC9zdmc+' );
 
 /**

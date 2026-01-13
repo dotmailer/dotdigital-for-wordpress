@@ -85,7 +85,7 @@ const Edit = ( { attributes, setAttributes } ) => {
 								value={ attributes.formStyle }
 								options={ [
 									{ label: 'Embedded', value: 'embedded' },
-									{ label: 'Popover', value: 'popover' },
+									{ label: 'Popup', value: 'popover' },
 								] }
 								onChange={ ( newValue ) => setAttributes( { formStyle: newValue } ) }
 							/>
@@ -120,7 +120,7 @@ const Edit = ( { attributes, setAttributes } ) => {
 							</PanelRow>
 							<PanelRow>
 								<ToggleControl
-									label="Enable use of 'esc' to dismiss pop-over"
+									label="Enable use of 'esc' to dismiss popup"
 									checked={ attributes.useEsc }
 									onChange={ ( newValue ) => setAttributes( { useEsc: newValue } ) }
 								/>

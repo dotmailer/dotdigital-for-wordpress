@@ -105,15 +105,76 @@ class Dotdigital_WordPress_Sign_Up_Widget extends WP_Widget {
 			)
 		);
 
-		$domain      = strval( DOTDIGITAL_WORDPRESS_PLUGIN_NAME );
-		$showtitle   = $args['showtitle'] ?? 1;
-		$showdesc    = $args['showdesc'] ?? 1;
-		$redirection = ! empty( $args['redirection'] ) ? $args['redirection'] : $this->get_redirection();
-		$is_ajax = $args['is_ajax'] ?? 0;
-		$widget = $this;
-		$dd_widget_id = $widget->id . '-' . $this->widget_instance_id++;
+		$domain               = strval( DOTDIGITAL_WORDPRESS_PLUGIN_NAME );
+		$showtitle            = $args['showtitle'] ?? 1;
+		$showdesc             = $args['showdesc'] ?? 1;
+		$redirection          = ! empty( $args['redirection'] ) ? $args['redirection'] : $this->get_redirection();
+		$is_ajax              = $args['is_ajax'] ?? 0;
+		$widget               = $this;
+		$dd_widget_id         = $widget->id . '-' . $this->widget_instance_id++;
+		$recaptcha            = get_option( 'dm_recaptcha', array() );
+		$recaptcha_site_key   = $recaptcha['dm_recaptcha_site_key'] ?? '';
+		$recaptcha_secret_key = $recaptcha['dm_recaptcha_secret_key'] ?? '';
+		$recaptcha_hide_badge = $recaptcha['dm_recaptcha_hide_badge'] ?? false;
+
+		// Enqueue scripts if reCAPTCHA is configured.
+		if ( $recaptcha_site_key && $recaptcha_secret_key ) {
+			$this->enqueue_recaptcha_scripts();
+			$this->add_widget_data( $dd_widget_id, $recaptcha_site_key );
+		}
+
 		require DOTDIGITAL_WORDPRESS_PLUGIN_PATH . 'public/view/widget/dotdigital-wordpress-widget-sign-up.php';
 		require DOTDIGITAL_WORDPRESS_PLUGIN_PATH . 'public/view/widget/dotdigital-wordpress-widget-sign-up-messages.php';
+	}
+
+	/**
+	 * Add widget data to the localized script.
+	 *
+	 * @param string $widget_id
+	 * @param string $site_key
+	 */
+	private function add_widget_data( $widget_id, $site_key ) {
+		// Store widget data in a static array to accumulate all widgets.
+		static $widget_data = array();
+
+		$widget_data[] = array(
+			'id'      => $widget_id,
+			'siteKey' => $site_key,
+		);
+
+		wp_localize_script(
+			'dotdigital-widget-recaptcha',
+			'dmRecaptchaData',
+			array( 'widgets' => $widget_data )
+		);
+	}
+	/**
+	 * Enqueue reCAPTCHA scripts.
+	 */
+	private function enqueue_recaptcha_scripts() {
+		$recaptcha            = get_option( 'dm_recaptcha' );
+		$recaptcha_site_key   = $recaptcha['dm_recaptcha_site_key'] ?? '';
+		$recaptcha_secret_key = $recaptcha['dm_recaptcha_secret_key'] ?? '';
+
+		if ( $recaptcha_site_key && $recaptcha_secret_key ) {
+			wp_enqueue_script(
+				'dotdigital-recaptcha',
+				'https://www.google.com/recaptcha/api.js?render=' . esc_attr( $recaptcha_site_key ),
+				array(),
+				null,
+				true
+			);
+		}
+
+		if ( ! wp_script_is( 'dotdigital-widget-recaptcha', 'enqueued' ) ) {
+			wp_enqueue_script(
+				'dotdigital-widget-recaptcha',
+				DOTDIGITAL_WORDPRESS_PLUGIN_URL . 'public/js/dotdigital-recaptcha.js',
+				array(),
+				DOTDIGITAL_WORDPRESS_VERSION,
+				true
+			);
+		}
 	}
 
 	/**
