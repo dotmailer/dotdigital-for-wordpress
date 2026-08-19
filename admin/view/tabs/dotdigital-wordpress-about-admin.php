@@ -12,6 +12,10 @@
  * @since      7.3.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <div class="wrap">
 	<table width="100%" cellspacing="0" cellpadding="0">

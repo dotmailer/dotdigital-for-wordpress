@@ -58,7 +58,6 @@ class Dotdigital_WordPress_Patch_Manager {
 
 		foreach ( $patches as $patch ) {
 			if ( ! $patch::can_apply() ) {
-				error_log( sprintf( 'Patch %s cannot be applied', $patch ) );
 				return;
 			}
 
@@ -69,7 +68,6 @@ class Dotdigital_WordPress_Patch_Manager {
 				} catch ( Exception $e ) {
 					$this->notify_admin( $e->getMessage() );
 					$patch::rollback_patch();
-					error_log( sprintf( 'Patch %s failed', $patch ) );
 					return;
 				}
 			}
@@ -115,9 +113,6 @@ class Dotdigital_WordPress_Patch_Manager {
 		}
 		if ( preg_match( '/class\s+(\w+)/', $contents, $matches ) ) {
 			$class_name = $namespace . $matches[1];
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
-				error_log( 'Extracted class name: ' . $class_name ); // Add this line for logging.
-			}
 			return $class_name;
 		}
 		return null;
@@ -157,7 +152,6 @@ class Dotdigital_WordPress_Patch_Manager {
 	 * @since 7.3.0
 	 */
 	private function update_applied_patches( $applied_patch ) {
-		error_log( sprintf( 'Updating applied patches with %s', $applied_patch ) );
 		$applied_patches = $this->get_applied_patches();
 		$applied_patches[] = $applied_patch;
 		update_option( Dotdigital_WordPress_Config::SETTING_DOTDIGITAL_WORDPRESS_PATCHES, $applied_patches );

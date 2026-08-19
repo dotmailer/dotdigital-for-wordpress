@@ -130,6 +130,6 @@ class Dotdigital_WordPress_Messages_Admin implements Dotdigital_WordPress_Page_T
 	 * @inheritDoc
 	 */
 	public function get_title() {
-		return __( 'Messages' );
+		return __( 'Messages', 'dotdigital-for-wordpress' );
 	}
 }

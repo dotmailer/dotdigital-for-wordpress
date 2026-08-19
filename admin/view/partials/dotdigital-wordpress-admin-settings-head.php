@@ -3,6 +3,10 @@
  * @package    Dotdigital_WordPress
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <style>

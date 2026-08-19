@@ -25,5 +25,5 @@ registerBlockType( metadata,
 		 */
 		edit: Edit,
 		icon: <Icon />,
-	}
+	},
 );

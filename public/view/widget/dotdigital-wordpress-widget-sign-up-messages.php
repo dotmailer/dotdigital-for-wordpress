@@ -8,6 +8,10 @@
  * @var string $dd_widget_id
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <?php $messages = get_option( \Dotdigital_WordPress\Includes\Setting\Dotdigital_WordPress_Config::SETTING_MESSAGES_PATH ); ?>
 	<div class="form_messages">

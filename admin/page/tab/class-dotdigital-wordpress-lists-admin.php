@@ -329,6 +329,6 @@ class Dotdigital_WordPress_Lists_Admin implements Dotdigital_WordPress_Page_Tab_
 	 * @inheritDoc
 	 */
 	public function get_title(): string {
-		return __( 'My lists' );
+		return __( 'My lists', 'dotdigital-for-wordpress' );
 	}
 }

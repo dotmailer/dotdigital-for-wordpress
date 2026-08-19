@@ -371,6 +371,6 @@ class Dotdigital_WordPress_Datafields_Admin implements Dotdigital_WordPress_Page
 	 * @inheritDoc
 	 */
 	public function get_title() {
-		return __( 'My contact data fields' );
+		return __( 'My contact data fields', 'dotdigital-for-wordpress' );
 	}
 }

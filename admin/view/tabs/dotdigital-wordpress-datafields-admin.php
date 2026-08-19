@@ -6,9 +6,13 @@
  *
  * @package    Dotdigital_WordPress
  *
- * @var Dotdigital_WordPress_Setting_Form $form
+ * @var \Dotdigital_WordPress\Includes\Setting\Form\Dotdigital_WordPress_Setting_Form $form
  * @var Dotdigital_WordPress\Admin\Page\Tab\Dotdigital_WordPress_Lists_Admin $view
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 use Dotdigital_WordPress\Includes\Setting\Form\Dotdigital_WordPress_Setting_Form;
 

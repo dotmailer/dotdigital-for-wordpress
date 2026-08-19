@@ -68,10 +68,10 @@
 								} );
 								form.next( '.form_messages' ).empty().append( responseMessage );
 							},
-						}
+						},
 					);
-				}
+				},
 			);
-		}
+		},
 	);
 }( jQuery ) );

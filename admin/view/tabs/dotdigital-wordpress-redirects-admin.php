@@ -7,9 +7,13 @@
  * @package    Dotdigital_WordPress
  *
  * @var array $account_info
- * @var Dotdigital_WordPress_Credentials_Admin $view
- * @var Dotdigital_WordPress_Setting_Form $form
+ * @var \Dotdigital_WordPress\Admin\Page\Tab\Dotdigital_WordPress_Credentials_Admin $view
+ * @var \Dotdigital_WordPress\Includes\Setting\Form\Dotdigital_WordPress_Setting_Form $form
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 use Dotdigital_WordPress\Admin\Page\Tab\Dotdigital_WordPress_Credentials_Admin;
 use Dotdigital_WordPress\Includes\Setting\Form\Dotdigital_WordPress_Setting_Form;

@@ -70,7 +70,7 @@ class Dotdigital_WordPress_Credentials_Admin implements Dotdigital_WordPress_Pag
 					Dotdigital_WordPress_Config::SETTING_CREDENTIALS_PATH,
 					Dotdigital_WordPress_Config::SETTING_CREDENTIALS_PATH_USERNAME
 				),
-				__( 'Username' ),
+				__( 'Username', 'dotdigital-for-wordpress' ),
 				"{$this->get_slug()}",
 			)
 		);
@@ -82,7 +82,7 @@ class Dotdigital_WordPress_Credentials_Admin implements Dotdigital_WordPress_Pag
 					Dotdigital_WordPress_Config::SETTING_CREDENTIALS_PATH,
 					Dotdigital_WordPress_Config::SETTING_CREDENTIALS_PATH_PASSWORD
 				),
-				__( 'Password' ),
+				__( 'Password', 'dotdigital-for-wordpress' ),
 				"{$this->get_slug()}",
 			)
 		);
@@ -131,7 +131,7 @@ class Dotdigital_WordPress_Credentials_Admin implements Dotdigital_WordPress_Pag
 	 * @inheritDoc
 	 */
 	public function get_title() {
-		return __( 'API credentials' );
+		return __( 'API credentials', 'dotdigital-for-wordpress' );
 	}
 
 	/**

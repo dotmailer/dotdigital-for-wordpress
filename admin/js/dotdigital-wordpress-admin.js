@@ -40,7 +40,7 @@
 
 	$( `input[toggle-row-inputs]` ).on(
 		'change',
-		( event ) => toggle_inputs( event.target.closest( 'tr' ) )
+		( event ) => toggle_inputs( event.target.closest( 'tr' ) ),
 	);
 
 	$( '.form-group-radio' ).change( function() {
