@@ -6,6 +6,10 @@
  * @var array $attributes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 the_widget(
 	'DM_Widget',
 	array(),

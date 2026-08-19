@@ -2,8 +2,12 @@
 /**
  * @package    Dotdigital_WordPress
  *
- * @var Dotdigital_WordPress_Setting_Form_Input_Interface $form_field
+ * @var \Dotdigital_WordPress\Includes\Setting\Form\Fields\Dotdigital_WordPress_Setting_Form_Input_Interface $form_field
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 use Dotdigital_WordPress\Includes\Setting\Form\Fields\Dotdigital_WordPress_Setting_Form_Input_Interface;
 

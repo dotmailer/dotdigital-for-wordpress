@@ -2,8 +2,12 @@
 /**
  * @package    Dotdigital_WordPress
  *
- * @var Dotdigital_WordPress_Setting_Form_Radio_Group $form
+ * @var \Dotdigital_WordPress\Includes\Setting\Form\Dotdigital_WordPress_Setting_Form_Radio_Group $form
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 use Dotdigital_WordPress\Includes\Setting\Form\Dotdigital_WordPress_Setting_Form_Radio_Group;
 

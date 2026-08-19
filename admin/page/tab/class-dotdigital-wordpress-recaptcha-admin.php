@@ -229,6 +229,6 @@ class Dotdigital_WordPress_Recaptcha_Admin implements Dotdigital_WordPress_Page_
 	 * @return string The title.
 	 */
 	public function get_title() {
-		return __( 'reCAPTCHA' );
+		return __( 'reCAPTCHA', 'dotdigital-for-wordpress' );
 	}
 }

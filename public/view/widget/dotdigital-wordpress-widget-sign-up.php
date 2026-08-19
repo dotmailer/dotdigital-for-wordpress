@@ -5,6 +5,10 @@
  * @package    Dotdigital_WordPress
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget;
 
 /**
@@ -12,7 +16,7 @@ use Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget;
  *
  * @package    Dotdigital_WordPress
  *
- * @var Dotdigital_WordPress_Sign_Up_Widget $widget
+ * @var \Dotdigital_WordPress\Includes\Widget\Dotdigital_WordPress_Sign_Up_Widget $widget
  * @var bool $showtitle
  * @var bool $showdesc
  * @var mixed $redirection

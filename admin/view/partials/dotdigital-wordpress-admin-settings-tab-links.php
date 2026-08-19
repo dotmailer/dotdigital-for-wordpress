@@ -7,6 +7,10 @@
  * @var string $page_slug
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <h2 class='nav-tab-wrapper'>

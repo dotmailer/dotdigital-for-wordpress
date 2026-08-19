@@ -7,6 +7,10 @@
  * @var \Exception $exception
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 	<div>
 		<p class='error_message'><?php echo esc_html( $exception->getMessage() ); ?></p>

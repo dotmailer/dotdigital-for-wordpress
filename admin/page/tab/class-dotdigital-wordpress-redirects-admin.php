@@ -31,7 +31,7 @@ class Dotdigital_WordPress_Redirects_Admin implements Dotdigital_WordPress_Page_
 	public function initialise() {
 		$this->form = new Dotdigital_WordPress_Setting_Form_Radio_Group(
 			$this->get_slug(),
-			__( 'Redirection settings' ),
+			__( 'Redirection settings', 'dotdigital-for-wordpress' ),
 			$this->get_slug()
 		);
 
@@ -118,6 +118,6 @@ class Dotdigital_WordPress_Redirects_Admin implements Dotdigital_WordPress_Page_
 	 * @inheritDoc
 	 */
 	public function get_title(): string {
-		return __( 'Redirections' );
+		return __( 'Redirections', 'dotdigital-for-wordpress' );
 	}
 }

@@ -85,8 +85,8 @@ class Dotdigital_WordPress_Admin {
 	public function add_plugin_admin_menus() {
 		$admin_settings_page = new Dotdigital_WordPress_Settings_Admin();
 		add_menu_page(
-			__( 'Dotdigital for WordPress' ),
-			__( 'Dotdigital for WordPress' ),
+			__( 'Dotdigital for WordPress', 'dotdigital-for-wordpress' ),
+			__( 'Dotdigital for WordPress', 'dotdigital-for-wordpress' ),
 			'manage_options',
 			$admin_settings_page->get_slug(),
 			array( $admin_settings_page, 'render' ),

@@ -10,6 +10,10 @@
  * @var string $dd_widget_id
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( empty( $lists ) ) {
 	return;
 }

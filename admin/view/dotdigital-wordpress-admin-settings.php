@@ -7,6 +7,10 @@
  * @package    Dotdigital_WordPress
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 	<?php do_action( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '_settings_head' ); ?>
 	<?php settings_errors( DOTDIGITAL_WORDPRESS_PLUGIN_NAME . '_settings_notices' ); ?>

@@ -9,6 +9,10 @@
  * @var string $dd_widget_id
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <?php

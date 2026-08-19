@@ -45,7 +45,7 @@ class Dotdigital_WordPress_About_Admin implements Dotdigital_WordPress_Page_Tab_
 	 * @inheritDoc
 	 */
 	public function get_title(): string {
-		return __( 'About' );
+		return __( 'About', 'dotdigital-for-wordpress' );
 	}
 
 	/**
