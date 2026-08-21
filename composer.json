@@ -62,6 +62,8 @@
 			"rm -rf build_prefixed/package.json",
 			"rm -rf build_prefixed/package-lock.json",
 			"rm -rf build_prefixed/composer.json",
+			"rm -rf build_prefixed/tools",
+			"rm -rf build_prefixed/eslint.config.js",
 			"rm -rf build_prefixed/blocks"
 		],
 		"bundle": [

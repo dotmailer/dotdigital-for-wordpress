@@ -7,6 +7,8 @@
 	"homepage": "#",
 	"main": "build/index.js",
 	"scripts": {
+		"build": "node tools/build.js",
+		"start": "node tools/build.js --watch",
 		"lint:js:blocks": "eslint blocks/",
 		"lint:js:blocks:fix": "eslint blocks/ --fix",
 		"lint:js:admin": "eslint admin/js/",
@@ -29,7 +31,10 @@
 	},
 	"devDependencies": {
 		"@wordpress/eslint-plugin": "^25.9.0",
+		"esbuild": "^0.25.0",
 		"eslint": "^9.0.0",
-		"eslint-plugin-react-hooks": "^7.1.1"
+		"eslint-plugin-react-hooks": "^7.1.1",
+		"rtlcss": "^4.3.0",
+		"sass": "^1.80.0"
 	}
 }
