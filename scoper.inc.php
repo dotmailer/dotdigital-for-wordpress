@@ -21,7 +21,8 @@ return [
 				'node_modules',
 				'cypress',
 				'tests',
-				'build'
+				'build',
+				'build_prefixed'
 			] )
 			->in( __DIR__ )
 	],

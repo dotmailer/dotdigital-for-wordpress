@@ -13,6 +13,7 @@ module.exports = [
 			'build/**',
 			'coverage/**',
 			'cypress/**',
+			'tools/**',
 		],
 	},
 	// WordPress recommended flat config
